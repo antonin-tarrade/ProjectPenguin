@@ -4,6 +4,8 @@
 
 ### Avant de commencer
 
+Ce projet utilise Unity 2022.3.6f1 (Evitez de changer)
+
 git clone git@git.inpt.fr:7fault/2022-2023/pass_the_game_2023.git  
 git config --local core.autocrlf false (a vérifier pour linux)  
 git checkout -b *votre_nom*  
