@@ -1,106 +1,93 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
-public class Player : MonoBehaviour
+public class Player : Penguin
 {
+	// Booleens pour empecher les mouvements diagonaux
+	private bool movement_x_lock = false;
+	private bool movement_y_lock = false;
 
-    public float speed = 5f;
-    public float slideBoost = 2f;
-    public float slideSlowDown = 0.75f;
+	// Inputs directionnels enregistrés à la dernière frame
+	private Vector2 old_input = Vector2.zero;
 
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
-    private Rigidbody2D body;
+	private void Start ()
+	{
+		InitPenguin ();
+	}
 
-    private float movement_x = 0;
-    private float movement_y = 0;
-    
-    // Booleens pour empecher les mouvements diagonaux
-    private bool movement_x_lock;
-    private bool movement_y_lock;
+	private void Update ()
+	{
+		// Arrêt du slide
+		if (Input.GetKeyUp ("space") || Input.anyKeyDown || movement.magnitude < 0.01)
+			isSliding = false;
+		// Début du slide
+		if (Input.GetKeyDown ("space"))
+		{
+			isSliding = true;
+			movement.x *= slideBoost;
+			movement.y *= slideBoost;
+			StartCoroutine (slide ());
+		}
 
-    private bool isSliding;
+		if (!isSliding && Input.GetKey (KeyCode.LeftShift))
+			Fire ();
 
+		// Mouvement
+		Vector2 movementDirection = getDirectionFromInput ();
+		if (movementDirection != Vector2.zero)
+			facingDirection = movementDirection;
 
+		if (!isSliding)
+		{
+			movement.x = speed * movementDirection.x;
+			movement.y = speed * movementDirection.y;
+		}
 
-    void Start(){
-        this.animator = GetComponent<Animator>();
-        this.spriteRenderer = GetComponent<SpriteRenderer>();
-        this.body = GetComponent<Rigidbody2D>();
+		// Variables d'animation
+		if (movementDirection.y < 0) // Down
+			animator.SetInteger ("orientation", 0);
+		if (movementDirection.x < 0) // Left
+			animator.SetInteger ("orientation", 1);
+		if (movementDirection.y > 0) // Up
+			animator.SetInteger ("orientation", 2);
+		if (movementDirection.x > 0) // Right
+			animator.SetInteger ("orientation", 3);
+		animator.SetBool ("isSliding", isSliding);
+		animator.SetFloat ("speed", movement.magnitude);
+	}
 
-        movement_x_lock = false;
-        movement_y_lock = false;
-        isSliding = false;
+	private void FixedUpdate ()
+	{
+		Move ();
+	}
 
-        animator.SetFloat("speed", 0);
-        animator.SetInteger("orientation", 0);
-    }
-
-    void Update(){
-        getMovementInput();
-
-        animator.SetFloat("speed", Mathf.Abs(movement_x) + Mathf.Abs(movement_y));
-        if (movement_y < 0) // Down
-            animator.SetInteger("orientation", 0);
-        if (movement_x < 0) // Left
-            animator.SetInteger("orientation", 1);
-        if (movement_y > 0) // Up
-            animator.SetInteger("orientation", 2);
-        if (movement_x > 0) // Right
-            animator.SetInteger("orientation", 3);
-        
-
-        if (Input.GetKeyDown("space")){
-            isSliding = true;
-            movement_x = slideBoost*movement_x;
-            movement_y = slideBoost*movement_y;
-            StartCoroutine(slidingCoroutine());
-        }
-        if (Input.GetKeyUp("space") || Mathf.Abs(movement_x) + Mathf.Abs(movement_y) < 0.01)
-            isSliding = false;
-        
-        animator.SetBool("isSliding", isSliding);
-    }
-
-    void FixedUpdate(){
-
-        body.velocity = new Vector2(movement_x * speed,
-                                     movement_y * speed);
-    }
-
-    private void getMovementInput(){
-
-        if (!(movement_x_lock||isSliding))
-            movement_x = Input.GetAxisRaw("Horizontal");
-        if (Mathf.Abs(movement_x)>0.01)
-            movement_y_lock = true;
-
-        if (!(movement_y_lock||isSliding))
-            movement_y = Input.GetAxisRaw("Vertical");
-        if (Mathf.Abs(movement_y)>0.01)
-            movement_x_lock = true;
-
-        if (Mathf.Abs(movement_x) < 0.01)
-            movement_y_lock = false;
-        if (Mathf.Abs(movement_y) < 0.01)
-            movement_x_lock = false;
-
-    }
-
-    IEnumerator slidingCoroutine()
+	// Obtient la direction dans laquelle se déplacer en fonction des inputs
+	private Vector2 getDirectionFromInput ()
     {
-        while (isSliding)
+		float input_x = Input.GetAxisRaw ("Horizontal");
+        float input_y = Input.GetAxisRaw ("Vertical");
+
+        if (!isSliding)
         {
-            movement_x = slideSlowDown*movement_x;
-            movement_y = slideSlowDown*movement_y;
+            if (Mathf.Abs (input_x) < 0.01 || old_input.y != input_y)
+            {
+                movement_x_lock = true;
+                movement_y_lock = false;
+            }
+            if (Mathf.Abs (input_y) < 0.01 || old_input.x != input_x)
+            {
+                movement_y_lock = true;
+                movement_x_lock = false;
+            }
+		}
 
-            if (Mathf.Abs(movement_x) + Mathf.Abs(movement_y) < 0.1)
-                isSliding = false;
+		old_input.x = input_x;
+        old_input.y = input_y;
 
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
+        float direction_x = movement_x_lock ? 0 : input_x;
+        float direction_y = movement_y_lock ? 0 : input_y;
 
+        return new Vector2 (direction_x, direction_y);
+	}
 }
