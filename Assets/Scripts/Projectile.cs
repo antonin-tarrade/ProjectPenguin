@@ -7,9 +7,9 @@ public class Projectile : MonoBehaviour
 	// Stats
     public float speed;
     public Vector2 direction;
-	public float maxLifeLength; // DurÈe de vie en secondes
+	public float maxLifeLength; // Duree de vie en secondes
 
-	[HideInInspector] public Penguin owner; // Pingouin ayant tirÈ ce projectile
+	[HideInInspector] public Penguin owner; // Pingouin ayant tir√© ce projectile
 	private Rigidbody2D body;
 	private float currentLifeLength = 0f;
 
@@ -32,15 +32,37 @@ public class Projectile : MonoBehaviour
 		body.velocity = direction * speed;
 	}
 
-	private void OnTriggerEnter2D (Collider2D collision)
+	private void OnCollisionEnter2D (Collision2D collision)
 	{
-		Penguin penguin = collision.transform.GetComponent<Penguin> ();
+		// Collisions entrainant la destruction (Obstacle et Shards)
+		if(collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Shards"))
+        {
+            Destroy (gameObject);
+        }
+
+		// Collision avec un autre pengouin
+		Penguin penguin = collision.transform.GetComponent<Penguin>();
 		if (penguin != null && penguin != owner)
 		{
 			if (!penguin.isSliding)
 			{
-				Debug.Log (collision.name + " touchÈ par " + owner.name + " !");
+				// Debug.Log (collision.name + " touch√© par " + owner.name + " !");
+
+				// Friendly fire D√©sactiv√©
+				/*if(!(owner.gameObject.CompareTag(collision.gameObject.tag)))
+				{
+					penguin.health -= 1;
+					Destroy (gameObject);
+				}
+				else{
+					Destroy (gameObject);
+				}
+				*/
+
+				// Friendly fire Activ√©
+				penguin.health -= 1;
 				Destroy (gameObject);
+				
 			}
 		}
 	}

@@ -8,8 +8,11 @@ public class Player : Penguin
 	private bool movement_x_lock = false;
 	private bool movement_y_lock = false;
 
-	// Inputs directionnels enregistrés à la dernière frame
+	// Inputs directionnels enregistres a la derniere frame
 	private Vector2 old_input = Vector2.zero;
+
+	// Score (iceShards Ã©tant rentrÃ© dans l'igloo)
+	public int iceShards = 0;
 
 	private void Start ()
 	{
@@ -18,11 +21,11 @@ public class Player : Penguin
 
 	private void Update ()
 	{
-		// Arrêt du slide
-		if (Input.GetKeyUp ("space") || Input.anyKeyDown || movement.magnitude < 0.01)
+		// Arret du slide
+		if (Input.GetKeyUp ("space") || Input.GetMouseButtonUp(1) || Input.anyKeyDown || movement.magnitude < 0.01)
 			isSliding = false;
-		// Début du slide
-		if (Input.GetKeyDown ("space"))
+		// Debut du slide
+		if (Input.GetKeyDown ("space") || Input.GetMouseButtonDown(1))
 		{
 			isSliding = true;
 			movement.x *= slideBoost;
@@ -30,7 +33,7 @@ public class Player : Penguin
 			StartCoroutine (slide ());
 		}
 
-		if (!isSliding && Input.GetKey (KeyCode.LeftShift))
+		if (!isSliding && (Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)) ) 
 			Fire ();
 
 		// Mouvement
@@ -62,7 +65,7 @@ public class Player : Penguin
 		Move ();
 	}
 
-	// Obtient la direction dans laquelle se déplacer en fonction des inputs
+	// Obtient la direction dans laquelle se deplacer en fonction des inputs
 	private Vector2 getDirectionFromInput ()
     {
 		float input_x = Input.GetAxisRaw ("Horizontal");

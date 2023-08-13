@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 949083320755513678}
-  - component: {fileID: 5068379241013574512}
+  - component: {fileID: 509827770822819753}
   - component: {fileID: 2664316855483250904}
   - component: {fileID: 3318701357982962567}
   - component: {fileID: 3337128139346075061}
   - component: {fileID: 9140020812526462646}
   m_Layer: 0
   m_Name: Ennemy
-  m_TagString: Untagged
+  m_TagString: Ennemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +36,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5068379241013574512
+--- !u!114 &509827770822819753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,13 +48,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f95ddf83521b041a007a2fbc68bc22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 1
+  baseHealth: 0
   speed: 3
-  slideBoost: 2
-  slideSlowDown: 0.75
-  fireCooldown: 0.6
+  slideBoost: 0
+  slideSlowDown: 0
+  fireCooldown: 1
   projectilePrefab: {fileID: 272138857047783761, guid: 2a2c1118dd3e64c44add8db72445c361, type: 3}
-  movementTreshold: 5
-  shootingDistance: 5
+  isSliding: 0
+  movementTreshold: 2
+  shootingDistance: 10
+  iceShard: {fileID: 3918862722806596231, guid: 830c59bbe9dbaed4d8f7fba26008a608, type: 3}
+  avoidance: 2
 --- !u!212 &2664316855483250904
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -95,7 +100,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -1314980398, guid: 114c247ced9caaa458fdf2a3622a1ee5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -136,7 +141,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.02}
@@ -178,7 +183,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &9140020812526462646
 Animator:
   serializedVersion: 5
