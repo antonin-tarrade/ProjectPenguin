@@ -6,6 +6,9 @@ public class Penguin : MonoBehaviour
 {
 	[Header ("Penguin")]
 	// Stats
+	public int health;
+	public int baseHealth;
+	
 	public float speed;
 	public float slideBoost;
 	public float slideSlowDown;
@@ -13,7 +16,7 @@ public class Penguin : MonoBehaviour
 	// Prefabs
 	public GameObject projectilePrefab;
 
-	// Déplacements du pingouin
+	// Deplacements du pingouin
 	protected Vector2 movement = Vector2.zero;
 	protected Vector2 facingDirection = Vector2.down;
 	[HideInInspector] public bool isSliding = false;
@@ -30,6 +33,8 @@ public class Penguin : MonoBehaviour
 
 		animator.SetFloat ("speed", 0);
 		animator.SetInteger ("orientation", 0);
+
+		baseHealth = health;
 	}
 
 	protected void Move ()
@@ -57,7 +62,9 @@ public class Penguin : MonoBehaviour
 			return;
 
 		timeAtLastFire = Time.time;
-		GameObject projectile = Instantiate (projectilePrefab, transform.position, Quaternion.identity);
+
+		Vector3 offset = facingDirection;
+		GameObject projectile = Instantiate (projectilePrefab, transform.position + offset , Quaternion.identity);
 		projectile.GetComponent<Projectile> ().direction = facingDirection;
 		projectile.GetComponent<Projectile> ().owner = this;
 	}

@@ -6,46 +6,80 @@ using UnityEngine;
 public class Ennemy : Penguin
 {
 	[Header ("Ennemy")]
-	public float movementTreshold; // Distance avec le joueur qui fera se déplacer le pingouin
-	public float shootingDistance; // Distance avec le joueur à laquelle le pingouin tire
 
-	private Transform player;
-	private Vector2 distanceToPlayer;
+	// Objet/Component
+	private GameObject player;
+	public GameObject iceShard; // Prefab Loot
+
+	// Variables pathfinding
+	private Transform target;
+	private Vector2 distanceToTarget;
+	private bool isAvoiding=false;
+	private Vector2 avoidDirection; 
+	private Vector3 obstaclePosition;
+	public float movementTreshold; // Distance avec le joueur qui fera se deplacer le pingouin
+	public float shootingDistance; // Distance avec le joueur a laquelle le pingouin tire
+	
+	public float avoidance; // Puissance 
+
+	private void Awake() {
+		//Initialisation Component
+		player = GameObject.FindWithTag ("Player");
+		target = player.transform;
+	}
 
 	private void Start ()
 	{
 		InitPenguin ();
-		player = GameObject.FindWithTag ("Player").transform;
 	}
 
 	private void Update ()
 	{
-		distanceToPlayer.x = transform.position.x - player.position.x;
-		distanceToPlayer.y = transform.position.y - player.position.y;
-
-		// Déplacement (basique ...)
-		bool xAlignedToPlayer = Mathf.Abs (distanceToPlayer.x) < 0.35f;
-		bool yAlignedToPlayer = Mathf.Abs (distanceToPlayer.y) < 0.35f;
-
-		if ((!yAlignedToPlayer && Mathf.Abs (distanceToPlayer.x) > 0.35f) || (yAlignedToPlayer && Mathf.Abs (distanceToPlayer.x) > movementTreshold))
-			movement = -Vector2.right * Mathf.Sign (distanceToPlayer.x);    // Déplacement selon x
-		else if ((!xAlignedToPlayer && Mathf.Abs (distanceToPlayer.y) > 0.35f) || (xAlignedToPlayer && Mathf.Abs (distanceToPlayer.y) > movementTreshold))
-			movement = -Vector2.up * Mathf.Sign (distanceToPlayer.y);       // Déplacement selon y
-		else
-		{
-			movement = Vector2.zero;
+		// DÃ©placement et tir
+		distanceToTarget.x = transform.position.x - target.position.x;
+		distanceToTarget.y = transform.position.y - target.position.y;
+		bool xAlignedToTarget = Mathf.Abs (distanceToTarget.x) < 0.35f;
+		bool yAlignedToTarget = Mathf.Abs (distanceToTarget.y) < 0.35f;
+		bool canShootX = Mathf.Abs (facingDirection.x) < 0.01f && xAlignedToTarget && Mathf.Abs (distanceToTarget.x) < shootingDistance;
+		bool canShootY = Mathf.Abs (facingDirection.y) < 0.01f && yAlignedToTarget && Mathf.Abs (distanceToTarget.y) < shootingDistance;
+		if (canShootX || canShootY){ 
+			// Tir
+			Fire ();
 		}
+		else{ 
 
-		movement *= speed;
+			if(isAvoiding){
+				// Avoid Obstacle
+				movement = avoidDirection;
+
+				float obstacleDistance = Vector2.Distance(transform.position, obstaclePosition);
+				if (obstacleDistance > avoidance)
+				{
+					isAvoiding = false;
+				}
+			}
+			else{
+				// Deplacement vers le joueur (basique ...)	
+				if ((!yAlignedToTarget && Mathf.Abs (distanceToTarget.x) > 0.35f) || (yAlignedToTarget && Mathf.Abs (distanceToTarget.x) > movementTreshold))
+					movement = -Vector2.right * Mathf.Sign (distanceToTarget.x);    // Deplacement selon x
+				else if ((!xAlignedToTarget && Mathf.Abs (distanceToTarget.y) > 0.35f) || (xAlignedToTarget && Mathf.Abs (distanceToTarget.y) > movementTreshold))
+					movement = -Vector2.up * Mathf.Sign (distanceToTarget.y);       // Deplacement selon y
+				else
+				{
+					movement = Vector2.zero;
+				}
+			}
+			
+			movement *= speed;
+		}
+		
+		// Mort 
+		if (health <= 0){
+			Death();
+		}
 
 		// Orientation
 		FaceTowards ();
-
-		// Tir
-		bool canShootX = Mathf.Abs (facingDirection.x) < 0.01f && xAlignedToPlayer && Mathf.Abs (distanceToPlayer.x) < shootingDistance;
-		bool canShootY = Mathf.Abs (facingDirection.y) < 0.01f && yAlignedToPlayer && Mathf.Abs (distanceToPlayer.y) < shootingDistance;
-		if (canShootX || canShootY)
-			Fire ();
 
 		// Variables d'animation
 		if (facingDirection.y < 0) // Down
@@ -65,6 +99,25 @@ public class Ennemy : Penguin
 		Move ();
 	}
 
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.CompareTag("Obstacle"))
+		{
+			isAvoiding = true;
+			obstaclePosition = collision.transform.position;
+			avoidDirection = AvoidDirection(obstaclePosition);
+		}
+	}
+
+	private Vector2 AvoidDirection(Vector3 obstaclePosition)
+	{
+		Vector2 avoidDirection = (transform.position - obstaclePosition).normalized;
+		Vector2 perpendicular = new Vector2(-avoidDirection.y, avoidDirection.x);
+		Vector2 finalAvoidanceDirection = (avoidDirection + perpendicular).normalized;
+
+		return finalAvoidanceDirection;
+	}
+
 	// Fait face dans la direction de la marche ou dans celle du joueur
 	private void FaceTowards ()
 	{
@@ -73,10 +126,15 @@ public class Ennemy : Penguin
 			facingDirection = movement.normalized;
 		} else
 		{
-			if (Mathf.Abs (distanceToPlayer.x) > Mathf.Abs (distanceToPlayer.y))
-				facingDirection = (distanceToPlayer.x > 0) ? Vector2.left : Vector2.right;
+			if (Mathf.Abs (distanceToTarget.x) > Mathf.Abs (distanceToTarget.y))
+				facingDirection = (distanceToTarget.x > 0) ? Vector2.left : Vector2.right;
 			else
-				facingDirection = (distanceToPlayer.y > 0) ? Vector2.down : Vector2.up;
+				facingDirection = (distanceToTarget.y > 0) ? Vector2.down : Vector2.up;
 		}
+	}
+
+	private void Death(){
+        Instantiate(iceShard, transform.position, Quaternion.identity);
+		Destroy(gameObject);
 	}
 }
