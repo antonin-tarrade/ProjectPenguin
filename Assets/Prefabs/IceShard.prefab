@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2877235948175224025}
   - component: {fileID: 1176716500740201035}
   - component: {fileID: 6733821997420096682}
+  - component: {fileID: 8828100253921296845}
   m_Layer: 0
   m_Name: IceShard
   m_TagString: Shards
@@ -115,7 +116,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.04970932, y: -0.006965339}
@@ -158,3 +159,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &8828100253921296845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3918862722806596231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38e7c51833ffc344952ff4437b60b5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
