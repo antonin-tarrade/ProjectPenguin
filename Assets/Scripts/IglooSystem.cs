@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class IglooSystem : MonoBehaviour
 {
     [SerializeField]
     private Canvas shopButton;
-
     private void Start() {
         shopButton.gameObject.SetActive(true);
         shopButton.enabled = false;
@@ -15,13 +11,15 @@ public class IglooSystem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
-            shopButton.enabled = true;            
+            shopButton.enabled = true;     
+            ShopManager.openable = true;       
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
             shopButton.enabled = false;
+            ShopManager.openable = false;
         }
     }
     // public GameObject player;
