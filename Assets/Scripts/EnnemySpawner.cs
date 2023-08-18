@@ -56,6 +56,8 @@ public class EnnemySpawner : MonoBehaviour
         }
     }
 
+    // On notifie le spawner qu'un ennemi est mort, pour garder le compte des ennemis encore en vie
+    // et connaître l'avancement d'une vague d'ennemis
     public void NotifyDeath()
     {
         remainingEnnemies--;

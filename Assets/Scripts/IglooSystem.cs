@@ -9,6 +9,7 @@ public class IglooSystem : MonoBehaviour
         shopButton.enabled = false;
     }
 
+    // On rend le shop ouvrable quand le joueur est à proximité
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
             shopButton.enabled = true;     

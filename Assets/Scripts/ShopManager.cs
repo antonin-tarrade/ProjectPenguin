@@ -83,7 +83,7 @@ public class ShopManager : MonoBehaviour
         shardText.text = "Shards : " + player.iceShards.ToString();
     }
 }
-
+// Enum pour les niveaux des powerup
 public enum LevelEnum
 {
     LEVEL0,
@@ -92,6 +92,7 @@ public enum LevelEnum
     LEVEL3,
 }
 
+// Classe abstraite dont il faut ré-implémenter la fonction d'achat (voir exemples)
 public abstract class Upgrade {
     protected string name;
     protected int price;
