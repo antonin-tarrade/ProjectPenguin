@@ -19,7 +19,7 @@ public class Ennemy : Penguin
 	private Vector3 obstaclePosition;
 	public float movementTreshold; // Distance avec le joueur qui fera se deplacer le pingouin
 	public float shootingDistance; // Distance avec le joueur a laquelle le pingouin tire
-	
+	public EnnemySpawner spawner;
 	public float avoidance; // Puissance 
 
 	private void Awake() {
@@ -135,6 +135,7 @@ public class Ennemy : Penguin
 
 	private void Death(){
         Instantiate(iceShard, transform.position, Quaternion.identity);
+		spawner.NotifyDeath();
 		Destroy(gameObject);
 	}
 }
