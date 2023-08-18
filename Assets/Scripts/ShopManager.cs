@@ -6,6 +6,7 @@ public class ShopManager : MonoBehaviour
 {
     public static ShopManager instance;
     public Player player;
+    public GameManager gameManager;
     public static bool openable {get; set;}
 
     private Upgrade[] upgrades = {
@@ -71,6 +72,11 @@ public class ShopManager : MonoBehaviour
 
     public void ToggleShop() {
         shopUI.SetActive(!shopUI.activeSelf);
+        if(shopUI.activeSelf) {
+            gameManager.Pause();
+        } else {
+            gameManager.Unpause();
+        }
     }
 
     private void OnGUI() {
