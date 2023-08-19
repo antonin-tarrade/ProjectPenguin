@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnnemySpawner : MonoBehaviour
 {
-    public GameObject ennemyPrefab; 
+    public GameObject ennemyPrefab;
 
     // Nombre d'ennemi par spawn
     public int numberOfEnemies;
@@ -16,20 +17,24 @@ public class EnnemySpawner : MonoBehaviour
 
     // Délai entre les spawns individuel
     public float maxSpawnDelay;
-
+    public int remainingEnnemies = 0;
+    public int waveDelay = 30;
+    public TextMeshProUGUI timer;
+    public GameObject timerGO; 
     void Start()
     {
         StartCoroutine(SpawnEnemiesWithDelay());
     }
 
-    private void Update() {
+    private void Update()
+    {
 
         // Input de test à retirer
-        if (Input.GetKeyDown ("p"))
-		{
+        if (Input.GetKeyDown("p"))
+        {
             StartCoroutine(SpawnEnemiesWithDelay());
-		}
-        
+        }
+
     }
 
     IEnumerator SpawnEnemiesWithDelay()
@@ -42,11 +47,36 @@ public class EnnemySpawner : MonoBehaviour
             Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
 
             // Spawn
-            Instantiate(ennemyPrefab, spawnPosition, Quaternion.identity);
-
+            GameObject ennemy = Instantiate(ennemyPrefab, spawnPosition, Quaternion.identity);
+            ennemy.GetComponent<Ennemy>().spawner = this;
+            remainingEnnemies++;
             // Delai
             float spawnDelay = Random.Range(0f, maxSpawnDelay);
             yield return new WaitForSeconds(spawnDelay);
         }
+    }
+
+    // On notifie le spawner qu'un ennemi est mort, pour garder le compte des ennemis encore en vie
+    // et connaître l'avancement d'une vague d'ennemis
+    public void NotifyDeath()
+    {
+        remainingEnnemies--;
+        Debug.Log("Remaining Enemies : " + remainingEnnemies);
+        if (remainingEnnemies == 0)
+        {
+            timerGO.SetActive(true);
+            StartCoroutine(WaitForNextWave());
+        }
+    }
+
+    private IEnumerator WaitForNextWave()
+    {
+        for (int i = waveDelay; i > 0; i--)
+        {
+            timer.text = i.ToString();
+            yield return new WaitForSeconds(1);
+        }
+        timerGO.SetActive(false);
+        StartCoroutine(SpawnEnemiesWithDelay());
     }
 }

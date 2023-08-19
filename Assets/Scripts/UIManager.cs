@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
 {
     // Objet/Component
     public GameObject GameManager;
-    private Game_Manager gameManager;
+    private GameManager gameManager;
 
     public GameObject player;
     private Player playerSystem;
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
 
         //Initialisation Component
         playerSystem = player.GetComponent<Player>();
-        gameManager = GameManager.GetComponent<Game_Manager>();
+        gameManager = GameManager.GetComponent<GameManager>();
     }
 
     public void Initialisation() {
