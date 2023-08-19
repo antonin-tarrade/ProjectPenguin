@@ -148,10 +148,13 @@ public class HealthUpgrade : Upgrade {
             if(Player.health == Player.baseHealth) {
                 Player.baseHealth += 10;
             } else {
-                Player.health = Player.baseHealth + 5;
+                Player.health ++;
                 // Annuler l'augmentation de niveau
                 if(Level != LevelEnum.LEVEL0) {
                     Level -= 1;
+                    Price /= 2;
+                    LevelText.text = Level.ToString();
+
                 }
             }
         }

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ennemy : Penguin
+public class Enemy : Penguin
 {
-	[Header ("Ennemy")]
+	[Header ("Enemy")]
 
 	// Objet/Component
 	private GameObject player;
@@ -19,7 +19,7 @@ public class Ennemy : Penguin
 	private Vector3 obstaclePosition;
 	public float movementTreshold; // Distance avec le joueur qui fera se deplacer le pingouin
 	public float shootingDistance; // Distance avec le joueur a laquelle le pingouin tire
-	public EnnemySpawner spawner;
+	public EnemySpawner spawner;
 	public float avoidance; // Puissance 
 
 	private void Awake() {

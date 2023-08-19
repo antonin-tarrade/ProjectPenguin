@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public void Play(){
         Time.timeScale = 1f;
 
-        playerSystem.health = playerSystem.baseHealth;
+        // playerSystem.health = playerSystem.baseHealth;
         playerSystem.iceShards = 0;
 
         UIManager.Switch(UIManager.gameMenu);

@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class EnnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
-    public GameObject ennemyPrefab;
+    public GameObject enemyPrefab;
 
-    // Nombre d'ennemi par spawn
+    // Nombre d'enemi par spawn
     public int numberOfEnemies;
 
-    // Moyenne du cercle d'apparition
+    // Moyene du cercle d'apparition
     public float spawnRadius;
     // Incertitude du cercle de Spawn 
     public float spawnRandom;
 
     // Délai entre les spawns individuel
     public float maxSpawnDelay;
-    public int remainingEnnemies = 0;
+
+    public int waveNumber = 0;
+    public int remainingEnemies = 0;
     public int waveDelay = 30;
     public TextMeshProUGUI timer;
     public GameObject timerGO; 
+
     void Start()
     {
         StartCoroutine(SpawnEnemiesWithDelay());
@@ -47,23 +50,24 @@ public class EnnemySpawner : MonoBehaviour
             Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
 
             // Spawn
-            GameObject ennemy = Instantiate(ennemyPrefab, spawnPosition, Quaternion.identity);
-            ennemy.GetComponent<Ennemy>().spawner = this;
-            remainingEnnemies++;
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            enemy.GetComponent<Enemy>().spawner = this;
+            remainingEnemies++;
             // Delai
             float spawnDelay = Random.Range(0f, maxSpawnDelay);
             yield return new WaitForSeconds(spawnDelay);
         }
     }
 
-    // On notifie le spawner qu'un ennemi est mort, pour garder le compte des ennemis encore en vie
-    // et connaître l'avancement d'une vague d'ennemis
+    // On notifie le spawner qu'un enemi est mort, pour garder le compte des enemis encore en vie
+    // et connaître l'avancement d'une vague d'enemis
     public void NotifyDeath()
     {
-        remainingEnnemies--;
-        Debug.Log("Remaining Enemies : " + remainingEnnemies);
-        if (remainingEnnemies == 0)
+        remainingEnemies--;
+        Debug.Log("Remaining Enemies : " + remainingEnemies);
+        if (remainingEnemies == 0)
         {
+            waveNumber++;
             timerGO.SetActive(true);
             StartCoroutine(WaitForNextWave());
         }
