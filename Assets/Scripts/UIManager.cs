@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject gameMenu;
     public GameObject pauseMenu;
     public GameObject overMenu;
+    public GameObject shopMenu;
 
     
     // UIs
@@ -61,6 +62,7 @@ public class UIManager : MonoBehaviour
         gameMenu.SetActive(false);
         pauseMenu.SetActive(false);
         overMenu.SetActive(false);
+        shopMenu.SetActive(false);
 
     }
 
@@ -89,7 +91,7 @@ public class UIManager : MonoBehaviour
 
         // Menu Game
        
-        
+         
         // Health (UI)
         UIHealthSystem.UpdateHealthUI(playerSystem.baseHealth, playerSystem.health);
         // Wave (UI)

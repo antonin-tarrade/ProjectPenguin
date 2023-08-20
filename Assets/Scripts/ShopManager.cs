@@ -28,8 +28,8 @@ public class ShopManager : MonoBehaviour
         }
 
         upgrades = new Upgrade[] {
-            new FishingUpgrade(fishingHole),
             new HealthUpgrade(healthUI),
+            new FishingUpgrade(fishingHole),
             new SpeedUpgrade(),
             new SlidingUpgrade(),
             new StrengthUpgrade(),
@@ -66,8 +66,8 @@ public class ShopManager : MonoBehaviour
                         break;
                 }
             }
-
-            item.GetComponent<Button>().onClick.AddListener(() => upgrade.Buy());
+            Button button = item.GetComponent<Button>();
+            button.onClick.AddListener(( ) => upgrade.Buy());
             
         }
     }
@@ -79,12 +79,14 @@ public class ShopManager : MonoBehaviour
     }
 
     public void ToggleShop() {
-        shopUI.SetActive(!shopUI.activeSelf);
-        if(shopUI.activeSelf) {
-            gameManager.Pause();
-        } else {
-            gameManager.Unpause();
-        }
+       if (shopUI.activeSelf) {
+           shopUI.SetActive(false);
+           gameManager.Unpause();
+       }
+       else {
+           shopUI.SetActive(true);
+           gameManager.ShopPause();
+       }
     }
 
     private void OnGUI() {

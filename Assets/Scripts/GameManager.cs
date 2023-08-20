@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     public void Play(){
         Time.timeScale = 1f;
-        
+
         playerSystem.health = playerSystem.baseHealth;
         playerSystem.iceShards = 0;
 
@@ -43,6 +43,12 @@ public class GameManager : MonoBehaviour
     public void Pause(){
         Time.timeScale = 0f;
         UIManager.Switch(UIManager.pauseMenu);
+        UIManager.isPaused = !(UIManager.isPaused);
+    }
+
+    public void ShopPause(){
+        Time.timeScale = 0f;
+        UIManager.Switch(UIManager.shopMenu);
         UIManager.isPaused = !(UIManager.isPaused);
     }
 
