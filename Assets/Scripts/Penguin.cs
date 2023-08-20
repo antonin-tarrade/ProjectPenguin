@@ -70,4 +70,6 @@ public class Penguin : MonoBehaviour
 		projectile.GetComponent<Projectile> ().direction = facingDirection;
 		projectile.GetComponent<Projectile> ().owner = this;
 	}
+
+
 }

@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectible : MonoBehaviour
+public abstract class Collectible : MonoBehaviour
 {
-    // Script de loot des Iceshards quand il fallait juste marcher dessus pour les recolter
-    private void OnTriggerEnter2D (Collider2D collision)
+   // Script de loot
+    public abstract void Collected(Player player);
+
+ 
+    protected void OnTriggerEnter2D (Collider2D collision)
 	{
 		if(collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().iceShards += 1;
+            this.Collected(collision.gameObject.GetComponent<Player>());
 		    Destroy(gameObject);
         }
 	}

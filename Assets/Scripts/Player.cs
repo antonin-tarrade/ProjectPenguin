@@ -93,4 +93,16 @@ public class Player : Penguin
 
         return new Vector2 (direction_x, direction_y);
 	}
+
+	public void AddShards(int value)
+	{
+		iceShards += value;
+	}
+
+	public void Heal(int value)
+	{
+		health += value;
+		if (health > baseHealth)
+			health = baseHealth;
+	}
 }

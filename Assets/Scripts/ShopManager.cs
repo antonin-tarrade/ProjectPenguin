@@ -8,18 +8,15 @@ public class ShopManager : MonoBehaviour
     public Player player;
     public GameManager gameManager;
     public static bool openable {get; set;}
+    public Health healthUI;
+    public IcefishingHole fishingHole;
 
-    private Upgrade[] upgrades = {
-            new HealthUpgrade(),
-            new SpeedUpgrade(),
-            new SlidingUpgrade(),
-            new StrengthUpgrade(),
-            new MultishotUpgrade(),
-    };
+    private Upgrade[] upgrades;
     public TextMeshProUGUI shardText;
     public GameObject shopUI;
     public Transform shopContent;
     public GameObject itemPrefab;
+
 
     private void Awake() {
         if(instance == null)
@@ -29,6 +26,15 @@ public class ShopManager : MonoBehaviour
         else {
             Destroy(gameObject);
         }
+
+        upgrades = new Upgrade[] {
+            new FishingUpgrade(fishingHole),
+            new HealthUpgrade(healthUI),
+            new SpeedUpgrade(),
+            new SlidingUpgrade(),
+            new StrengthUpgrade(),
+            new MultishotUpgrade()
+        };
     }
 
     private void Start() {
@@ -60,7 +66,9 @@ public class ShopManager : MonoBehaviour
                         break;
                 }
             }
+
             item.GetComponent<Button>().onClick.AddListener(() => upgrade.Buy());
+            
         }
     }
 
@@ -102,14 +110,18 @@ public abstract class Upgrade {
     public GameObject itemRef;
     private TextMeshProUGUI priceText;
     private TextMeshProUGUI levelText;
+ 
 
     public string Name { get => name; protected set => name = value; }
     public int Price { get => price; protected set => price = value; }
     public string Image { get => imagePath; protected set => imagePath = value; }
     public LevelEnum Level { get => level; protected set => level = value; }
     public Player Player { get => player; set => player = value; }
+
     public TextMeshProUGUI PriceText { get => priceText; set => priceText = value; }
     public TextMeshProUGUI LevelText { get => levelText; set => levelText = value; }
+
+
 
     public virtual void Buy() {
         Player.iceShards -= Price;
@@ -135,31 +147,43 @@ public class SpeedUpgrade : Upgrade {
     }
 }
 public class HealthUpgrade : Upgrade {
+    private Health healthSystem;
 
-    public HealthUpgrade() {
+    public HealthUpgrade(Health healthUI) {
         Name = "Health";
-        Price = 1;
+        Price = 5;
         Image = "Heart";
         Level = LevelEnum.LEVEL0;
+        healthSystem = healthUI;
+
     }
     public override void Buy() {
         if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
             base.Buy();
-            if(Player.health == Player.baseHealth) {
-                Player.baseHealth += 10;
-            } else {
-                Player.health ++;
-                // Annuler l'augmentation de niveau
-                if(Level != LevelEnum.LEVEL0) {
-                    Level -= 1;
-                    Price /= 2;
-                    LevelText.text = Level.ToString();
-
-                }
-            }
+            Player.baseHealth += 1;
+            healthSystem.InitHealthUI(Player.baseHealth);
         }
     }
 }
+
+public class FishingUpgrade : Upgrade {
+    private IcefishingHole fishingHole;
+
+    public FishingUpgrade(IcefishingHole fishingHole) {
+        Name = "Fishing";
+        Price = 3;
+        Image = "FishingRod";
+        Level = LevelEnum.LEVEL0;
+        this.fishingHole = fishingHole;
+    }
+    public override void Buy() {
+        if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
+            base.Buy();
+            fishingHole.fishingTime *= 0.7f;
+        }
+    }
+}
+
 
 public class SlidingUpgrade : Upgrade {
     public SlidingUpgrade() {
