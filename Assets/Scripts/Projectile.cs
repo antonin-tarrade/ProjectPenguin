@@ -41,8 +41,7 @@ public class Projectile : MonoBehaviour
 		// Collisions entrainant la destruction (Obstacle et Shards)
 		Projectile p;
 		if(collision.gameObject.CompareTag("Obstacle") 
-			|| collision.gameObject.CompareTag("Shards") 
-			|| collision.gameObject.TryGetComponent<Projectile>(out p))
+			|| collision.gameObject.CompareTag("Shards"))
         {
             Destroy (gameObject);
 			return;
@@ -57,6 +56,7 @@ public class Projectile : MonoBehaviour
 				onHit?.Invoke(penguin);
 				Destroy(gameObject);
 			}
+			Destroy(gameObject);
 		}
 
     }

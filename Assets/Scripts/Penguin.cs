@@ -113,11 +113,13 @@ public class Penguin : MonoBehaviour
 		//projectile.GetComponent<Projectile>().direction = facingDirection;
 		//projectile.GetComponent<Projectile>().owner = this;
 		attack.Fire(facingDirection);
+		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Shoot, transform.position);
     }
 
 	public void Hit(float dmg)
 	{
 		health -= dmg;
+		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Hit, transform.position);
 	}
 
 
