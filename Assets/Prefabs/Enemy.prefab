@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3337128139346075061}
   - component: {fileID: 9140020812526462646}
   m_Layer: 0
-  m_Name: Ennemy
+  m_Name: Enemy
   m_TagString: Ennemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,17 +48,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f95ddf83521b041a007a2fbc68bc22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseHealth: 1
   health: 1
-  baseHealth: 0
   speed: 3
   slideBoost: 0
   slideSlowDown: 0
   fireCooldown: 1
   projectilePrefab: {fileID: 272138857047783761, guid: 2a2c1118dd3e64c44add8db72445c361, type: 3}
   isSliding: 0
+  iceShard: {fileID: 3918862722806596231, guid: 830c59bbe9dbaed4d8f7fba26008a608, type: 3}
   movementTreshold: 2
   shootingDistance: 10
-  iceShard: {fileID: 3918862722806596231, guid: 830c59bbe9dbaed4d8f7fba26008a608, type: 3}
+  spawner: {fileID: 0}
   avoidance: 2
 --- !u!212 &2664316855483250904
 SpriteRenderer:

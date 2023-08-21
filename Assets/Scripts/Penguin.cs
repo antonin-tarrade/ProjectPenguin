@@ -6,8 +6,9 @@ public class Penguin : MonoBehaviour
 {
 	[Header ("Penguin")]
 	// Stats
-	public int health;
-	public int baseHealth;
+	
+	public int baseHealth = 3;
+	public float health;
 	
 	public float speed;
 	public float slideBoost;
@@ -34,7 +35,8 @@ public class Penguin : MonoBehaviour
 		animator.SetFloat ("speed", 0);
 		animator.SetInteger ("orientation", 0);
 
-		baseHealth = health;
+		// Health is a float to represent half-hearts
+		health = (float)baseHealth;
 	}
 
 	protected void Move ()
@@ -68,4 +70,6 @@ public class Penguin : MonoBehaviour
 		projectile.GetComponent<Projectile> ().direction = facingDirection;
 		projectile.GetComponent<Projectile> ().owner = this;
 	}
+
+
 }

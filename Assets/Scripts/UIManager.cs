@@ -4,15 +4,20 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     // Objet/Component
+    // GameManager
     public GameObject GameManager;
     private GameManager gameManager;
-
+    // Player
     public GameObject player;
     private Player playerSystem;
+    // enemySpawner
+    public GameObject enemySpawner;
+    private EnemySpawner enemySpawnerSystem;
 
     // Menu
     public GameObject mainMenu;
@@ -21,10 +26,14 @@ public class UIManager : MonoBehaviour
     public GameObject gameMenu;
     public GameObject pauseMenu;
     public GameObject overMenu;
+    public GameObject shopMenu;
 
-    // Textes
-    public GameObject textShards;
+    
+    // UIs
     public GameObject UIHealth;
+    private Health UIHealthSystem;
+    public GameObject UIShards;
+    public GameObject UIWave;
 
     // Variables
     public GameObject menuActif;
@@ -37,6 +46,9 @@ public class UIManager : MonoBehaviour
         //Initialisation Component
         playerSystem = player.GetComponent<Player>();
         gameManager = GameManager.GetComponent<GameManager>();
+        UIHealthSystem = UIHealth.GetComponent<Health>();
+        UIHealthSystem.InitHealthUI(playerSystem.baseHealth);
+        enemySpawnerSystem = enemySpawner.GetComponent<EnemySpawner>();
     }
 
     public void Initialisation() {
@@ -50,6 +62,8 @@ public class UIManager : MonoBehaviour
         gameMenu.SetActive(false);
         pauseMenu.SetActive(false);
         overMenu.SetActive(false);
+        shopMenu.SetActive(false);
+
     }
 
     private void Update() {
@@ -76,11 +90,20 @@ public class UIManager : MonoBehaviour
         if (isPaused) return;
 
         // Menu Game
-        // Score
-        textShards.GetComponent<Text>().text = playerSystem.iceShards.ToString();
-        // Vie (texte)
-        UIHealth.GetComponent<Text>().text = playerSystem.health.ToString();
+       
+         
+        // Health (UI)
+        UIHealthSystem.UpdateHealthUI(playerSystem.baseHealth, playerSystem.health);
+        // Wave (UI)
+        UIWave.transform.GetChild(0).GetComponent<TMP_Text>().text = "Wave : " + enemySpawnerSystem.waveNumber;
+        UIWave.transform.GetChild(1).GetComponent<TMP_Text>().text = "Enemies left : " + enemySpawnerSystem.remainingEnemies;
+        // Shards (UI)
+        UIShards.transform.GetChild(0).GetComponent<TMP_Text>().text = ": " + playerSystem.iceShards.ToString();
+
     }
+    
+
+        
 
     public void Switch(GameObject to) {
         menuActif.SetActive(false);

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2877235948175224025}
   - component: {fileID: 1176716500740201035}
   - component: {fileID: 6733821997420096682}
-  - component: {fileID: 8828100253921296845}
+  - component: {fileID: 8497873726842989702}
   m_Layer: 0
   m_Name: IceShard
   m_TagString: Shards
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8828100253921296845
+--- !u!114 &8497873726842989702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,6 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3918862722806596231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a38e7c51833ffc344952ff4437b60b5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 66b61f2690c704d319136b2ce6b67dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  value: 1

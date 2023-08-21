@@ -60,7 +60,7 @@ public class Projectile : MonoBehaviour
 				*/
 
 				// Friendly fire Activé
-				penguin.health -= 1;
+				penguin.health -= 0.5f;
 				Destroy (gameObject);
 				
 			}

@@ -46,6 +46,12 @@ public class GameManager : MonoBehaviour
         UIManager.isPaused = !(UIManager.isPaused);
     }
 
+    public void ShopPause(){
+        Time.timeScale = 0f;
+        UIManager.Switch(UIManager.shopMenu);
+        UIManager.isPaused = !(UIManager.isPaused);
+    }
+
     public void Unpause(){
         Time.timeScale = 1f;
         UIManager.Switch(UIManager.gameMenu);
