@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public void Play(){
         Time.timeScale = 1f;
 
+        playerSystem.SetStats(battleData.playerStats);
         playerSystem.health = playerSystem.baseHealth;
         playerSystem.iceShards = 0;
 

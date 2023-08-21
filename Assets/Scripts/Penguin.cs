@@ -7,7 +7,7 @@ using System;
 
 public class Penguin : MonoBehaviour
 {
-	[System.Serializable]
+	[Serializable]
     public class Stats
     {
         public int baseHealth;
@@ -31,6 +31,28 @@ public class Penguin : MonoBehaviour
 		attack.dmg = stats.dmg;
 		attack.speed = stats.attackSpeed;
 	}
+
+	[Serializable]
+	public class StatModifier
+	{
+		public bool modifyHealth;
+		public float healthModifier;
+		public bool modifySpeed;
+		public float speedModifier;
+		public bool modifyAttackSpeed;
+		public float attackSpeedModifier;
+        public bool modifyDmg;
+        public float dmgModifier;
+
+		public void Apply(Penguin penguin)
+		{
+			if (modifyHealth) penguin.baseHealth = (int) (penguin.baseHealth * healthModifier);
+			if (modifySpeed) penguin.speed *= speedModifier;
+			if (modifyAttackSpeed) penguin.attack.speed *= attackSpeedModifier;
+			if (modifyDmg) penguin.attack.dmg *= dmgModifier;
+		}
+
+    }
 
     [Header ("Penguin")]
 	// Stats
