@@ -39,36 +39,25 @@ public class Projectile : MonoBehaviour
 	private void OnCollisionEnter2D (Collision2D collision)
 	{
 		// Collisions entrainant la destruction (Obstacle et Shards)
-		if(collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Shards"))
+		Projectile p;
+		if(collision.gameObject.CompareTag("Obstacle") 
+			|| collision.gameObject.CompareTag("Shards") 
+			|| collision.gameObject.TryGetComponent<Projectile>(out p))
         {
             Destroy (gameObject);
+			return;
         }
 
 		// Collision avec un autre pengouin
 		Penguin penguin = collision.transform.GetComponent<Penguin>();
-		if (penguin != null && penguin != owner)
+        if (penguin != null )
 		{ 
-			if (!penguin.isSliding)
+			if (!penguin.isSliding && penguin.type != owner.type)
 			{
-				// Debug.Log (collision.name + " touché par " + owner.name + " !");
-
-				// Friendly fire Désactivé
-				/*if(!(owner.gameObject.CompareTag(collision.gameObject.tag)))
-				{
-					penguin.health -= 1;
-					Destroy (gameObject);
-				}
-				else{
-					Destroy (gameObject);
-				}
-				*/
-
-				// Friendly fire Activé
-				//penguin.health -= 0.5f;
 				onHit?.Invoke(penguin);
-				Destroy (gameObject);
-				
+				Destroy(gameObject);
 			}
 		}
-	}
+
+    }
 }

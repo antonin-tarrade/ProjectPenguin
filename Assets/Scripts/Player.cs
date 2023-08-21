@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : Penguin
 {
+
 	// Booleens pour empecher les mouvements diagonaux
 	private bool movement_x_lock = false;
 	private bool movement_y_lock = false;
@@ -18,6 +19,7 @@ public class Player : Penguin
 	{
 		InitPenguin ();
 		SetStats(GameManager.instance.battleData.playerStats);
+		type = Type.Player;
 	}
 
 	private void Update ()

@@ -232,7 +232,17 @@ public class MultishotUpgrade : Upgrade {
         if (Player.iceShards >= Price && Level != LevelEnum.LEVEL3)
         {
             base.Buy();
-            Penguin player = Player.GetComponent<Penguin>();
+
+            ChangeAttack();      
+        }
+    }
+
+    public void ChangeAttack()
+    {
+        Penguin player = Player.GetComponent<Penguin>();
+        Debug.Log(level);
+        if (level == LevelEnum.LEVEL1)
+        {
             IAttack newAttack = new MultiShotAttack
             {
                 attacker = player,
@@ -240,7 +250,13 @@ public class MultishotUpgrade : Upgrade {
                 speed = player.attack.speed
             };
 
-            player.attack = newAttack;        
+            player.attack = newAttack;
+        }
+        else
+        {
+            MultiShotAttack attack = (MultiShotAttack)player.attack;
+            attack.numberOfAttacks += 2;
+            attack.totalAngle += 10;
         }
     }
 }

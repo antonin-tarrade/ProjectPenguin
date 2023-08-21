@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Enemy : Penguin
@@ -32,6 +33,7 @@ public class Enemy : Penguin
 	{
 		InitPenguin ();
 		SetStats(GameManager.instance.battleData.ennemyStats);
+		type = Type.Ennemy;
 	}
 
 	private void Update ()

@@ -60,7 +60,11 @@ public class Penguin : MonoBehaviour
 	public List<Upgrade> upgrades = new();
 	public IAttack attack;
 
-	protected void InitPenguin ()
+	// Pour ne pas que les ennemis se tuent entre eux
+	public enum Type { Player, Ennemy }
+	public Type type { get; protected set; }
+
+    protected void InitPenguin ()
 	{
 		animator = gameObject.GetComponent<Animator> ();
 		body = gameObject.GetComponent<Rigidbody2D> ();
