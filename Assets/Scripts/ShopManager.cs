@@ -1,3 +1,5 @@
+using Attacks;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +18,7 @@ public class ShopManager : MonoBehaviour
     public GameObject shopUI;
     public Transform shopContent;
     public GameObject itemPrefab;
+
 
 
     private void Awake() {
@@ -213,7 +216,7 @@ public class StrengthUpgrade : Upgrade {
     public override void Buy() {
         if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
             base.Buy();
-            Debug.Log("Not Implemented yet, you just lost your shards :pepeLoser:");
+            Player.gameObject.GetComponent<Penguin>().attack.dmg += 0.5f;
         }
     }
 }
@@ -226,9 +229,18 @@ public class MultishotUpgrade : Upgrade {
         Level = LevelEnum.LEVEL0;
     } 
     public override void Buy() {
-        if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
+        if (Player.iceShards >= Price && Level != LevelEnum.LEVEL3)
+        {
             base.Buy();
-            Debug.Log("Not Implemented yet, you just lost your shards :pepeLoser:");
+            Penguin player = Player.GetComponent<Penguin>();
+            IAttack newAttack = new MultiShotAttack
+            {
+                attacker = player,
+                dmg = player.attack.dmg,
+                speed = player.attack.speed
+            };
+
+            player.attack = newAttack;        
         }
     }
 }

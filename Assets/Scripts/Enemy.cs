@@ -31,6 +31,7 @@ public class Enemy : Penguin
 	private void Start ()
 	{
 		InitPenguin ();
+		SetStats(GameManager.instance.battleData.ennemyStats);
 	}
 
 	private void Update ()

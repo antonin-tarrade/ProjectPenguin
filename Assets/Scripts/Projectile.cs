@@ -13,6 +13,10 @@ public class Projectile : MonoBehaviour
 	private Rigidbody2D body;
 	private float currentLifeLength = 0f;
 
+	// Event quand le projectile touche une cible
+	public delegate void OnHitPenguinEvent(Penguin penguin);
+	public OnHitPenguinEvent onHit;
+
 
 	private void Start ()
 	{
@@ -43,7 +47,7 @@ public class Projectile : MonoBehaviour
 		// Collision avec un autre pengouin
 		Penguin penguin = collision.transform.GetComponent<Penguin>();
 		if (penguin != null && penguin != owner)
-		{
+		{ 
 			if (!penguin.isSliding)
 			{
 				// Debug.Log (collision.name + " touché par " + owner.name + " !");
@@ -60,7 +64,8 @@ public class Projectile : MonoBehaviour
 				*/
 
 				// Friendly fire Activé
-				penguin.health -= 0.5f;
+				//penguin.health -= 0.5f;
+				onHit?.Invoke(penguin);
 				Destroy (gameObject);
 				
 			}

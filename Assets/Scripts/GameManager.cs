@@ -1,3 +1,4 @@
+using Attacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,13 +12,20 @@ public class GameManager : MonoBehaviour
     public GameObject UI;
     private UIManager UIManager;
 
+    // Objet contenant toutes les statistiques, peut être customisé à volonté pour changer la difficulté(voir dossier GameData)
+    public BattleData battleData;
+
     // Variable
     public bool isOver;
+
+    public static GameManager instance;
 
     private void Awake() {
         //Initialisation Component
         playerSystem = player.GetComponent<Player>();
         UIManager = UI.GetComponent<UIManager>();
+
+        instance = this;
     }
     
     void Update()

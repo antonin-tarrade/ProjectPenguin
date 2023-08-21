@@ -1,12 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Attacks;
+using System;
 
 public class Penguin : MonoBehaviour
 {
-	[Header ("Penguin")]
+	[System.Serializable]
+    public class Stats
+    {
+        public int baseHealth;
+        public float speed;
+		public float attackSpeed;
+		public float dmg;
+
+		public Stats(int baseHealth, float speed, float attackSpeed, float dmg)
+		{
+			this.baseHealth = baseHealth;
+			this.speed = speed;
+			this.attackSpeed = attackSpeed;
+			this.dmg = dmg;
+		}
+    }
+
+	public void SetStats( Stats stats )
+	{
+		baseHealth = stats.baseHealth;
+		speed = stats.speed;
+		attack.dmg = stats.dmg;
+		attack.speed = stats.attackSpeed;
+	}
+
+    [Header ("Penguin")]
 	// Stats
-	
+
+
 	public int baseHealth = 3;
 	public float health;
 	
@@ -27,6 +56,10 @@ public class Penguin : MonoBehaviour
 	protected Animator animator;
 	protected Rigidbody2D body;
 
+	// Competences
+	public List<Upgrade> upgrades = new();
+	public IAttack attack;
+
 	protected void InitPenguin ()
 	{
 		animator = gameObject.GetComponent<Animator> ();
@@ -37,7 +70,13 @@ public class Penguin : MonoBehaviour
 
 		// Health is a float to represent half-hearts
 		health = (float)baseHealth;
-	}
+
+        attack = new BasicAttack
+        {
+            dmg = 0.5f,
+            attacker = this
+        };
+    }
 
 	protected void Move ()
 	{
@@ -65,11 +104,18 @@ public class Penguin : MonoBehaviour
 
 		timeAtLastFire = Time.time;
 
-		Vector3 offset = facingDirection;
-		GameObject projectile = Instantiate (projectilePrefab, transform.position + offset , Quaternion.identity);
-		projectile.GetComponent<Projectile> ().direction = facingDirection;
-		projectile.GetComponent<Projectile> ().owner = this;
+		//Vector3 offset = facingDirection;
+		//GameObject projectile = Instantiate(projectilePrefab, transform.position + offset, Quaternion.identity);
+		//projectile.GetComponent<Projectile>().direction = facingDirection;
+		//projectile.GetComponent<Projectile>().owner = this;
+		attack.Fire(facingDirection);
+    }
+
+	public void Hit(float dmg)
+	{
+		health -= dmg;
 	}
+
 
 
 }

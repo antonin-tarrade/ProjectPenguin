@@ -17,6 +17,7 @@ public class Player : Penguin
 	private void Start ()
 	{
 		InitPenguin ();
+		SetStats(GameManager.instance.battleData.playerStats);
 	}
 
 	private void Update ()
