@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner instance;
+
     public GameObject enemyPrefab;
 
     // Nombre d'enemi par spawn
@@ -22,7 +25,12 @@ public class EnemySpawner : MonoBehaviour
     public int remainingEnemies = 0;
     public int waveDelay = 30;
     public TextMeshProUGUI timer;
-    public GameObject timerGO; 
+    public GameObject timerGO;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {

@@ -138,7 +138,7 @@ public class Enemy : Penguin
 
 	private void Death(){
         Instantiate(iceShard, transform.position, Quaternion.identity);
-		spawner.NotifyDeath();
+		EnemySpawner.instance.NotifyDeath();
 		Destroy(gameObject);
 	}
 }
