@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
     // Objet/Component
     public GameObject player;
     private Player playerSystem;
@@ -17,6 +18,10 @@ public class GameManager : MonoBehaviour
 
     // Variable
     public bool isOver;
+    public delegate void GameplayEvent();
+    public GameplayEvent playerDeathEvent;
+    public GameplayEvent playerRespawnEvent;
+
 
     public static GameManager instance;
 
@@ -31,12 +36,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Game Over
-        if (playerSystem.health<=0) {
-            isOver = true;            
-        }
-        else{
-            isOver = false;
-        }
+        //if (playerSystem.health<=0) {
+        //    isOver = true;            
+        //}
+        //else{
+        //    isOver = false;
+        //}
     }
 
     public void Play(){
@@ -65,5 +70,17 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         UIManager.Switch(UIManager.gameMenu);
         UIManager.isPaused = !(UIManager.isPaused);
+    }
+
+    public void PlayerDeath()
+    {
+        isOver = true;
+        playerDeathEvent?.Invoke();
+    }
+
+    public void PlayerRespawn()
+    {
+        isOver = false;
+        playerRespawnEvent?.Invoke();
     }
 }

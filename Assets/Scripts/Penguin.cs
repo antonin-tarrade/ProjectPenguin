@@ -141,6 +141,7 @@ public class Penguin : MonoBehaviour
 	public void Hit(float dmg)
 	{
 		health -= dmg;
+		if (health <= 0) Death();
 		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Hit, transform.position);
 	}
 
@@ -149,6 +150,8 @@ public class Penguin : MonoBehaviour
 		health += hp;
 		health = Mathf.Min(health, baseHealth);
 	}
+
+	protected virtual void Death() { }
 
 
 

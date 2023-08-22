@@ -1,6 +1,7 @@
 using Ennemies;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.PlasticSCM.Editor.WebApi;
@@ -49,6 +50,9 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         //StartCoroutine(SpawnEnemiesWithDelay());
+
+        GameManager.instance.playerDeathEvent += ClearWave;
+        GameManager.instance.playerRespawnEvent += StartWave;
     }
 
     private void Update()
@@ -82,11 +86,12 @@ public class EnemySpawner : MonoBehaviour
             enemyComponent.spawner = this;
             remainingEnemies++;
             // Delai
-            float spawnDelay = Random.Range(0f, maxSpawnDelay);
+            // Modifier le minspawndelay, mais le min ne doit pas être trop court pour des problèmes d'opérations effectué sur l'objet instancié
+            float spawnDelay = Random.Range(maxSpawnDelay/2f, maxSpawnDelay);
             yield return new WaitForSeconds(spawnDelay);
             enemyComponent.SetStats(GameManager.instance.battleData.enemyStats);
             if (modifyStats) waves[waveNumber].statModifier.Apply(enemyComponent);
-            enemyComponent.Heal(enemyComponent.baseHealth);
+            enemyComponent.health = enemyComponent.baseHealth;
         }
 
     }
@@ -96,7 +101,6 @@ public class EnemySpawner : MonoBehaviour
     public void NotifyDeath()
     {
         remainingEnemies--;
-        Debug.Log("Remaining Enemies : " + remainingEnemies);
         if (remainingEnemies == 0)
         {
             waves[waveNumber].Finish();
@@ -116,6 +120,17 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         timerGO.SetActive(false);
+        StartCoroutine(SpawnEnemiesWithDelay());
+    }
+
+    private void ClearWave()
+    {
+        remainingEnemies = 0;
+        foreach (GameObject obj in enemyTrackers) Destroy(obj);
+    }
+
+    public void StartWave()
+    {
         StartCoroutine(SpawnEnemiesWithDelay());
     }
 }
