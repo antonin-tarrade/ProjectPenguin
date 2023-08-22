@@ -144,6 +144,12 @@ public class Penguin : MonoBehaviour
 		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Hit, transform.position);
 	}
 
+	public void Heal(float hp)
+	{
+		health += hp;
+		health = Mathf.Min(health, baseHealth);
+	}
+
 
 
 }

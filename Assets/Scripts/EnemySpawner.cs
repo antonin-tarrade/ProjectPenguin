@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
     public static EnemySpawner instance;
 
     public GameObject enemyPrefab;
-    public List<GameObject> ennemyTrackers;
+    public List<GameObject> enemyTrackers;
 
     // Nombre d'enemi par spawn
     public int numberOfEnemies;
@@ -60,7 +60,7 @@ public class EnemySpawner : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            foreach (GameObject obj in ennemyTrackers) Destroy(obj);
+            foreach (GameObject obj in enemyTrackers) Destroy(obj);
         }
 
     }
@@ -77,13 +77,16 @@ public class EnemySpawner : MonoBehaviour
 
             // Spawn
             GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-            ennemyTrackers.Add(enemy);
-            enemy.GetComponent<Enemy>().spawner = this;
+            enemyTrackers.Add(enemy);
+            Enemy enemyComponent = enemy.GetComponent<Enemy>();
+            enemyComponent.spawner = this;
             remainingEnemies++;
             // Delai
             float spawnDelay = Random.Range(0f, maxSpawnDelay);
             yield return new WaitForSeconds(spawnDelay);
-            if (modifyStats) waves[waveNumber].statModifier.Apply(enemy.GetComponent<Enemy>());
+            enemyComponent.SetStats(GameManager.instance.battleData.enemyStats);
+            if (modifyStats) waves[waveNumber].statModifier.Apply(enemyComponent);
+            enemyComponent.Heal(enemyComponent.baseHealth);
         }
 
     }

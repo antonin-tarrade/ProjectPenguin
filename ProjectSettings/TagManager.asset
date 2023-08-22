@@ -15,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Obstacles
-  - 
-  - 
+  - Minimap
+  - Background
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Minimap
+    uniqueID: 3689478083
     locked: 0
