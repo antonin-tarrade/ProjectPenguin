@@ -36,7 +36,8 @@ public class ShopManager : MonoBehaviour
             new SpeedUpgrade(),
             new SlidingUpgrade(),
             new StrengthUpgrade(),
-            new MultishotUpgrade()
+            new MultishotUpgrade(),
+            new SlowShotUpgrade()
         };
     }
 
@@ -224,7 +225,7 @@ public class StrengthUpgrade : Upgrade {
 public class MultishotUpgrade : Upgrade {
     public MultishotUpgrade() {
         Name = "Multishot";
-        Price = 1;
+        Price = 5;
         Image = "Multishot";
         Level = LevelEnum.LEVEL0;
     } 
@@ -239,24 +240,49 @@ public class MultishotUpgrade : Upgrade {
 
     public void ChangeAttack()
     {
-        Penguin player = Player.GetComponent<Penguin>();
-        Debug.Log(level);
         if (level == LevelEnum.LEVEL1)
         {
             IAttack newAttack = new MultiShotAttack
             {
-                attacker = player,
-                dmg = player.attack.dmg,
-                speed = player.attack.speed
+                attacker = Player,
+                dmg = Player.attack.dmg,
+                speed = Player.attack.speed,
+                effects = Player.attack.effects
             };
 
-            player.attack = newAttack;
+            Player.attack = newAttack;
         }
         else
         {
-            MultiShotAttack attack = (MultiShotAttack)player.attack;
+            MultiShotAttack attack = (MultiShotAttack)Player.attack;
             attack.numberOfAttacks += 2;
             attack.totalAngle += 10;
+        }
+    }
+}
+
+public class SlowShotUpgrade : Upgrade
+{
+    public SlowShotUpgrade()
+    {
+        Name = "SlowShot";
+        Price = 1;
+        Image = "Slowshot";
+        Level = LevelEnum.LEVEL0;
+    }
+
+    public override void Buy()
+    {
+        base.Buy();
+        if (level == LevelEnum.LEVEL1)
+        {
+            Player.attack.effects.Add(new SlowStatusEffect() { duration = 5, power = 1.5f });
+        }
+        else
+        {
+            SlowStatusEffect effect = (SlowStatusEffect)Player.attack.effects.Find(effect => effect.name == "SlowEffect");
+            effect.power += 0.5f;
+            effect.duration += 1;
         }
     }
 }

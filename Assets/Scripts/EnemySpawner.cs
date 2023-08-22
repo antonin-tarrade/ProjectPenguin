@@ -53,7 +53,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(waves[waveNumber].statModifier);
         // Input de test à retirer
         if (Input.GetKeyDown("p"))
         {

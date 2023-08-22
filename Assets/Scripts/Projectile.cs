@@ -39,7 +39,6 @@ public class Projectile : MonoBehaviour
 	private void OnCollisionEnter2D (Collision2D collision)
 	{
 		// Collisions entrainant la destruction (Obstacle et Shards)
-		Projectile p;
 		if(collision.gameObject.CompareTag("Obstacle") 
 			|| collision.gameObject.CompareTag("Shards"))
         {
