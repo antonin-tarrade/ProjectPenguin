@@ -1,11 +1,19 @@
+using Ennemies;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
+using Unity.PlasticSCM.Editor.WebApi;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner instance;
+
     public GameObject enemyPrefab;
+    public List<GameObject> enemyTrackers;
 
     // Nombre d'enemi par spawn
     public int numberOfEnemies;
@@ -19,29 +27,51 @@ public class EnemySpawner : MonoBehaviour
     public float maxSpawnDelay;
 
     public int waveNumber = 0;
+    public int totalNumber;
+    public WaveData[] waves;
     public int remainingEnemies = 0;
     public int waveDelay = 30;
     public TextMeshProUGUI timer;
-    public GameObject timerGO; 
+    public GameObject timerGO;
+
+
+    public bool modifyStats = false;
+    public Penguin.StatModifier statModifier;
+
+    private void Awake()
+    {
+        instance = this;
+
+
+        waves = Resources.LoadAll<WaveData>("GameData/WaveData");
+        totalNumber = waves.Length;
+    }
 
     void Start()
     {
-        StartCoroutine(SpawnEnemiesWithDelay());
+        //StartCoroutine(SpawnEnemiesWithDelay());
+
+        GameManager.instance.playerDeathEvent += ClearWave;
+        GameManager.instance.playerRespawnEvent += StartWave;
     }
 
     private void Update()
     {
-
         // Input de test à retirer
         if (Input.GetKeyDown("p"))
         {
             StartCoroutine(SpawnEnemiesWithDelay());
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            foreach (GameObject obj in enemyTrackers) Destroy(obj);
         }
 
     }
 
     IEnumerator SpawnEnemiesWithDelay()
     {
+        waves[waveNumber].Load();
         for (int i = 0; i < numberOfEnemies; i++)
         {
             // Position 
@@ -51,12 +81,19 @@ public class EnemySpawner : MonoBehaviour
 
             // Spawn
             GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-            enemy.GetComponent<Enemy>().spawner = this;
+            enemyTrackers.Add(enemy);
+            Enemy enemyComponent = enemy.GetComponent<Enemy>();
+            enemyComponent.spawner = this;
             remainingEnemies++;
             // Delai
-            float spawnDelay = Random.Range(0f, maxSpawnDelay);
+            // Modifier le minspawndelay, mais le min ne doit pas être trop court pour des problèmes d'opérations effectué sur l'objet instancié
+            float spawnDelay = Random.Range(maxSpawnDelay/2f, maxSpawnDelay);
             yield return new WaitForSeconds(spawnDelay);
+            enemyComponent.SetStats(GameManager.instance.battleData.enemyStats);
+            if (modifyStats) waves[waveNumber].statModifier.Apply(enemyComponent);
+            enemyComponent.health = enemyComponent.baseHealth;
         }
+
     }
 
     // On notifie le spawner qu'un enemi est mort, pour garder le compte des enemis encore en vie
@@ -64,10 +101,11 @@ public class EnemySpawner : MonoBehaviour
     public void NotifyDeath()
     {
         remainingEnemies--;
-        Debug.Log("Remaining Enemies : " + remainingEnemies);
         if (remainingEnemies == 0)
         {
+            waves[waveNumber].Finish();
             waveNumber++;
+            waveNumber %= totalNumber;
             timerGO.SetActive(true);
             StartCoroutine(WaitForNextWave());
         }
@@ -75,12 +113,24 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator WaitForNextWave()
     {
+        
         for (int i = waveDelay; i > 0; i--)
         {
             timer.text = i.ToString();
             yield return new WaitForSeconds(1);
         }
         timerGO.SetActive(false);
+        StartCoroutine(SpawnEnemiesWithDelay());
+    }
+
+    private void ClearWave()
+    {
+        remainingEnemies = 0;
+        foreach (GameObject obj in enemyTrackers) Destroy(obj);
+    }
+
+    public void StartWave()
+    {
         StartCoroutine(SpawnEnemiesWithDelay());
     }
 }

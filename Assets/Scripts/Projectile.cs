@@ -13,6 +13,10 @@ public class Projectile : MonoBehaviour
 	private Rigidbody2D body;
 	private float currentLifeLength = 0f;
 
+	// Event quand le projectile touche une cible
+	public delegate void OnHitPenguinEvent(Penguin penguin);
+	public OnHitPenguinEvent onHit;
+
 
 	private void Start ()
 	{
@@ -35,35 +39,24 @@ public class Projectile : MonoBehaviour
 	private void OnCollisionEnter2D (Collision2D collision)
 	{
 		// Collisions entrainant la destruction (Obstacle et Shards)
-		if(collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Shards"))
+		if(collision.gameObject.CompareTag("Obstacle") 
+			|| collision.gameObject.CompareTag("Shards"))
         {
             Destroy (gameObject);
+			return;
         }
 
 		// Collision avec un autre pengouin
 		Penguin penguin = collision.transform.GetComponent<Penguin>();
-		if (penguin != null && penguin != owner)
-		{
-			if (!penguin.isSliding)
+        if (penguin != null )
+		{ 
+			if (!penguin.isSliding && penguin.type != owner.type)
 			{
-				// Debug.Log (collision.name + " touché par " + owner.name + " !");
-
-				// Friendly fire Désactivé
-				/*if(!(owner.gameObject.CompareTag(collision.gameObject.tag)))
-				{
-					penguin.health -= 1;
-					Destroy (gameObject);
-				}
-				else{
-					Destroy (gameObject);
-				}
-				*/
-
-				// Friendly fire Activé
-				penguin.health -= 0.5f;
-				Destroy (gameObject);
-				
+				onHit?.Invoke(penguin);
+				Destroy(gameObject);
 			}
+			Destroy(gameObject);
 		}
-	}
+
+    }
 }

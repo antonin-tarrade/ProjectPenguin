@@ -1,12 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Attacks;
+using System;
 
 public class Penguin : MonoBehaviour
 {
-	[Header ("Penguin")]
+	[Serializable]
+    public class Stats
+    {
+        public int baseHealth;
+        public float speed;
+		public float attackSpeed;
+		public float dmg;
+
+		public Stats(int baseHealth, float speed, float attackSpeed, float dmg)
+		{
+			this.baseHealth = baseHealth;
+			this.speed = speed;
+			this.attackSpeed = attackSpeed;
+			this.dmg = dmg;
+		}
+    }
+
+	public void SetStats( Stats stats )
+	{
+		baseHealth = stats.baseHealth;
+		speed = stats.speed;
+		attack.dmg = stats.dmg;
+		attack.speed = stats.attackSpeed;
+	}
+
+	[Serializable]
+	public class StatModifier
+	{
+		public bool modifyHealth;
+		public float healthModifier;
+		public bool modifySpeed;
+		public float speedModifier;
+		public bool modifyAttackSpeed;
+		public float attackSpeedModifier;
+        public bool modifyDmg;
+        public float dmgModifier;
+
+		public void Apply(Penguin penguin)
+		{
+			if (modifyHealth) penguin.baseHealth = (int) (penguin.baseHealth * healthModifier);
+			if (modifySpeed) penguin.speed *= speedModifier;
+			if (modifyAttackSpeed) penguin.attack.speed *= attackSpeedModifier;
+			if (modifyDmg) penguin.attack.dmg *= dmgModifier;
+		}
+
+    }
+
+    [Header ("Penguin")]
 	// Stats
-	
+
+
 	public int baseHealth = 3;
 	public float health;
 	
@@ -27,7 +78,15 @@ public class Penguin : MonoBehaviour
 	protected Animator animator;
 	protected Rigidbody2D body;
 
-	protected void InitPenguin ()
+	// Competences
+	public List<Upgrade> upgrades = new();
+	public IAttack attack;
+
+	// Pour ne pas que les ennemis se tuent entre eux
+	public enum Type { Player, Ennemy }
+	public Type type { get; protected set; }
+
+    protected void InitPenguin ()
 	{
 		animator = gameObject.GetComponent<Animator> ();
 		body = gameObject.GetComponent<Rigidbody2D> ();
@@ -37,7 +96,13 @@ public class Penguin : MonoBehaviour
 
 		// Health is a float to represent half-hearts
 		health = (float)baseHealth;
-	}
+
+        attack = new BasicAttack
+        {
+            dmg = 0.5f,
+            attacker = this
+        };
+    }
 
 	protected void Move ()
 	{
@@ -65,11 +130,29 @@ public class Penguin : MonoBehaviour
 
 		timeAtLastFire = Time.time;
 
-		Vector3 offset = facingDirection;
-		GameObject projectile = Instantiate (projectilePrefab, transform.position + offset , Quaternion.identity);
-		projectile.GetComponent<Projectile> ().direction = facingDirection;
-		projectile.GetComponent<Projectile> ().owner = this;
+		//Vector3 offset = facingDirection;
+		//GameObject projectile = Instantiate(projectilePrefab, transform.position + offset, Quaternion.identity);
+		//projectile.GetComponent<Projectile>().direction = facingDirection;
+		//projectile.GetComponent<Projectile>().owner = this;
+		attack.Fire(facingDirection);
+		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Shoot, transform.position);
+    }
+
+	public void Hit(float dmg)
+	{
+		health -= dmg;
+		if (health <= 0) Death();
+		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Hit, transform.position);
 	}
+
+	public void Heal(float hp)
+	{
+		health += hp;
+		health = Mathf.Min(health, baseHealth);
+	}
+
+	protected virtual void Death() { }
+
 
 
 }

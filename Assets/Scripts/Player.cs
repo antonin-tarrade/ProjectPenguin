@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Player : Penguin
 {
+
+	private bool isDead = false;
+
+	public Vector3 spawnPoint;
+
 	// Booleens pour empecher les mouvements diagonaux
 	private bool movement_x_lock = false;
 	private bool movement_y_lock = false;
@@ -17,10 +22,16 @@ public class Player : Penguin
 	private void Start ()
 	{
 		InitPenguin ();
+		SetStats(GameManager.instance.battleData.playerStats);
+		type = Type.Player;
+
+		GameManager.instance.playerRespawnEvent += Respawn;
 	}
 
 	private void Update ()
 	{
+
+		if (isDead) return;
 		// Arret du slide
 		if (Input.GetKeyUp ("space") || Input.GetMouseButtonUp(1) || Input.anyKeyDown || movement.magnitude < 0.01)
 			isSliding = false;
@@ -102,7 +113,20 @@ public class Player : Penguin
 	public void Heal(int value)
 	{
 		health += value;
-		if (health > baseHealth)
-			health = baseHealth;
+		health = Mathf.Min(health, baseHealth);
+	}
+
+    protected override void Death()
+    {
+		isDead = true;
+		movement = new Vector2(0, 0);
+		GameManager.instance.PlayerDeath();
+    }
+
+	private void Respawn()
+	{
+		isDead = false;
+		health = baseHealth;
+		transform.position = spawnPoint;
 	}
 }

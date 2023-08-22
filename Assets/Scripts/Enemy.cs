@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Enemy : Penguin
@@ -26,11 +27,13 @@ public class Enemy : Penguin
 		//Initialisation Component
 		player = GameObject.FindWithTag ("Player");
 		target = player.transform;
-	}
+        InitPenguin();
+        type = Type.Ennemy;
+    }
 
 	private void Start ()
 	{
-		InitPenguin ();
+		
 	}
 
 	private void Update ()
@@ -73,10 +76,10 @@ public class Enemy : Penguin
 			movement *= speed;
 		}
 		
-		// Mort 
-		if (health <= 0){
-			Death();
-		}
+		//// Mort 
+		//if (health <= 0){
+		//	Death();
+		//}
 
 		// Orientation
 		FaceTowards ();
@@ -133,9 +136,9 @@ public class Enemy : Penguin
 		}
 	}
 
-	private void Death(){
+	protected override void Death() {
         Instantiate(iceShard, transform.position, Quaternion.identity);
-		spawner.NotifyDeath();
+		EnemySpawner.instance.NotifyDeath();
 		Destroy(gameObject);
 	}
 }

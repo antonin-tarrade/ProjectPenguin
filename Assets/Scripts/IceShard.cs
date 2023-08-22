@@ -9,5 +9,6 @@ public class IceShards : Collectible
     public override void Collected(Player player)
     {
         player.AddShards(value);
+        AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.PickUp, transform.position);
     }
 }

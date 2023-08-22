@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using JetBrains.Annotations;
 
 public class UIManager : MonoBehaviour
 {
@@ -66,16 +67,19 @@ public class UIManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        gameManager.playerDeathEvent += onPlayerDeath;
+        gameManager.playerRespawnEvent += onPlayerRespawn;
+    }
+
     private void Update() {
 
         // Menu Over
-        if (gameManager.isOver){
+        if (menuActif == overMenu)
+        {
+            if (Input.GetKeyDown(KeyCode.R)) gameManager.PlayerRespawn();
 
-            if(Input.GetKeyDown(KeyCode.R)){
-                gameManager.Play();
-            }
-
-            Switch(overMenu);
         }
 
         // Menu Pause
@@ -101,6 +105,16 @@ public class UIManager : MonoBehaviour
         UIShards.transform.GetChild(0).GetComponent<TMP_Text>().text = ": " + playerSystem.iceShards.ToString();
 
     }
+
+    public void onPlayerDeath()
+    {
+        Switch(overMenu) ;
+    }
+
+    public void onPlayerRespawn()
+    {
+        Switch(gameMenu);
+    }
     
 
         
@@ -111,4 +125,6 @@ public class UIManager : MonoBehaviour
 
         menuActif = to;
     }
+
+
 }

@@ -15,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Obstacles
-  - 
-  - 
+  - Minimap
+  - Background
   - 
   - 
   - 
@@ -41,6 +41,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1344473785
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Minimap
+    uniqueID: 3689478083
     locked: 0

@@ -1,3 +1,5 @@
+using Attacks;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +20,7 @@ public class ShopManager : MonoBehaviour
     public GameObject itemPrefab;
 
 
+
     private void Awake() {
         if(instance == null)
         {
@@ -33,7 +36,8 @@ public class ShopManager : MonoBehaviour
             new SpeedUpgrade(),
             new SlidingUpgrade(),
             new StrengthUpgrade(),
-            new MultishotUpgrade()
+            new MultishotUpgrade(),
+            new SlowShotUpgrade()
         };
     }
 
@@ -213,7 +217,7 @@ public class StrengthUpgrade : Upgrade {
     public override void Buy() {
         if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
             base.Buy();
-            Debug.Log("Not Implemented yet, you just lost your shards :pepeLoser:");
+            Player.gameObject.GetComponent<Penguin>().attack.dmg += 0.5f;
         }
     }
 }
@@ -221,14 +225,64 @@ public class StrengthUpgrade : Upgrade {
 public class MultishotUpgrade : Upgrade {
     public MultishotUpgrade() {
         Name = "Multishot";
-        Price = 1;
+        Price = 5;
         Image = "Multishot";
         Level = LevelEnum.LEVEL0;
     } 
     public override void Buy() {
-        if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
+        if (Player.iceShards >= Price && Level != LevelEnum.LEVEL3)
+        {
             base.Buy();
-            Debug.Log("Not Implemented yet, you just lost your shards :pepeLoser:");
+
+            ChangeAttack();      
+        }
+    }
+
+    public void ChangeAttack()
+    {
+        if (level == LevelEnum.LEVEL1)
+        {
+            IAttack newAttack = new MultiShotAttack
+            {
+                attacker = Player,
+                dmg = Player.attack.dmg,
+                speed = Player.attack.speed,
+                effects = Player.attack.effects
+            };
+
+            Player.attack = newAttack;
+        }
+        else
+        {
+            MultiShotAttack attack = (MultiShotAttack)Player.attack;
+            attack.numberOfAttacks += 2;
+            attack.totalAngle += 10;
+        }
+    }
+}
+
+public class SlowShotUpgrade : Upgrade
+{
+    public SlowShotUpgrade()
+    {
+        Name = "SlowShot";
+        Price = 1;
+        Image = "Slowshot";
+        Level = LevelEnum.LEVEL0;
+    }
+
+    public override void Buy()
+    {
+        base.Buy();
+        if (level == LevelEnum.LEVEL1)
+        {
+            Player.attack.effects.Add(new SlowStatusEffect() { duration = 5, power = 1.5f });
+        }
+        else
+        {
+            SlowStatusEffect effect = (SlowStatusEffect)Player.attack.effects.Find(effect => effect.name == "SlowEffect");
+            effect.power += 0.5f;
+            effect.duration += 1;
         }
     }
 }
