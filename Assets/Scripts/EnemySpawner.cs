@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
-using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 
