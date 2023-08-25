@@ -20,10 +20,10 @@ MonoBehaviour:
       m_Calls: []
   numberOfEnnemies: 5
   ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
-  modifyStats: 1
+  modifyStats: 0
   statModifier:
-    modifyHealth: 0
-    healthModifier: 0
+    modifyHealth: 1
+    healthModifier: 10
     modifySpeed: 0
     speedModifier: 0
     modifyAttackSpeed: 0
