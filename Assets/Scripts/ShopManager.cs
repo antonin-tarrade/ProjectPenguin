@@ -273,17 +273,21 @@ public class SlowShotUpgrade : Upgrade
 
     public override void Buy()
     {
-        base.Buy();
-        if (level == LevelEnum.LEVEL1)
+        if (Player.iceShards >= Price)
         {
-            Player.attack.effects.Add(new SlowStatusEffect() { duration = 5, power = 1.5f });
+            base.Buy();
+            if (level == LevelEnum.LEVEL1)
+            {
+                Player.attack.effects.Add(new SlowStatusEffect() { duration = 5, power = 1.5f });
+            }
+            else
+            {
+                SlowStatusEffect effect = (SlowStatusEffect)Player.attack.effects.Find(effect => effect.name == "SlowEffect");
+                effect.power += 0.5f;
+                effect.duration += 1;
+            }
         }
-        else
-        {
-            SlowStatusEffect effect = (SlowStatusEffect)Player.attack.effects.Find(effect => effect.name == "SlowEffect");
-            effect.power += 0.5f;
-            effect.duration += 1;
-        }
+        
     }
 }
 
