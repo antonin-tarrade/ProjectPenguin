@@ -8,7 +8,7 @@ public class ChargingBar : MonoBehaviour
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image progressImage;
 
-    private bool isCharging = false;
+    protected bool isCharging = false;
 
     // Start is called before the first frame update
     void Start()

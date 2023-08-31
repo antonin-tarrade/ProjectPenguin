@@ -19,6 +19,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   numberOfEnnemies: 3
+  numberOfBoss: 0
+  numberOfSlime: 0
   ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
   modifyStats: 0
   statModifier:

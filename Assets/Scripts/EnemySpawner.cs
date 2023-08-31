@@ -12,10 +12,15 @@ public class EnemySpawner : MonoBehaviour
     public static EnemySpawner instance;
 
     public GameObject enemyPrefab;
+    public GameObject bossPrefab;
+    public GameObject slimePrefab;
+
     public List<GameObject> enemyTrackers;
 
     // Nombre d'enemi par spawn
     public int numberOfEnemies;
+    public int numberOfBoss;
+    public int numberOfSlime;
 
     // Moyene du cercle d'apparition
     public float spawnRadius;
@@ -28,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
     public int waveNumber = 0;
     public int totalNumber;
     public WaveData[] waves;
-    public int remainingEnemies = 0;
+    public static int remainingEnemies = 0;
     public int waveDelay = 30;
     public TextMeshProUGUI timer;
     public GameObject timerGO;
@@ -48,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(SpawnEnemiesWithDelay());
+        StartCoroutine(SpawnEnemiesWithDelay());
 
         GameManager.instance.playerDeathEvent += ClearWave;
         GameManager.instance.playerRespawnEvent += StartWave;
@@ -56,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        // Input de test à retirer
+        /*// Input de test à retirer
         if (Input.GetKeyDown("p"))
         {
             StartCoroutine(SpawnEnemiesWithDelay());
@@ -64,13 +69,14 @@ public class EnemySpawner : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             foreach (GameObject obj in enemyTrackers) Destroy(obj);
-        }
+        }*/
 
     }
 
     IEnumerator SpawnEnemiesWithDelay()
     {
         waves[waveNumber].Load();
+        // Spawn basic ennemies
         for (int i = 0; i < numberOfEnemies; i++)
         {
             // Position 
@@ -93,6 +99,52 @@ public class EnemySpawner : MonoBehaviour
             enemyComponent.health = enemyComponent.baseHealth;
         }
 
+        // Spawn Bosses
+        for (int i = 0; i < numberOfBoss; i++)
+        {
+            // Position 
+            float angle = Random.Range(0f, Mathf.PI * 2);
+            float radius = spawnRadius + Random.Range(-spawnRandom, spawnRandom);
+            Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
+
+            // Spawn
+            GameObject enemy = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
+            enemyTrackers.Add(enemy);
+            Enemy enemyComponent = enemy.GetComponent<Enemy>();
+            enemyComponent.spawner = this;
+            remainingEnemies++;
+            // Delai
+            // Modifier le minspawndelay, mais le min ne doit pas être trop court pour des problèmes d'opérations effectué sur l'objet instancié
+            float spawnDelay = Random.Range(maxSpawnDelay/2f, maxSpawnDelay);
+            yield return new WaitForSeconds(spawnDelay);
+            enemyComponent.SetStats(GameManager.instance.battleData.enemyStats);
+            if (modifyStats) waves[waveNumber].statModifier.Apply(enemyComponent);
+            enemyComponent.health = enemyComponent.baseHealth;
+        }
+
+        // Spawn Slimes
+        
+        for (int i = 0; i < numberOfSlime; i++)
+        {
+            // Position 
+            float angle = Random.Range(0f, Mathf.PI * 2);
+            float radius = spawnRadius + Random.Range(-spawnRandom, spawnRandom);
+            Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
+
+            // Spawn
+            GameObject enemy = Instantiate(slimePrefab, spawnPosition, Quaternion.identity);
+            enemyTrackers.Add(enemy);
+            Enemy enemyComponent = enemy.GetComponent<Enemy>();
+            enemyComponent.spawner = this;
+            remainingEnemies++;
+            // Delai
+            // Modifier le minspawndelay, mais le min ne doit pas être trop court pour des problèmes d'opérations effectué sur l'objet instancié
+            float spawnDelay = Random.Range(maxSpawnDelay/2f, maxSpawnDelay);
+            yield return new WaitForSeconds(spawnDelay);
+            enemyComponent.SetStats(GameManager.instance.battleData.enemyStats);
+            if (modifyStats) waves[waveNumber].statModifier.Apply(enemyComponent);
+            enemyComponent.health = enemyComponent.baseHealth;
+        }
     }
 
     // On notifie le spawner qu'un enemi est mort, pour garder le compte des enemis encore en vie

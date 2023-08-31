@@ -4,9 +4,10 @@ using System.Threading;
 using System.Xml;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using System.Threading.Tasks;
 
 
-// Système d'attaques et d'effets applicables aux pingouins, ainsi que les stats globales, soyez créatifs, possibilités infines !!!
+// Systï¿½me d'attaques et d'effets applicables aux pingouins, ainsi que les stats globales, soyez crï¿½atifs, possibilitï¿½s infines !!!
 namespace Attacks
 {
 
@@ -16,11 +17,15 @@ namespace Attacks
         public string difficultyName;
         public Penguin.Stats playerStats;
         public Penguin.Stats enemyStats;
+        public Penguin.Stats bossStats;
+        public Penguin.Stats slimeStats;
+        public Penguin.Stats smallSlimeStats;
+
 
     }
 
 
-    // Implémentation d'un système pour différentes attaques
+    // Implï¿½mentation d'un systï¿½me pour diffï¿½rentes attaques
     public interface IAttack
     {
         public float dmg { get; set; }
@@ -82,7 +87,7 @@ namespace Attacks
             }
         }
 
-        private void FireOne(Vector3 direction)
+        protected void FireOne(Vector3 direction)
         {
             Vector3 offset = direction;
             GameObject projectile = GameObject.Instantiate(attacker.projectilePrefab, attacker.transform.position + offset, Quaternion.identity);
@@ -90,12 +95,47 @@ namespace Attacks
             projectile.GetComponent<Projectile>().speed = speed;
             projectile.GetComponent<Projectile>().onHit += OnHit;
             projectile.GetComponent<Projectile>().direction = direction;
-            projectile.GetComponent<Projectile>().owner = attacker;
+            if(attacker != null)
+            {
+                projectile.GetComponent<Projectile>().owner = attacker;
+            }
+        }
+    }
+
+    public class MultiShotDelayAttack : MultiShotAttack
+    {
+        public int delay = 100;
+        public int canonNumber = 1;
+
+        public override void Fire(Vector3 direction) {
+            float angleOffset = 0;
+            for (int canon = 1; canon <= canonNumber; canon++)
+            {
+                FireWithDelay(direction, delay, angleOffset);
+                angleOffset += totalAngle / canonNumber;
+            }
+        }
+
+        public async void FireWithDelay(Vector3 direction, int delay, float angleOffset) {
+            float step = totalAngle / numberOfAttacks;
+            for (float angle = -totalAngle/(2); angle <= totalAngle / 2; angle += step)
+            {
+    
+                Vector3 d = Helper.Rotate(direction, (angle + angleOffset) * Mathf.Deg2Rad);
+                if(attacker == null){
+                    break;
+                }
+                FireOne(d);
+                
+                Debug.Log("shooting");
+                await Task.Delay(delay);
+
+            }
         }
     }
 
 
-    // Système d'effet sur les tirs
+    // Systï¿½me d'effet sur les tirs
     public interface StatusEffect
     {
         public string name { get; }

@@ -121,7 +121,7 @@ public class Penguin : MonoBehaviour
 		}
 	}
 
-	protected void Fire ()
+	protected virtual void Fire ()
 	{
 		if (isSliding)
 			return;

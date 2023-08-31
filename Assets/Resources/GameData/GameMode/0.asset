@@ -23,3 +23,18 @@ MonoBehaviour:
     speed: 1
     attackSpeed: 5
     dmg: 0.5
+  bossStats:
+    baseHealth: 20
+    speed: 1
+    attackSpeed: 5
+    dmg: 1
+  slimeStats:
+    baseHealth: 5
+    speed: 0.5
+    attackSpeed: 1
+    dmg: 0.25
+  smallSlimeStats:
+    baseHealth: 0
+    speed: 0
+    attackSpeed: 0
+    dmg: 0

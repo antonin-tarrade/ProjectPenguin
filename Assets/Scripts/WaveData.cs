@@ -10,13 +10,15 @@ namespace Ennemies
     [CreateAssetMenu(fileName = "WaveData", menuName = "GameData/WaveData", order = 1)]
     public class WaveData : ScriptableObject
     {
-        // Peut être utile pour faire des sortes de paliers progressifs
+        // Peut ï¿½tre utile pour faire des sortes de paliers progressifs
         public UnityEvent onLoading;
         public UnityEvent onFinished;
 
 
         // Ennemis de la vague
         public int numberOfEnnemies;
+        public int numberOfBoss;
+        public int numberOfSlime;
         public GameObject ennemyPrefab;
 
         // Modificateur de stats
@@ -37,6 +39,8 @@ namespace Ennemies
             EnemySpawner spawner = EnemySpawner.instance;
 
             spawner.numberOfEnemies = numberOfEnnemies;
+            spawner.numberOfBoss = numberOfBoss;
+            spawner.numberOfSlime = numberOfSlime;
             if (modifyStats) EnemySpawner.instance.modifyStats = true;
             else EnemySpawner.instance.modifyStats = false;
 

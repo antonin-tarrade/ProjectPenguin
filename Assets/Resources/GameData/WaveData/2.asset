@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99f763918e2cbe843a140897eb09db5e, type: 3}
-  m_Name: 1
+  m_Name: 2
   m_EditorClassIdentifier: 
   onLoading:
     m_PersistentCalls:
@@ -18,9 +18,9 @@ MonoBehaviour:
   onFinished:
     m_PersistentCalls:
       m_Calls: []
-  numberOfEnnemies: 5
-  numberOfBoss: 0
-  numberOfSlime: 2
+  numberOfEnnemies: 0
+  numberOfBoss: 1
+  numberOfSlime: 0
   ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
   modifyStats: 0
   statModifier:

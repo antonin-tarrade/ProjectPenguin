@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour
         UIHealthSystem.UpdateHealthUI(playerSystem.baseHealth, playerSystem.health);
         // Wave (UI)
         UIWave.transform.GetChild(0).GetComponent<TMP_Text>().text = "Wave : " + enemySpawnerSystem.waveNumber;
-        UIWave.transform.GetChild(1).GetComponent<TMP_Text>().text = "Enemies left : " + enemySpawnerSystem.remainingEnemies;
+        UIWave.transform.GetChild(1).GetComponent<TMP_Text>().text = "Enemies left : " + EnemySpawner.remainingEnemies;
         // Shards (UI)
         UIShards.transform.GetChild(0).GetComponent<TMP_Text>().text = ": " + playerSystem.iceShards.ToString();
 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 949083320755513678}
-  - component: {fileID: 509827770822819753}
+  - component: {fileID: 8053540087721252252}
   - component: {fileID: 2664316855483250904}
   - component: {fileID: 3318701357982962567}
   - component: {fileID: 3337128139346075061}
@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1875279394382818684}
   - component: {fileID: -2015954402254113668}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Boss
   m_TagString: Ennemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,13 +33,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5614812721444753451}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &509827770822819753
+--- !u!114 &8053540087721252252
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,22 +48,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 6047452247930797885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f95ddf83521b041a007a2fbc68bc22, type: 3}
+  m_Script: {fileID: 11500000, guid: 066017920aae7ff4cb2e6b8e5515ec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHealth: 1
-  health: 1
-  speed: 3
+  baseHealth: 3
+  health: 5
+  speed: 1
   slideBoost: 0
   slideSlowDown: 0
-  fireCooldown: 1
+  fireCooldown: 2
   projectilePrefab: {fileID: 272138857047783761, guid: 2a2c1118dd3e64c44add8db72445c361, type: 3}
   isSliding: 0
   iceShard: {fileID: 3918862722806596231, guid: 830c59bbe9dbaed4d8f7fba26008a608, type: 3}
   movementTreshold: 2
   shootingDistance: 10
   spawner: {fileID: 0}
-  avoidance: 2
+  avoidance: 3
 --- !u!212 &2664316855483250904
 SpriteRenderer:
   m_ObjectHideFlags: 0

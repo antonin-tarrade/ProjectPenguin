@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   direction: {x: 0, y: 0}
-  maxLifeLength: 10
+  maxLifeLength: 5
   owner: {fileID: 0}
 --- !u!212 &2650867360689980264
 SpriteRenderer:

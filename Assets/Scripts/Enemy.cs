@@ -12,11 +12,11 @@ public class Enemy : Penguin
 	public GameObject iceShard; // Prefab Loot
 
 	// Variables pathfinding
-	private Transform target;
-	private Vector2 distanceToTarget;
-	private bool isAvoiding=false;
-	private Vector2 avoidDirection; 
-	private Vector3 obstaclePosition;
+	protected Transform target;
+	protected Vector2 distanceToTarget;
+	protected bool isAvoiding=false;
+	protected Vector2 avoidDirection; 
+	protected Vector3 obstaclePosition;
 	public float movementTreshold; // Distance avec le joueur qui fera se deplacer le pingouin
 	public float shootingDistance; // Distance avec le joueur a laquelle le pingouin tire
 	public EnemySpawner spawner;
@@ -49,30 +49,8 @@ public class Enemy : Penguin
 			Fire ();
 		}
 		else{ 
-
-			if(isAvoiding){
-				// Avoid Obstacle
-				movement = avoidDirection;
-
-				float obstacleDistance = Vector2.Distance(transform.position, obstaclePosition);
-				if (obstacleDistance > avoidance)
-				{
-					isAvoiding = false;
-				}
-			}
-			else{
-				// Deplacement vers le joueur (basique ...)	
-				if ((!yAlignedToTarget && Mathf.Abs (distanceToTarget.x) > 0.35f) || (yAlignedToTarget && Mathf.Abs (distanceToTarget.x) > movementTreshold))
-					movement = -Vector2.right * Mathf.Sign (distanceToTarget.x);    // Deplacement selon x
-				else if ((!xAlignedToTarget && Mathf.Abs (distanceToTarget.y) > 0.35f) || (xAlignedToTarget && Mathf.Abs (distanceToTarget.y) > movementTreshold))
-					movement = -Vector2.up * Mathf.Sign (distanceToTarget.y);       // Deplacement selon y
-				else
-				{
-					movement = Vector2.zero;
-				}
-			}
-			
-			movement *= speed;
+			// Calcul du déplacement du personnage (modifie movement)
+			CaclMovement(xAlignedToTarget, yAlignedToTarget);
 		}
 		
 		//// Mort 
@@ -96,6 +74,34 @@ public class Enemy : Penguin
 		animator.SetFloat ("speed", movement.magnitude);
 	}
 
+	protected void CaclMovement(bool xAlignedToTarget, bool yAlignedToTarget)
+	{
+		if(isAvoiding){
+				// Avoid Obstacle
+				movement = avoidDirection;
+
+				float obstacleDistance = Vector2.Distance(transform.position, obstaclePosition);
+				if (obstacleDistance > avoidance)
+				{
+					isAvoiding = false;
+				}
+			}
+			else{
+
+				// Deplacement vers le joueur (basique ...)	
+				if ((!yAlignedToTarget && Mathf.Abs (distanceToTarget.x) > 0.35f) || (yAlignedToTarget && Mathf.Abs (distanceToTarget.x) > movementTreshold))
+					movement = -Vector2.right * Mathf.Sign (distanceToTarget.x);    // Deplacement selon x
+				else if ((!xAlignedToTarget && Mathf.Abs (distanceToTarget.y) > 0.35f) || (xAlignedToTarget && Mathf.Abs (distanceToTarget.y) > movementTreshold))
+					movement = -Vector2.up * Mathf.Sign (distanceToTarget.y);       // Deplacement selon y
+				else
+				{
+					movement = Vector2.zero;
+				}
+			}
+			
+			movement *= speed;
+	}
+
 	private void FixedUpdate ()
 	{
 		Move ();
@@ -111,7 +117,7 @@ public class Enemy : Penguin
 		}
 	}
 
-	private Vector2 AvoidDirection(Vector3 obstaclePosition)
+	protected Vector2 AvoidDirection(Vector3 obstaclePosition)
 	{
 		Vector2 avoidDirection = (transform.position - obstaclePosition).normalized;
 		Vector2 perpendicular = new Vector2(-avoidDirection.y, avoidDirection.x);
@@ -121,7 +127,7 @@ public class Enemy : Penguin
 	}
 
 	// Fait face dans la direction de la marche ou dans celle du joueur
-	private void FaceTowards ()
+	protected void FaceTowards ()
 	{
 		if (movement != Vector2.zero)
 		{
