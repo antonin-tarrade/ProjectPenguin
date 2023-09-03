@@ -24,6 +24,7 @@ public class SlimeEnemy : Enemy
             
         }
 		EnemySpawner.instance.NotifyDeath();
+		//Debug.Log("2 ennemies ajoutés à cause de la mort du slime");
 		Destroy(gameObject);
 	}
 }

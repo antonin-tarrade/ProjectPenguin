@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     // Variable
     public bool isOver;
+    public bool isPaused;
     public delegate void GameplayEvent();
     public GameplayEvent playerDeathEvent;
     public GameplayEvent playerRespawnEvent;
@@ -32,6 +33,13 @@ public class GameManager : MonoBehaviour
 
         instance = this;
     }
+    
+    void Start()
+    {
+    	//Pause();
+        //Unpause();
+    }
+    
     
     void Update()
     {
@@ -58,18 +66,21 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         UIManager.Switch(UIManager.pauseMenu);
         UIManager.isPaused = !(UIManager.isPaused);
+        this.isPaused = true;
     }
 
     public void ShopPause(){
         Time.timeScale = 0f;
         UIManager.Switch(UIManager.shopMenu);
         UIManager.isPaused = !(UIManager.isPaused);
+        this.isPaused = true;
     }
 
     public void Unpause(){
         Time.timeScale = 1f;
         UIManager.Switch(UIManager.gameMenu);
         UIManager.isPaused = !(UIManager.isPaused);
+        this.isPaused = false;
     }
 
     public void PlayerDeath()
@@ -83,4 +94,8 @@ public class GameManager : MonoBehaviour
         isOver = false;
         playerRespawnEvent?.Invoke();
     }
+    
+    
+
+    
 }

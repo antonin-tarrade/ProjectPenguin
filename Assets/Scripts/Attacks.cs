@@ -62,11 +62,12 @@ namespace Attacks
 
         public void OnHit(Penguin targetHit)
         {
-            targetHit.Hit(dmg);
             foreach (StatusEffect effect in effects)
             {
                 effect?.ApplyOn(targetHit);
             }
+            
+            targetHit.Hit(dmg);
         }
     }
 
@@ -168,8 +169,29 @@ namespace Attacks
         }
 
 
+    }
+    
+    public class ProtectionStatusEffect : StatusEffect
+    {
+    	public string name { get => "ProtectionEffect"; }
 
+        private Dictionary<Penguin, float> defRefs = new();
 
+        public float duration { get; set; }
+
+        public void ApplyOn(Penguin target)
+        {
+            if (defRefs.ContainsKey(target)) return;
+            defRefs.Add(target, target.def);
+            target.def = 10000;
+            new BackgroundUpdater.Timer(duration,  () => { CancelOn(target); } );
+        }
+
+        public void CancelOn(Penguin target) 
+        {
+            target.def = defRefs[target];
+            defRefs.Remove(target);
+        }
     }
 
 

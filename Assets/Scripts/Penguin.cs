@@ -14,13 +14,17 @@ public class Penguin : MonoBehaviour
         public float speed;
 		public float attackSpeed;
 		public float dmg;
+		public float def;
+		public int points;
 
-		public Stats(int baseHealth, float speed, float attackSpeed, float dmg)
+		public Stats(int baseHealth, float speed, float attackSpeed, float dmg, float def, int points)
 		{
 			this.baseHealth = baseHealth;
 			this.speed = speed;
 			this.attackSpeed = attackSpeed;
 			this.dmg = dmg;
+			this.def = def;
+			this.points = points;
 		}
     }
 
@@ -30,6 +34,8 @@ public class Penguin : MonoBehaviour
 		speed = stats.speed;
 		attack.dmg = stats.dmg;
 		attack.speed = stats.attackSpeed;
+		def = stats.def;
+		points = stats.points; 
 	}
 
 	[Serializable]
@@ -61,6 +67,8 @@ public class Penguin : MonoBehaviour
 	public int baseHealth = 3;
 	public float health;
 	
+	public int points;
+	public float def;
 	public float speed;
 	public float slideBoost;
 	public float slideSlowDown;
@@ -140,7 +148,7 @@ public class Penguin : MonoBehaviour
 
 	public void Hit(float dmg)
 	{
-		health -= dmg;
+		health -= dmg/def;
 		if (health <= 0) Death();
 		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Hit, transform.position);
 	}

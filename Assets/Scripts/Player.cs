@@ -1,11 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Attacks;
+using UnityEngine.SceneManagement;
 
 public class Player : Penguin
 {
 
 	private bool isDead = false;
+	private bool hasSecondChance = false;
+	
+	// Bouclier
+	private bool hasBouclier = false;
+	private float dureeBouclierMax = 3;
+	private float dureeBouclier = 0;
+	private float tempsAvantProcActInit = 10;
+	private float tempsAvantProcAct = 0;
+	private ProtectionStatusEffect protec;
+	[SerializeField] GameObject bouclier;
+	[SerializeField] BoxCollider2D colliderPlayer;
 
 	public Vector3 spawnPoint;
 
@@ -18,6 +31,8 @@ public class Player : Penguin
 
 	// Score (iceShards étant rentré dans l'igloo)
 	public int iceShards = 0;
+	
+	public int score = 0;
 
 	private void Start ()
 	{
@@ -30,7 +45,13 @@ public class Player : Penguin
 
 	private void Update ()
 	{
-
+		UpdateDepTime();
+		if (dureeBouclier <=0)
+		{
+			bouclier.SetActive(false);
+			colliderPlayer.enabled = true;
+		}
+		
 		if (isDead) return;
 		// Arret du slide
 		if (Input.GetKeyUp ("space") || Input.GetMouseButtonUp(1) || Input.anyKeyDown || movement.magnitude < 0.01)
@@ -44,9 +65,11 @@ public class Player : Penguin
 			StartCoroutine (slide ());
 		}
 
-		if (!isSliding && (Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)) ) 
+		if (!isSliding && (Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)) && !GameManager.instance.isPaused) 
+		{
 			Fire ();
-
+		}
+		
 		// Mouvement
 		Vector2 movementDirection = getDirectionFromInput ();
 		if (movementDirection != Vector2.zero)
@@ -69,6 +92,12 @@ public class Player : Penguin
 			animator.SetInteger ("orientation", 3);
 		animator.SetBool ("isSliding", isSliding);
 		animator.SetFloat ("speed", movement.magnitude);
+		
+		//Activation du bouclier
+		if (hasBouclier && (Input.GetKeyDown(KeyCode.C) || Input.GetMouseButtonDown(1)))
+		{
+			ActiverBouclier();
+		}
 	}
 
 	private void FixedUpdate ()
@@ -108,12 +137,60 @@ public class Player : Penguin
 	public void AddShards(int value)
 	{
 		iceShards += value;
+		AddScore(value);
+	}
+	
+	public void AddScore(int value)
+	{
+		score += value;
 	}
 
 	public void Heal(int value)
 	{
 		health += value;
 		health = Mathf.Min(health, baseHealth);
+	}
+	
+	// Bouclier
+	public bool GetHasBouclier()
+	{
+		return hasBouclier;
+	}
+	public void ActiverDispoBouclier()
+	{
+		hasBouclier = true;
+		protec = new ProtectionStatusEffect() { duration = 5 };
+		//Player.attack.effects.Add(new ProtectionStatusEffect() { duration = 5 });
+	}
+	
+	private void ActiverBouclier()
+	{
+		
+		if (tempsAvantProcAct < 0) 
+		{
+			tempsAvantProcAct = tempsAvantProcActInit;
+			dureeBouclier = dureeBouclierMax;
+			bouclier.SetActive(true);
+			colliderPlayer.enabled = false;
+			protec.ApplyOn(this);
+			Debug.Log("Bouclier activé");
+		} else {
+			Debug.Log("Le bouclier n'a pas pu être activé");
+		}
+	}
+	
+	
+	// Fait l'update de toutes les variables dépendants du temps pour pouvoir faire avec Time.deltaTime
+	private void UpdateDepTime()
+	{
+		float delta = Time.deltaTime;
+		tempsAvantProcAct -= delta;
+		dureeBouclier -= delta;
+	}
+	
+	public void SetSecondChance()
+	{
+		hasSecondChance = true;
 	}
 
     protected override void Death()
@@ -124,9 +201,16 @@ public class Player : Penguin
     }
 
 	private void Respawn()
-	{
-		isDead = false;
-		health = baseHealth;
-		transform.position = spawnPoint;
+	{	
+		if (hasSecondChance)
+		{
+			hasSecondChance = false;
+			isDead = false;
+			health = baseHealth;
+			transform.position = spawnPoint;
+		} else {
+			SceneManager.LoadScene("SampleScene");
+		}
+		
 	}
 }

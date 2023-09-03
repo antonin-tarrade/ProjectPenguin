@@ -8,7 +8,7 @@ public class Enemy : Penguin
 	[Header ("Enemy")]
 
 	// Objet/Component
-	private GameObject player;
+	private Player player;
 	public GameObject iceShard; // Prefab Loot
 
 	// Variables pathfinding
@@ -24,7 +24,7 @@ public class Enemy : Penguin
 
 	private void Awake() {
 		//Initialisation Component
-		player = GameObject.FindWithTag ("Player");
+		player = GameObject.FindObjectOfType<Player>();
 		target = player.transform;
         InitPenguin();
         type = Type.Ennemy;
@@ -144,6 +144,7 @@ public class Enemy : Penguin
 	protected override void Death() {
         Instantiate(iceShard, transform.position, Quaternion.identity);
 		EnemySpawner.instance.NotifyDeath();
+		player.AddScore(points);
 		Destroy(gameObject);
 	}
 }

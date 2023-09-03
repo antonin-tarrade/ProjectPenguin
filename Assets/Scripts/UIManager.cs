@@ -21,20 +21,21 @@ public class UIManager : MonoBehaviour
     private EnemySpawner enemySpawnerSystem;
 
     // Menu
-    public GameObject mainMenu;
-    public GameObject rulesMenu;
-    public GameObject creditMenu;
     public GameObject gameMenu;
     public GameObject pauseMenu;
     public GameObject overMenu;
     public GameObject shopMenu;
+    public GameObject difficultyMenu;
 
     
     // UIs
     public GameObject UIHealth;
     private Health UIHealthSystem;
-    public GameObject UIShards;
-    public GameObject UIWave;
+    public TMP_Text UIShards;
+    public TMP_Text UIWaveTxtWave;
+    public TMP_Text UIWaveTXTEnemies;
+    public TMP_Text UIScore;
+    public Text scoreMort;
 
     // Variables
     public GameObject menuActif;
@@ -56,14 +57,12 @@ public class UIManager : MonoBehaviour
 
         Time.timeScale = 0f;
         
-        menuActif = mainMenu;
-        mainMenu.SetActive(true);
-        rulesMenu.SetActive(false);
-        creditMenu.SetActive(false);
+        menuActif = difficultyMenu;
         gameMenu.SetActive(false);
         pauseMenu.SetActive(false);
         overMenu.SetActive(false);
         shopMenu.SetActive(false);
+        difficultyMenu.SetActive(true);
 
     }
 
@@ -99,15 +98,19 @@ public class UIManager : MonoBehaviour
         // Health (UI)
         UIHealthSystem.UpdateHealthUI(playerSystem.baseHealth, playerSystem.health);
         // Wave (UI)
-        UIWave.transform.GetChild(0).GetComponent<TMP_Text>().text = "Wave : " + enemySpawnerSystem.waveNumber;
-        UIWave.transform.GetChild(1).GetComponent<TMP_Text>().text = "Enemies left : " + EnemySpawner.remainingEnemies;
+        UIWaveTxtWave.text = "Wave : " + enemySpawnerSystem.waveNumber;
+        UIWaveTXTEnemies.text = "Enemies left : " + EnemySpawner.remainingEnemies;
         // Shards (UI)
-        UIShards.transform.GetChild(0).GetComponent<TMP_Text>().text = ": " + playerSystem.iceShards.ToString();
+        UIShards.text = ": " + playerSystem.iceShards.ToString();
+        
+        // Score (UI)
+        UIScore.text = "Score : " + playerSystem.score.ToString();
 
     }
 
     public void onPlayerDeath()
     {
+    	scoreMort.text = "Score : " + playerSystem.score.ToString();
         Switch(overMenu) ;
     }
 
@@ -121,8 +124,9 @@ public class UIManager : MonoBehaviour
 
     public void Switch(GameObject to) {
         menuActif.SetActive(false);
+        //gameMenu.SetActive(true);
         to.SetActive(true);
-
+	Debug.Log("Switch : " + to.ToString() + " " + menuActif.ToString());
         menuActif = to;
     }
 
