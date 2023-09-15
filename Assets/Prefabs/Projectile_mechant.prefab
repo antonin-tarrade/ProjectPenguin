@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2650867360689980264}
   - component: {fileID: 817824014257433627}
   - component: {fileID: 519636318272604328}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Projectile_mechant
   m_TagString: Untagged
   m_Icon: {fileID: 0}

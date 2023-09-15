@@ -7,20 +7,21 @@ TagManager:
   - Obstacle
   - Ennemy
   - Shards
+  - Shield
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Obstacles
   - Minimap
+  - 
+  - Shield
+  - ProjectilePlayer
+  - ProjectileEnnemies
   - Background
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 
@@ -44,9 +45,21 @@ TagManager:
   - name: Background
     uniqueID: 1344473785
     locked: 0
+  - name: Hearth
+    uniqueID: 213822027
+    locked: 0
+  - name: Player
+    uniqueID: 3255014359
+    locked: 0
+  - name: Shield
+    uniqueID: 2015004215
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Minimap
     uniqueID: 3689478083
+    locked: 0
+  - name: ProjectilePlayer
+    uniqueID: 1761396577
     locked: 0

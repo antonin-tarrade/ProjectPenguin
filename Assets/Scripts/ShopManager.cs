@@ -37,7 +37,8 @@ public class ShopManager : MonoBehaviour
             new SlidingUpgrade(),
             new StrengthUpgrade(),
             new MultishotUpgrade(),
-            new SlowShotUpgrade()
+            new SlowShotUpgrade(),
+            new SecondChanceUpgrade()
         };
     }
 
@@ -103,7 +104,7 @@ public enum LevelEnum
     LEVEL0,
     LEVEL1,
     LEVEL2,
-    LEVEL3,
+    LEVEL3
 }
 
 // Classe abstraite dont il faut ré-implémenter la fonction d'achat (voir exemples)
@@ -112,6 +113,7 @@ public abstract class Upgrade {
     protected int price;
     protected string imagePath;
     protected LevelEnum level;
+    protected LevelEnum levelMax;
     private Player player;
     public GameObject itemRef;
     private TextMeshProUGUI priceText;
@@ -122,6 +124,7 @@ public abstract class Upgrade {
     public int Price { get => price; protected set => price = value; }
     public string Image { get => imagePath; protected set => imagePath = value; }
     public LevelEnum Level { get => level; protected set => level = value; }
+    public LevelEnum LevelMax { get => levelMax; protected set => levelMax = value; }
     public Player Player { get => player; set => player = value; }
 
     public TextMeshProUGUI PriceText { get => priceText; set => priceText = value; }
@@ -131,10 +134,34 @@ public abstract class Upgrade {
 
     public virtual void Buy() {
         Player.iceShards -= Price;
-        Price *= 2;
+        
         Level += 1;
-        PriceText.text = "Price : " + Price.ToString();
-        LevelText.text = Level.ToString();
+        if (Level != LevelMax)
+        {
+        	Price *= 2;
+        	PriceText.text = "Price : " + Price.ToString();
+        	LevelText.text = Level.ToString();
+        } else {
+        	PriceText.text = "Indisponible";
+        	LevelText.text = "Level max atteint";
+        }
+    }
+}
+
+public class SecondChanceUpgrade : Upgrade {
+    public SecondChanceUpgrade(){
+    	Name = "Second Chance";
+	Price = 500;
+	Image = "SecondChance";
+	Level = LevelEnum.LEVEL0;
+	LevelMax = LevelEnum.LEVEL1;
+    }
+	
+    public override void Buy() {
+        if(Player.iceShards >= Price && Level != LevelMax) {
+            base.Buy();
+            Player.SetSecondChance();
+        }
     }
 }
 
@@ -144,9 +171,10 @@ public class SpeedUpgrade : Upgrade {
         Price = 1;
         Image = "Speed";
         Level = LevelEnum.LEVEL0;
+	LevelMax = LevelEnum.LEVEL3;
     } 
     public override void Buy() {
-        if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
+        if(Player.iceShards >= Price && Level != LevelMax) {
             base.Buy();
             Player.speed *= 1.2f;
         }
@@ -160,11 +188,12 @@ public class HealthUpgrade : Upgrade {
         Price = 5;
         Image = "Heart";
         Level = LevelEnum.LEVEL0;
+	LevelMax = LevelEnum.LEVEL3;
         healthSystem = healthUI;
 
     }
     public override void Buy() {
-        if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
+        if(Player.iceShards >= Price && Level != LevelMax) {
             base.Buy();
             Player.baseHealth += 1;
             healthSystem.InitHealthUI(Player.baseHealth);
@@ -180,10 +209,11 @@ public class FishingUpgrade : Upgrade {
         Price = 3;
         Image = "FishingRod";
         Level = LevelEnum.LEVEL0;
+	LevelMax = LevelEnum.LEVEL3;
         this.fishingHole = fishingHole;
     }
     public override void Buy() {
-        if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
+        if(Player.iceShards >= Price && Level != LevelMax) {
             base.Buy();
             fishingHole.fishingTime *= 0.7f;
         }
@@ -197,9 +227,10 @@ public class SlidingUpgrade : Upgrade {
         Price = 1;
         Image = "Feather";
         Level = LevelEnum.LEVEL0;
+	LevelMax = LevelEnum.LEVEL3;
     } 
     public override void Buy() {
-        if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
+        if(Player.iceShards >= Price && Level != LevelMax) {
             base.Buy();
             Player.slideBoost *= 1.2f;
             Player.slideSlowDown *= 0.95f;
@@ -213,9 +244,10 @@ public class StrengthUpgrade : Upgrade {
         Price = 1;
         Image = "Strength";
         Level = LevelEnum.LEVEL0;
+	LevelMax = LevelEnum.LEVEL3;
     } 
     public override void Buy() {
-        if(Player.iceShards >= Price && Level != LevelEnum.LEVEL3) {
+        if(Player.iceShards >= Price && Level != LevelMax) {
             base.Buy();
             Player.gameObject.GetComponent<Penguin>().attack.dmg += 0.5f;
         }
@@ -228,9 +260,10 @@ public class MultishotUpgrade : Upgrade {
         Price = 5;
         Image = "Multishot";
         Level = LevelEnum.LEVEL0;
+	LevelMax = LevelEnum.LEVEL3;
     } 
     public override void Buy() {
-        if (Player.iceShards >= Price && Level != LevelEnum.LEVEL3)
+        if (Player.iceShards >= Price && Level != LevelMax)
         {
             base.Buy();
 
@@ -269,6 +302,7 @@ public class SlowShotUpgrade : Upgrade
         Price = 1;
         Image = "Slowshot";
         Level = LevelEnum.LEVEL0;
+	LevelMax = LevelEnum.LEVEL1;
     }
 
     public override void Buy()

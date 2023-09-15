@@ -37,11 +37,11 @@ public class Health : MonoBehaviour
     {
   
         //InitHealthUI(numOfHearts);
-
+	float eps = 0.1f;
         for (int i=0; i<hearts.Length; i++){
-            if (i + 0.5f == health) {
+            if (i + 0.5f + eps > health && i + 0.5f - eps < health) {
                 hearts[i].sprite = halfHeart;
-            }else if (i < health){
+            } else if (i < health){
                 hearts[i].sprite = fullHeart;
             } else {
                 hearts[i].sprite = emptyHeart;

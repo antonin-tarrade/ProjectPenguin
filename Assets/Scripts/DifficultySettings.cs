@@ -21,14 +21,33 @@ public class DifficultySettings : MonoBehaviour
 
         total = battleDatas.Length;
         current = 0;
-        difficulty.text = battleDatas[current].difficultyName;
-        GameManager.instance.battleData = battleDatas[current];
+        UpdateText();
     }
 
     public void OnNext()
     {
         current = (current+1)%total;
-        difficulty.text = battleDatas[current].difficultyName;
-        GameManager.instance.battleData = battleDatas[current];
+        UpdateText();
+    }
+    
+    // Je suppose que la fonction est utilisé que avec un chiffre valide à chaque fois, sinon elle fait rien
+    public void SetDifficulty(int diff)
+    {
+    	if (current < total && 0 <= current){
+    		current = diff;
+    		UpdateText();
+    	}
+    	
+    }
+    
+    public int GetDifficulty()
+    {
+    	return current;
+    }
+    
+    private void UpdateText()
+    {
+    	difficulty.text = battleDatas[current].difficultyName;
+        //GameManager.instance.battleData = battleDatas[current];
     }
 }

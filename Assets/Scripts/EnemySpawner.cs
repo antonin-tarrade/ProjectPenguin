@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     public int numberOfBoss;
     public int numberOfSlime;
 
-    // Moyene du cercle d'apparition
+    // Moyenne du cercle d'apparition
     public float spawnRadius;
     // Incertitude du cercle de Spawn 
     public float spawnRandom;
@@ -76,6 +76,7 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnEnemiesWithDelay()
     {
         waves[waveNumber].Load();
+        remainingEnemies = numberOfEnemies + numberOfBoss + numberOfSlime;
         // Spawn basic ennemies
         for (int i = 0; i < numberOfEnemies; i++)
         {
@@ -89,7 +90,7 @@ public class EnemySpawner : MonoBehaviour
             enemyTrackers.Add(enemy);
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
             enemyComponent.spawner = this;
-            remainingEnemies++;
+            //remainingEnemies++;
             // Delai
             // Modifier le minspawndelay, mais le min ne doit pas être trop court pour des problèmes d'opérations effectué sur l'objet instancié
             float spawnDelay = Random.Range(maxSpawnDelay/2f, maxSpawnDelay);
@@ -112,7 +113,7 @@ public class EnemySpawner : MonoBehaviour
             enemyTrackers.Add(enemy);
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
             enemyComponent.spawner = this;
-            remainingEnemies++;
+            //remainingEnemies++;
             // Delai
             // Modifier le minspawndelay, mais le min ne doit pas être trop court pour des problèmes d'opérations effectué sur l'objet instancié
             float spawnDelay = Random.Range(maxSpawnDelay/2f, maxSpawnDelay);
@@ -136,7 +137,7 @@ public class EnemySpawner : MonoBehaviour
             enemyTrackers.Add(enemy);
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
             enemyComponent.spawner = this;
-            remainingEnemies++;
+            //remainingEnemies++;
             // Delai
             // Modifier le minspawndelay, mais le min ne doit pas être trop court pour des problèmes d'opérations effectué sur l'objet instancié
             float spawnDelay = Random.Range(maxSpawnDelay/2f, maxSpawnDelay);
@@ -156,10 +157,18 @@ public class EnemySpawner : MonoBehaviour
         {
             waves[waveNumber].Finish();
             waveNumber++;
+            Debug.Log("wave number : "+waveNumber);
             waveNumber %= totalNumber;
             timerGO.SetActive(true);
             StartCoroutine(WaitForNextWave());
         }
+    }
+    
+    // principalement pour les slimes pour garder le bon compte du nombre d'ennemis (pas utile probablement finalement)
+    public void NotifyDeath(int numberNewEnemies)
+    {
+    	remainingEnemies += numberNewEnemies;
+    	NotifyDeath();
     }
 
     private IEnumerator WaitForNextWave()
