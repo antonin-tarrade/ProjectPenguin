@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -48,6 +49,8 @@ public class EnemySpawner : MonoBehaviour
 
 
         waves = Resources.LoadAll<WaveData>("GameData/WaveData");
+        IEnumerable<WaveData> sortedWaves = waves.OrderBy(w => int.Parse(w.name)).ToArray();
+        waves = sortedWaves.ToArray();
         totalNumber = waves.Length;
     }
 
@@ -77,6 +80,7 @@ public class EnemySpawner : MonoBehaviour
     {
         waves[waveNumber].Load();
         remainingEnemies = numberOfEnemies + numberOfBoss + numberOfSlime;
+        Debug.Log("nbEn" + numberOfEnemies + "nbBoss" + numberOfBoss + "nbSlime" + numberOfSlime);
         // Spawn basic ennemies
         for (int i = 0; i < numberOfEnemies; i++)
         {
@@ -154,11 +158,8 @@ public class EnemySpawner : MonoBehaviour
     {
         remainingEnemies--;
         if (remainingEnemies == 0)
-        {
+        {   
             waves[waveNumber].Finish();
-            waveNumber++;
-            Debug.Log("wave number : "+waveNumber);
-            waveNumber %= totalNumber;
             timerGO.SetActive(true);
             StartCoroutine(WaitForNextWave());
         }
@@ -180,6 +181,8 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         timerGO.SetActive(false);
+        waveNumber++;
+        waveNumber %= totalNumber;
         StartCoroutine(SpawnEnemiesWithDelay());
     }
 
