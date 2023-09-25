@@ -21,7 +21,7 @@ public class IcefishingHole : MonoBehaviour
             {
                 chargingBar.UpdateBar((Time.time - fishingStartTime) / fishingTime);
 
-                // Vérifiez si le joueur a pêché pendant suffisamment de temps.
+                // Vï¿½rifiez si le joueur a pï¿½chï¿½ pendant suffisamment de temps.
                 if (isFishing && Time.time - fishingStartTime >= fishingTime)
                 {
                     CaptureFish();
@@ -29,7 +29,7 @@ public class IcefishingHole : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.F)||Input.GetKeyDown(KeyCode.G))
                 {
                     StartFishing();
                     chargingBar.SetChargeOn();

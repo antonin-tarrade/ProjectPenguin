@@ -57,7 +57,7 @@ public class Player : Penguin
 		if (Input.GetKeyUp ("space") || Input.GetMouseButtonUp(1) || Input.anyKeyDown || movement.magnitude < 0.01)
 			isSliding = false;
 		// Debut du slide
-		if (Input.GetKeyDown ("space") || Input.GetMouseButtonDown(1))
+		if (Input.GetKeyDown ("space") || Input.GetMouseButtonDown(1)|| Input.GetKeyDown(KeyCode.F))
 		{
 			isSliding = true;
 			movement.x *= slideBoost;
@@ -65,9 +65,9 @@ public class Player : Penguin
 			StartCoroutine (slide ());
 		}
 
-		if (!isSliding && (Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)) && !GameManager.instance.isPaused) 
+		if (!isSliding && (Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)|| Input.GetKeyDown(KeyCode.R)) && !GameManager.instance.isPaused) 
 		{
-			Fire ();
+			Fire();
 		}
 		
 		// Mouvement

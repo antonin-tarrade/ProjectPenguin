@@ -787,7 +787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1976131959}
+  m_FirstSelected: {fileID: 1061020376}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!1 &676758485
@@ -2913,7 +2913,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "[Ins\xE9rer Titre]"
+  m_Text: Penguin Survivor
 --- !u!222 &2108475404
 CanvasRenderer:
   m_ObjectHideFlags: 0

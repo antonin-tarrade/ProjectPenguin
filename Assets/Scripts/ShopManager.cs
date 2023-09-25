@@ -21,6 +21,7 @@ public class ShopManager : MonoBehaviour
 
 
 
+
     private void Awake() {
         if(instance == null)
         {
@@ -40,6 +41,8 @@ public class ShopManager : MonoBehaviour
             new SlowShotUpgrade(),
             new SecondChanceUpgrade()
         };
+
+
     }
 
     private void Start() {
@@ -74,11 +77,13 @@ public class ShopManager : MonoBehaviour
             Button button = item.GetComponent<Button>();
             button.onClick.AddListener(( ) => upgrade.Buy());
             
+            
+
         }
     }
 
     private void Update() {
-        if(openable && Input.GetKeyUp(KeyCode.E)) {
+        if(openable && (Input.GetKeyUp(KeyCode.E) || Input.GetKeyUp(KeyCode.T))) {
             ToggleShop();
         }
     }
@@ -89,8 +94,9 @@ public class ShopManager : MonoBehaviour
            gameManager.Unpause();
        }
        else {
-           shopUI.SetActive(true);
-           gameManager.ShopPause();
+            shopUI.SetActive(true);
+            GameObject.Find("Content").transform.GetChild(0).GetComponent<Button>().Select();
+            gameManager.ShopPause();
        }
     }
 

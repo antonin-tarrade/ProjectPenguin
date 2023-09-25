@@ -37,10 +37,16 @@ public class UIManager : MonoBehaviour
     public TMP_Text UIScore;
     public Text scoreMort;
 
+    // Default buttons (pour la borne)
+    public Button pauseDefaultButton;
+    public Button overDefaultButton;
+    public Button difficultyDefaultButton;
+
+
     // Variables
     public GameObject menuActif;
-
     public bool isPaused;
+
 
     private void Awake() {
         Initialisation();
@@ -51,6 +57,7 @@ public class UIManager : MonoBehaviour
         UIHealthSystem = UIHealth.GetComponent<Health>();
         UIHealthSystem.InitHealthUI(playerSystem.baseHealth);
         enemySpawnerSystem = enemySpawner.GetComponent<EnemySpawner>();
+
     }
 
     public void Initialisation() {
@@ -63,6 +70,7 @@ public class UIManager : MonoBehaviour
         overMenu.SetActive(false);
         shopMenu.SetActive(false);
         difficultyMenu.SetActive(true);
+        difficultyDefaultButton.Select();
 
     }
 
@@ -82,7 +90,7 @@ public class UIManager : MonoBehaviour
         }
 
         // Menu Pause
-        if(Input.GetKeyDown(KeyCode.Escape)){
+        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.B)){
             if(isPaused){
                 gameManager.Pause();
             }
@@ -113,11 +121,13 @@ public class UIManager : MonoBehaviour
     {
     	scoreMort.text = "Score : " + playerSystem.score.ToString();
         Switch(overMenu) ;
+        overDefaultButton.Select();
     }
 
     public void onPlayerRespawn()
     {
         Switch(gameMenu);
+        pauseDefaultButton.Select();
     }
     
 

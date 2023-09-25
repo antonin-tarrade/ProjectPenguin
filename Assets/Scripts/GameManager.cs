@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject UI;
     private UIManager UIManager;
 
-    // Objet contenant toutes les statistiques, peut être customisé à volonté pour changer la difficulté(voir dossier GameData)
+    // Objet contenant toutes les statistiques, peut ï¿½tre customisï¿½ ï¿½ volontï¿½ pour changer la difficultï¿½(voir dossier GameData)
     public BattleData battleData;
 
     // Variable
@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
 
     public static GameManager instance;
+
+
 
     private void Awake() {
         //Initialisation Component
@@ -65,6 +67,7 @@ public class GameManager : MonoBehaviour
     public void Pause(){
         Time.timeScale = 0f;
         UIManager.Switch(UIManager.pauseMenu);
+        UIManager.pauseDefaultButton.Select();
         UIManager.isPaused = !(UIManager.isPaused);
         this.isPaused = true;
     }
