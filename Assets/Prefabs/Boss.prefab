@@ -51,8 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 066017920aae7ff4cb2e6b8e5515ec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHealth: 3
+  baseHealth: 5
   health: 5
+  points: 0
+  def: 5
   speed: 1
   slideBoost: 0
   slideSlowDown: 0

@@ -142,6 +142,7 @@ public class Enemy : Penguin
 	}
 
 	protected override void Death() {
+		Debug.Log("Enemy Death");
         Instantiate(iceShard, transform.position, Quaternion.identity);
 		EnemySpawner.instance.NotifyDeath();
 		player.AddScore(points);

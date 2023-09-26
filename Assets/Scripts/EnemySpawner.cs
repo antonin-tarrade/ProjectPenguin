@@ -80,7 +80,6 @@ public class EnemySpawner : MonoBehaviour
     {
         waves[waveNumber].Load();
         remainingEnemies = numberOfEnemies + numberOfBoss + numberOfSlime;
-        Debug.Log("nbEn" + numberOfEnemies + "nbBoss" + numberOfBoss + "nbSlime" + numberOfSlime);
         // Spawn basic ennemies
         for (int i = 0; i < numberOfEnemies; i++)
         {

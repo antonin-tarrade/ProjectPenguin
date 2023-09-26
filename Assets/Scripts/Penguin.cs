@@ -73,6 +73,8 @@ public class Penguin : MonoBehaviour
 	public float slideBoost;
 	public float slideSlowDown;
 	public float fireCooldown;
+	private bool isDead = false;
+
 	// Prefabs
 	public GameObject projectilePrefab;
 
@@ -149,7 +151,11 @@ public class Penguin : MonoBehaviour
 	public void Hit(float dmg)
 	{
 		health -= dmg/def;
-		if (health <= 0) Death();
+		if (health <= 0 && !isDead){ 
+			isDead = true;
+			Death();
+		}
+
 		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Hit, transform.position);
 	}
 
