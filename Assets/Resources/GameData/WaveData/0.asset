@@ -18,20 +18,13 @@ MonoBehaviour:
   onFinished:
     m_PersistentCalls:
       m_Calls: []
-  numberOfEnnemies: 3
-  numberOfBoss: 0
-  numberOfSlime: 0
-  ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
-  modifyStats: 0
-  statModifier:
-    modifyHealth: 1
-    healthModifier: 10
-    modifySpeed: 0
-    speedModifier: 50
-    modifyAttackSpeed: 0
-    attackSpeedModifier: 0
-    modifyDmg: 1
-    dmgModifier: 2
+  spawnDatas:
+  - ennemyPrefab: {fileID: 0}
+    numberOfEnnemies: 0
+    statModifier: {fileID: 0}
+  - ennemyPrefab: {fileID: 0}
+    numberOfEnnemies: 0
+    statModifier: {fileID: 0}
   changeSpawnParameters: 0
   spawnRadius: 0
   spawnRandom: 0
