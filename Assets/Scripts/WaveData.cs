@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,13 @@ using UnityEngine.Events;
 
 namespace Ennemies
 {
+    [Serializable]
+    public class SpawnData
+    {
+        public GameObject ennemyPrefab;
+        public int numberOfEnnemies;
+        public PenguinStatModifier statModifier;
+    }
 
 
     [CreateAssetMenu(fileName = "WaveData", menuName = "GameData/WaveData", order = 1)]
@@ -16,14 +24,13 @@ namespace Ennemies
 
 
         // Ennemis de la vague
-        public int numberOfEnnemies;
-        public int numberOfBoss;
-        public int numberOfSlime;
-        public GameObject ennemyPrefab;
+        //public int numberOfEnnemies;
+        //public int numberOfBoss;
+        //public int numberOfSlime;
+        //public GameObject ennemyPrefab;
 
-        // Modificateur de stats
-        public bool modifyStats;
-        public Penguin.StatModifier statModifier;
+        public List<SpawnData> spawnDatas;
+
 
         // Cocher pour changer les variables du spawner
         public bool changeSpawnParameters;
@@ -38,11 +45,7 @@ namespace Ennemies
 
             EnemySpawner spawner = EnemySpawner.instance;
 
-            spawner.numberOfEnemies = numberOfEnnemies;
-            spawner.numberOfBoss = numberOfBoss;
-            spawner.numberOfSlime = numberOfSlime;
-            if (modifyStats) EnemySpawner.instance.modifyStats = true;
-            else EnemySpawner.instance.modifyStats = false;
+            spawner.waveToSpawn = spawnDatas;
 
             if (changeSpawnParameters)
             {

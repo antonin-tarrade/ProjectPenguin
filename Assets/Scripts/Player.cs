@@ -7,9 +7,8 @@ using UnityEngine.SceneManagement;
 public class Player : Penguin
 {
 
-	private bool isDead = false;
 	private bool hasSecondChance = false;
-	
+
 	// Bouclier
 	private bool hasBouclier = false;
 	private float dureeBouclierMax = 3;

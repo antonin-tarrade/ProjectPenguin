@@ -21,6 +21,7 @@ public class SlimeEnemy : Enemy
             
             enemyComponent.SetStats(GameManager.instance.battleData.enemyStats);
             enemyComponent.health = enemyComponent.baseHealth;
+            EnemySpawner.instance.enemyTrackers.Add(enemy);
             
         }
 		EnemySpawner.instance.NotifyDeath();

@@ -38,28 +38,6 @@ public class Penguin : MonoBehaviour
 		points = stats.points; 
 	}
 
-	[Serializable]
-	public class StatModifier
-	{
-		public bool modifyHealth;
-		public float healthModifier;
-		public bool modifySpeed;
-		public float speedModifier;
-		public bool modifyAttackSpeed;
-		public float attackSpeedModifier;
-        public bool modifyDmg;
-        public float dmgModifier;
-
-		public void Apply(Penguin penguin)
-		{
-			if (modifyHealth) penguin.baseHealth = (int) (penguin.baseHealth * healthModifier);
-			if (modifySpeed) penguin.speed *= speedModifier;
-			if (modifyAttackSpeed) penguin.attack.speed *= attackSpeedModifier;
-			if (modifyDmg) penguin.attack.dmg *= dmgModifier;
-		}
-
-    }
-
     [Header ("Penguin")]
 	// Stats
 
@@ -73,7 +51,7 @@ public class Penguin : MonoBehaviour
 	public float slideBoost;
 	public float slideSlowDown;
 	public float fireCooldown;
-	private bool isDead = false;
+	protected bool isDead = false;
 
 	// Prefabs
 	public GameObject projectilePrefab;
