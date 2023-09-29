@@ -36,13 +36,18 @@ public class Player : Penguin
 	private void Start ()
 	{
 		InitPenguin ();
-		SetStats(GameManager.instance.battleData.playerStats);
 		type = Type.Player;
 
 		GameManager.instance.playerRespawnEvent += Respawn;
 	}
 
-	private void Update ()
+	public override void InitPenguin()
+	{
+		base.InitPenguin();
+        SetStats(GameManager.instance.battleData.playerStats);
+    }
+
+    private void Update ()
 	{
 		UpdateDepTime();
 		if (dureeBouclier <=0)

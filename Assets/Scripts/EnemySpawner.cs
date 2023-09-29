@@ -106,8 +106,23 @@ public class EnemySpawner : MonoBehaviour
                 float spawnDelay = Random.Range(maxSpawnDelay / 2f, maxSpawnDelay);
                 yield return new WaitForSeconds(spawnDelay);
                 enemyComponent.SetStats(GameManager.instance.battleData.enemyStats);
-                if (spawnData.statModifier.modifyStats) spawnData.statModifier.Apply(enemyComponent);
+                if (spawnData.statModifier != null && spawnData.statModifier.modifyStats) spawnData.statModifier.Apply(enemyComponent);
                 enemyComponent.health = enemyComponent.baseHealth;
+
+                float countdownBeforeNextEnnemy = spawnData.delayBetweenEachEnnemy;
+                while (countdownBeforeNextEnnemy > 0)
+                {
+                    countdownBeforeNextEnnemy -= Time.deltaTime;
+                    yield return null;
+                }
+
+            }
+
+            float countdownBeforeNextWave = spawnData.delayBeforeNextWave;
+            while (countdownBeforeNextWave > 0)
+            {
+                countdownBeforeNextWave -= Time.deltaTime;
+                yield return null;
             }
         }
     }
@@ -150,7 +165,7 @@ public class EnemySpawner : MonoBehaviour
     {
         remainingEnemies = 0;
         foreach (GameObject obj in enemyTrackers) Destroy(obj);
-        WaitForNextWave();
+        StartCoroutine(WaitForNextWave());
     }
 
     public void StartWave()

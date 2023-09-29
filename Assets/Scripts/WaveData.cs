@@ -12,6 +12,8 @@ namespace Ennemies
         public GameObject ennemyPrefab;
         public int numberOfEnnemies;
         public PenguinStatModifier statModifier;
+        public float delayBeforeNextWave = 0.1f;
+        public float delayBetweenEachEnnemy = 0.1f;
     }
 
 

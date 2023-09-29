@@ -35,6 +35,7 @@ public class Health : MonoBehaviour
     // Update the healthbar UI
     public void UpdateHealthUI(int numOfHearts,float health)
     {
+        Debug.Log("HEALTH OF PLAYER IS " + health);
   
         //InitHealthUI(numOfHearts);
 	float eps = 0.1f;
