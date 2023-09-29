@@ -197,7 +197,7 @@ public class Player : Penguin
 		hasSecondChance = true;
 	}
 
-    protected override void Death()
+    public override void Death()
     {
 		isDead = true;
 		movement = new Vector2(0, 0);

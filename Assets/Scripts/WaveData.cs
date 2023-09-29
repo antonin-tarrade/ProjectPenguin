@@ -11,7 +11,13 @@ namespace Ennemies
     {
         public GameObject ennemyPrefab;
         public int numberOfEnnemies;
-        public PenguinStatModifier statModifier;
+        public PenguinStatModifier statModifier
+        {
+            get => (statModifierContainer != null) ? statModifierContainer.statModifier : statModifierRef;
+            set { statModifier = value; }
+        }
+        [SerializeField] private PenguinStatModifier statModifierRef;
+        public StatModifierContainer statModifierContainer;
         public float delayBeforeNextWave = 0.1f;
         public float delayBetweenEachEnnemy = 0.1f;
     }

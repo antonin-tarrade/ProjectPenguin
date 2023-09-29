@@ -8,7 +8,7 @@ public class SlimeEnemy : Enemy
     public GameObject smallSlimePrefab;
  
 
-	protected override void Death() {
+	public override void Death() {
         Instantiate(iceShard, transform.position, Quaternion.identity);
         for (int count = 0; count < childNumber; count++)
         {

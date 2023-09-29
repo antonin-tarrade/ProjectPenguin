@@ -71,22 +71,23 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(SpawnEnemiesWithDelay());
         }
         */
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ClearWave();
-        }
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    ClearWave();
+        //}
 
     }
 
 
     IEnumerator SpawnEnemiesWithDelay()
     {
+        enemyTrackers.Clear();
         waves[waveNumber].Load();
         foreach (SpawnData spawnData in waveToSpawn)
         {
 
             //remainingEnemies = numberOfEnemies + numberOfBoss + numberOfSlime;
-            remainingEnemies += spawnData.numberOfEnnemies;
+            //remainingEnemies += spawnData.numberOfEnnemies;
             // Spawn basic ennemies
             for (int i = 0; i < spawnData.numberOfEnnemies; i++)
             {
@@ -96,6 +97,7 @@ public class EnemySpawner : MonoBehaviour
                 Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
 
                 // Spawn
+                remainingEnemies++;
                 GameObject enemy = Instantiate(spawnData.ennemyPrefab, spawnPosition, Quaternion.identity);
                 enemyTrackers.Add(enemy);
                 Enemy enemyComponent = enemy.GetComponent<Enemy>();
@@ -153,7 +155,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = waveDelay; i > 0; i--)
         {
             timer.text = i.ToString();
-            yield return new WaitForSeconds(1);
+            if (!Input.GetKey(KeyCode.P)) yield return new WaitForSeconds(1);
         }
         timerGO.SetActive(false);
         waveNumber++;
@@ -161,11 +163,16 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnEnemiesWithDelay());
     }
 
+
+    //Pour le debug
     private void ClearWave()
     {
-        remainingEnemies = 0;
-        foreach (GameObject obj in enemyTrackers) Destroy(obj);
-        StartCoroutine(WaitForNextWave());
+        StopAllCoroutines();
+        foreach (GameObject obj in enemyTrackers) 
+        { 
+            if (obj != null) obj.GetComponent<Enemy>().Death(); 
+        }
+        enemyTrackers.Clear();
     }
 
     public void StartWave()

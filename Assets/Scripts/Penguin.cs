@@ -143,7 +143,7 @@ public class Penguin : MonoBehaviour
 		health = Mathf.Min(health, baseHealth);
 	}
 
-	protected virtual void Death() { }
+	public virtual void Death() { }
 
 
 

@@ -27,3 +27,9 @@ public class PenguinStatModifier
 
 }
 
+[CreateAssetMenu(fileName = "StatModifier", menuName = "Scriptables/StatModifier", order = 0)]
+public class StatModifierContainer : ScriptableObject
+{
+    public PenguinStatModifier statModifier;
+}
+
