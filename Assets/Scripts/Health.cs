@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     public GameObject player;
+    public float playerHealth;
     public GameObject healthUI;
     public GameObject healthPrefab;
 
@@ -36,6 +37,8 @@ public class Health : MonoBehaviour
     public void UpdateHealthUI(int numOfHearts,float health)
     {
         Debug.Log("HEALTH OF PLAYER IS " + health);
+        //DEBUG
+        playerHealth = health;
   
         //InitHealthUI(numOfHearts);
 	float eps = 0.1f;
