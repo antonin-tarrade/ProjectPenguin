@@ -85,6 +85,11 @@ public class EnemySpawner : MonoBehaviour
         waves[waveNumber].Load();
         foreach (SpawnData spawnData in waveToSpawn)
         {
+            remainingEnemies += spawnData.numberOfEnnemies;
+        }
+        foreach (SpawnData spawnData in waveToSpawn)
+        {
+            
 
             //remainingEnemies = numberOfEnemies + numberOfBoss + numberOfSlime;
             //remainingEnemies += spawnData.numberOfEnnemies;
@@ -97,7 +102,6 @@ public class EnemySpawner : MonoBehaviour
                 Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
 
                 // Spawn
-                remainingEnemies++;
                 GameObject enemy = Instantiate(spawnData.ennemyPrefab, spawnPosition, Quaternion.identity);
                 enemyTrackers.Add(enemy);
                 Enemy enemyComponent = enemy.GetComponent<Enemy>();

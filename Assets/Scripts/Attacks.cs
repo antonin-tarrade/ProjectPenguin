@@ -80,7 +80,7 @@ namespace Attacks
 
         public override void Fire(Vector3 direction)
         {
-            float step = totalAngle / numberOfAttacks;
+            float step = totalAngle / (numberOfAttacks-1);
             for (float angle = -totalAngle/(2); angle <= totalAngle / 2; angle += step)
             {
                 Vector3 d = Helper.Rotate(direction, angle * Mathf.Deg2Rad);

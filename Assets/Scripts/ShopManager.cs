@@ -284,7 +284,7 @@ public class MultishotUpgrade : Upgrade {
             IAttack newAttack = new MultiShotAttack
             {
                 attacker = Player,
-                dmg = Player.attack.dmg,
+                dmg = Player.attack.dmg/2,
                 speed = Player.attack.speed,
                 effects = Player.attack.effects
             };
