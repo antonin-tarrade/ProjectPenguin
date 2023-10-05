@@ -22,7 +22,7 @@ MonoBehaviour:
     points: 0
   enemyStats:
     baseHealth: 2
-    speed: 3
+    speed: 2
     attackSpeed: 8
     dmg: 1
     def: 1

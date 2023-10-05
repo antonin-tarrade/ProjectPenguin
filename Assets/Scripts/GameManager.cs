@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+
     // Objet/Component
     public GameObject player;
     private Player playerSystem;
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
     public delegate void GameplayEvent();
     public GameplayEvent playerDeathEvent;
     public GameplayEvent playerRespawnEvent;
+    public GameplayEvent pauseEvent;
+    public GameplayEvent unpauseEvent;
 
 
     public static GameManager instance;
@@ -70,6 +73,7 @@ public class GameManager : MonoBehaviour
         UIManager.pauseDefaultButton.Select();
         UIManager.isPaused = !(UIManager.isPaused);
         this.isPaused = true;
+        pauseEvent?.Invoke();
     }
 
     public void ShopPause(){
@@ -84,6 +88,7 @@ public class GameManager : MonoBehaviour
         UIManager.Switch(UIManager.gameMenu);
         UIManager.isPaused = !(UIManager.isPaused);
         this.isPaused = false;
+        unpauseEvent?.Invoke();
     }
 
     public void PlayerDeath()

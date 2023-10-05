@@ -71,22 +71,28 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(SpawnEnemiesWithDelay());
         }
         */
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ClearWave();
-        }
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    ClearWave();
+        //}
 
     }
 
 
     IEnumerator SpawnEnemiesWithDelay()
     {
+        enemyTrackers.Clear();
         waves[waveNumber].Load();
         foreach (SpawnData spawnData in waveToSpawn)
         {
+            remainingEnemies += spawnData.numberOfEnnemies;
+        }
+        foreach (SpawnData spawnData in waveToSpawn)
+        {
+            
 
             //remainingEnemies = numberOfEnemies + numberOfBoss + numberOfSlime;
-            remainingEnemies += spawnData.numberOfEnnemies;
+            //remainingEnemies += spawnData.numberOfEnnemies;
             // Spawn basic ennemies
             for (int i = 0; i < spawnData.numberOfEnnemies; i++)
             {
@@ -106,8 +112,23 @@ public class EnemySpawner : MonoBehaviour
                 float spawnDelay = Random.Range(maxSpawnDelay / 2f, maxSpawnDelay);
                 yield return new WaitForSeconds(spawnDelay);
                 enemyComponent.SetStats(GameManager.instance.battleData.enemyStats);
-                if (spawnData.statModifier.modifyStats) spawnData.statModifier.Apply(enemyComponent);
+                if (spawnData.statModifier != null && spawnData.statModifier.modifyStats) spawnData.statModifier.Apply(enemyComponent);
                 enemyComponent.health = enemyComponent.baseHealth;
+
+                float countdownBeforeNextEnnemy = spawnData.delayBetweenEachEnnemy;
+                while (countdownBeforeNextEnnemy > 0)
+                {
+                    countdownBeforeNextEnnemy -= Time.deltaTime;
+                    yield return null;
+                }
+
+            }
+
+            float countdownBeforeNextWave = spawnData.delayBeforeNextWave;
+            while (countdownBeforeNextWave > 0)
+            {
+                countdownBeforeNextWave -= Time.deltaTime;
+                yield return null;
             }
         }
     }
@@ -138,7 +159,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = waveDelay; i > 0; i--)
         {
             timer.text = i.ToString();
-            yield return new WaitForSeconds(1);
+            if (!Input.GetKey(KeyCode.P)) yield return new WaitForSeconds(1);
         }
         timerGO.SetActive(false);
         waveNumber++;
@@ -146,11 +167,16 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnEnemiesWithDelay());
     }
 
+
+    //Pour le debug
     private void ClearWave()
     {
-        remainingEnemies = 0;
-        foreach (GameObject obj in enemyTrackers) Destroy(obj);
-        WaitForNextWave();
+        StopAllCoroutines();
+        foreach (GameObject obj in enemyTrackers) 
+        { 
+            if (obj != null) obj.GetComponent<Enemy>().Death(); 
+        }
+        enemyTrackers.Clear();
     }
 
     public void StartWave()

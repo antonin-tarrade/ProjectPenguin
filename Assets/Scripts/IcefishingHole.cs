@@ -11,7 +11,20 @@ public class IcefishingHole : MonoBehaviour
     private float fishingStartTime = 0f;
     public Vector3 spawnOffset;
 
+    private AudioSource fishingSoundSource;
+    [SerializeField] List<AudioClip> fishingSoundClips;
+
     [SerializeField] private ChargingBar chargingBar;
+
+
+    private void Start()
+    {
+        fishingSoundSource = GetComponent<AudioSource>();
+        fishingSoundSource.Stop();
+
+        GameManager.instance.pauseEvent += fishingSoundSource.Pause;
+        GameManager.instance.unpauseEvent += fishingSoundSource.UnPause;
+    }
 
     void Update()
     {
@@ -29,7 +42,7 @@ public class IcefishingHole : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.F)||Input.GetKeyDown(KeyCode.G))
+                if (Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.G))
                 {
                     StartFishing();
                     chargingBar.SetChargeOn();
@@ -59,14 +72,16 @@ public class IcefishingHole : MonoBehaviour
     {
         isFishing = true;
         fishingStartTime = Time.time;
-        AudioManager.instance.PlayFishingSound(0);
+        fishingSoundSource.PlayOneShot(fishingSoundClips[0]);
+        //AudioManager.instance.PlayFishingSound(0);
     }
 
     void StopFishing()
     {
         isFishing = false;
         chargingBar.ResetBar();
-        AudioManager.instance.StopEffectSound();
+        fishingSoundSource.Stop();
+        //AudioManager.instance.StopEffectSound();
 
     }
 
@@ -74,7 +89,9 @@ public class IcefishingHole : MonoBehaviour
     {
         isFishing = false;
         Instantiate(fishPrefab, transform.position + spawnOffset, Quaternion.identity);
-        AudioManager.instance.PlayFishingSound(1);
+        fishingSoundSource.Stop();
+        fishingSoundSource.PlayOneShot(fishingSoundClips[1]);
+        //AudioManager.instance.PlayFishingSound(1);
         chargingBar.ResetBar();
 
 

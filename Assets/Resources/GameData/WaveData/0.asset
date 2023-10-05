@@ -19,12 +19,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   spawnDatas:
-  - ennemyPrefab: {fileID: 0}
-    numberOfEnnemies: 0
-    statModifier: {fileID: 0}
-  - ennemyPrefab: {fileID: 0}
-    numberOfEnnemies: 0
-    statModifier: {fileID: 0}
+  - ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
+    numberOfEnnemies: 5
+    statModifierRef:
+      modifyStats: 0
+      modifyHealth: 0
+      healthModifier: 1
+      modifySpeed: 0
+      speedModifier: 5
+      modifyAttackSpeed: 0
+      attackSpeedModifier: 10
+      modifyDmg: 0
+      dmgModifier: 0
+    statModifierContainer: {fileID: 0}
+    delayBeforeNextWave: 0.1
+    delayBetweenEachEnnemy: 5
   changeSpawnParameters: 0
   spawnRadius: 0
   spawnRandom: 0

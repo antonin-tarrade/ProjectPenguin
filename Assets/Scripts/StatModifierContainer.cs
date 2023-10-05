@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PenguinStatModifier", menuName = "Scriptables/PenguinStatModifier", order = 1)]
-public class PenguinStatModifier : ScriptableObject
+[Serializable]
+public class PenguinStatModifier 
 {
     // Modificateur de stats
     public bool modifyStats;
@@ -25,5 +25,11 @@ public class PenguinStatModifier : ScriptableObject
         if (modifyDmg) penguin.attack.dmg *= dmgModifier;
     }
 
+}
+
+[CreateAssetMenu(fileName = "StatModifier", menuName = "Scriptables/StatModifier", order = 0)]
+public class StatModifierContainer : ScriptableObject
+{
+    public PenguinStatModifier statModifier;
 }
 

@@ -15,7 +15,8 @@ public class UIManager : MonoBehaviour
     private GameManager gameManager;
     // Player
     public GameObject player;
-    private Player playerSystem;
+    public Player playerSystem;
+    public float playerHealth;
     // enemySpawner
     public GameObject enemySpawner;
     private EnemySpawner enemySpawnerSystem;
@@ -45,7 +46,7 @@ public class UIManager : MonoBehaviour
 
     // Variables
     public GameObject menuActif;
-    public bool isPaused;
+    public bool isPaused = false;
 
 
     private void Awake() {
@@ -91,7 +92,7 @@ public class UIManager : MonoBehaviour
 
         // Menu Pause
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.B)){
-            if(isPaused){
+            if(!isPaused){
                 gameManager.Pause();
             }
             else {
@@ -101,9 +102,11 @@ public class UIManager : MonoBehaviour
         if (isPaused) return;
 
         // Menu Game
-       
-         
+
+
         // Health (UI)
+        //DEBUG
+        playerHealth = playerSystem.health;
         UIHealthSystem.UpdateHealthUI(playerSystem.baseHealth, playerSystem.health);
         // Wave (UI)
         UIWaveTxtWave.text = "Wave : " + (enemySpawnerSystem.waveNumber + 1);

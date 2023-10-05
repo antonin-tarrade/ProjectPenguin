@@ -74,7 +74,7 @@ public class Penguin : MonoBehaviour
 	public enum Type { Player, Ennemy }
 	public Type type { get; protected set; }
 
-    protected void InitPenguin ()
+    public virtual void InitPenguin ()
 	{
 		animator = gameObject.GetComponent<Animator> ();
 		body = gameObject.GetComponent<Rigidbody2D> ();
@@ -143,7 +143,7 @@ public class Penguin : MonoBehaviour
 		health = Mathf.Min(health, baseHealth);
 	}
 
-	protected virtual void Death() { }
+	public virtual void Death() { }
 
 
 

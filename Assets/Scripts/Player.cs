@@ -36,13 +36,18 @@ public class Player : Penguin
 	private void Start ()
 	{
 		InitPenguin ();
-		SetStats(GameManager.instance.battleData.playerStats);
 		type = Type.Player;
 
 		GameManager.instance.playerRespawnEvent += Respawn;
 	}
 
-	private void Update ()
+	public override void InitPenguin()
+	{
+		base.InitPenguin();
+        SetStats(GameManager.instance.battleData.playerStats);
+    }
+
+    private void Update ()
 	{
 		UpdateDepTime();
 		if (dureeBouclier <=0)
@@ -192,7 +197,7 @@ public class Player : Penguin
 		hasSecondChance = true;
 	}
 
-    protected override void Death()
+    public override void Death()
     {
 		isDead = true;
 		movement = new Vector2(0, 0);

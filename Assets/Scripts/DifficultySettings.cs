@@ -48,6 +48,6 @@ public class DifficultySettings : MonoBehaviour
     private void UpdateText()
     {
     	difficulty.text = battleDatas[current].difficultyName;
-        //GameManager.instance.battleData = battleDatas[current];
+        GameManager.instance.battleData = battleDatas[current];
     }
 }
