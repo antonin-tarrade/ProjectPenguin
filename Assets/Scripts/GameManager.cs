@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     // Variable
     public bool isOver;
     public bool isPaused;
+    public bool isStarted;
     public delegate void GameplayEvent();
     public GameplayEvent playerDeathEvent;
     public GameplayEvent playerRespawnEvent;
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
         //Initialisation Component
         playerSystem = player.GetComponent<Player>();
         UIManager = UI.GetComponent<UIManager>();
-
+        isStarted = false;
         instance = this;
     }
     
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
         playerSystem.iceShards = 0;
 
         UIManager.Switch(UIManager.gameMenu);
+        isStarted = true;
     }
 
     public void Pause(){
