@@ -16,7 +16,7 @@ using UnityEngine.UIElements;
 // 3.We iterate on each point and select all the satisfying points, which are the ones for which the constraint is less than the current one
 // 4.We keep the best point, which is the one that minimizes the distance to the target : this is our local destination
 
-//TO DO : gerer les mediatrices(?), les evitements de la target elle meme(??), optimisation (bcp à faire), fix les tremblements statiques (enormement a faire)
+//TO DO : deplacement sur X OU Y (ez), gerer les mediatrices(?), les evitements de la target elle meme(??), optimisation (bcp à faire), fix les tremblements statiques (enormement a faire)
 public class Pathfinder : MonoBehaviour
 {
     // Class for editor purpose only (dictionnary not serializable)
