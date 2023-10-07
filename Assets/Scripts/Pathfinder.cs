@@ -5,6 +5,7 @@ using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
+using System.ComponentModel;
 
 
 // This script calculates local pathfinding based on 2 constraints :
@@ -17,11 +18,12 @@ using UnityEngine.UIElements;
 // 4.We keep the best point, which is the one that minimizes the distance to the target : this is our local destination
 
 //TO DO :
-//deplacement sur X OU Y (ez),
-//gerer les mediatrices(?),
-//les evitements de la target elle meme(??), optimisation (bcp à faire),
-//fix les tremblements statiques (enormement a faire),
-// système de priorité (contrainte pondérée)
+//deplacement sur X OU Y (done)
+//gerer les mediatrices, alignements et les groupes d'objets proches
+//les evitements de la target elle meme
+//optimisation
+//fix les tremblements statiques (done)
+//système de priorité (contrainte pondérée) ou de distance critique (distance à partir de laquelle on ne cherche plus à s'approcher de la cible mais seulement à s'éloigner de l'objet
 public class Pathfinder : MonoBehaviour
 {
     // Class for editor purpose only (dictionnary not serializable)
@@ -42,22 +44,30 @@ public class Pathfinder : MonoBehaviour
     float time;
 
     [Header("Movement")]
+    [SerializeField, Tooltip("Determines if movement is free or constrained on X/Y axes")]
+    bool restrainMovement;
     [SerializeField] float speed;
+    [Tooltip("How smooth the movement should be, low smoothing will be more accurate, high smoothing will be more fluid")]
+    [SerializeField, Range(0f, 1f)]
+    float smoothing;
+    [Tooltip("The min distance for which it considers it is aligned on an axis with its target")]
+    [SerializeField] float minAxisDistance;
     Vector3 currentDirection;
-    // targetName does not matter if targetRef is set
+    [Tooltip("Will look for object with targetName if targetRef is not set")]
     [SerializeField] string targetName;
     [SerializeField] GameObject targetRef;
     GameObject target;
 
     [Header("Calculations")]
-    [SerializeField] float updateFrequency;
-    // The number of points to calculate for the circle, a high resolution is not needed for good results and brings heavy calculations
+    [SerializeField, Tooltip("The frequency at which it calculates a new direction")] float updateFrequency;
+    [Tooltip("The number of points to calculate for the circle of directions, a high resolution is not needed for good results and brings heavy calculations")]
     [SerializeField] int circlePointsResolution;
-    // How much we want the movement to be precise and local
+    [Tooltip("How much we want the movement to be precise and local")]
     [SerializeField] int localisationFactor;
-    
+
 
     // For editor only
+    [Tooltip("List of tags to avoid and their respective distance to maintain")]
     [SerializeField] List<PathfindingKVP> tagsToAvoid = new List<PathfindingKVP>();
     // References for all types of objects to avoid
     Dictionary<string, float> objectsToAvoid = new Dictionary<string, float>();
@@ -114,9 +124,25 @@ public class Pathfinder : MonoBehaviour
             if (validsPoints.Length > 0)
             {
                 Vector3 bestPoint = GetBestPoint(validsPoints);
-                currentDirection = (bestPoint - transform.position).normalized * speed;
+                Vector3 direction = (bestPoint - transform.position).normalized * speed;
+                currentDirection = Vector3.Lerp(currentDirection, direction, (1 - smoothing));
             }
+            else currentDirection = Vector3.zero;
         }
+        
+        if (restrainMovement)
+        {
+            if (Mathf.Abs(currentDirection.x) < Mathf.Abs(currentDirection.y))
+            {
+                if (currentDirection.x < minAxisDistance) currentDirection = new Vector3(0, currentDirection.y, 0);
+                else currentDirection = new Vector3(currentDirection.x, 0, 0);
+            }
+            else
+            {
+                if (currentDirection.y < minAxisDistance) currentDirection = new Vector3(currentDirection.x, 0, 0);
+                else currentDirection = new Vector3(0, currentDirection.y, 0);
+            }
+        }   
     }
 
     // Find all the instances of objects that are tagged such as we need to avoid them
@@ -242,6 +268,7 @@ public class Pathfinder : MonoBehaviour
     void MoveTo(Vector3 position)
     {
         transform.position += currentDirection.normalized * Time.deltaTime * speed;
+        Debug.Log(currentDirection);
     }
 
 
