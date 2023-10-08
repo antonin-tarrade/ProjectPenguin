@@ -30,7 +30,9 @@ public class Pathfinder : MonoBehaviour
     [Serializable]
     public class PathfindingKVP
     {
+        [Tooltip("The tag of the objects to avoid")]
         public string tag;
+        [Tooltip("The minimum distance to respect")]
         public float minDistance;
     }
 
@@ -43,9 +45,14 @@ public class Pathfinder : MonoBehaviour
     // Variable for custom frequency update
     float time;
 
-    [Header("Movement")]
+    [Header("Configuration")]
     [SerializeField, Tooltip("Determines if movement is free or constrained on X/Y axes")]
     bool restrainMovement;
+    [SerializeField, Tooltip("Determines if pathfinder should put priority on avoiding getting close or reaching target")]
+    bool prioritiseTarget;
+
+    [Header("Movement")]
+
     [SerializeField] float speed;
     [Tooltip("How smooth the movement should be, low smoothing will be more accurate, high smoothing will be more fluid")]
     [SerializeField, Range(0f, 1f)]
@@ -119,9 +126,17 @@ public class Pathfinder : MonoBehaviour
         else
         {
             float distance = Vector3.Distance(transform.position, closestObject.transform.position);
+            objectsToAvoid.TryGetValue(closestObject.tag, out float minDistance);
             Vector3[] points = GeneratePointsBasedOn(transform.position, distance, circlePointsResolution);
+            Vector3[] safePoints = GetValidPoints(points, minDistance);
             Vector3[] validsPoints = GetValidPoints(points, distance);
-            if (validsPoints.Length > 0)
+            if (!prioritiseTarget && safePoints.Length > 0)
+            {
+                Vector3 bestPoint = GetBestPoint(safePoints);
+                Vector3 direction = (bestPoint - transform.position).normalized * speed;
+                currentDirection = Vector3.Lerp(currentDirection, direction, (1 - smoothing));
+            }
+            else if (validsPoints.Length > 0)
             {
                 Vector3 bestPoint = GetBestPoint(validsPoints);
                 Vector3 direction = (bestPoint - transform.position).normalized * speed;
@@ -171,7 +186,7 @@ public class Pathfinder : MonoBehaviour
             if (distance < minDistance)
             {
                 minDistance = distance;
-                closestObject = obj;
+                closestObject = obj; 
             }
         }
 
@@ -226,11 +241,13 @@ public class Pathfinder : MonoBehaviour
     {
         List<Vector3> validPoints = new List<Vector3>();
 
-        foreach(Vector3 point in points)
+        GameObject[] objectsDetected = FindObjectsToAvoid();
+
+        foreach (Vector3 point in points)
         {
             Vector3 movement = point - transform.position;
             movement = transform.position + (movement / localisationFactor);
-            GameObject[] objectsDetected = FindObjectsToAvoid();
+            
             GameObject closestObject = GetClosestObject(objectsDetected, movement);
             float distance = Vector3.Distance(movement, closestObject.transform.position);
 
