@@ -126,6 +126,19 @@ public class Penguin : MonoBehaviour
 		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Shoot, transform.position);
     }
 
+	protected virtual void Fire(Vector3 point)
+	{
+        if (isSliding)
+            return;
+        if (Time.time - timeAtLastFire < fireCooldown)
+            return;
+
+        timeAtLastFire = Time.time;
+		Vector3 direction = (point - transform.position).normalized;
+		attack.Fire(direction);
+		AudioManager.instance.PlaySfxAtPoint(AudioManager.Sfx.Shoot, transform.position);
+    }
+
 	public void Hit(float dmg)
 	{
 		health -= dmg/def;

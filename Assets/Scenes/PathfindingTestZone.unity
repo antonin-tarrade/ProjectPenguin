@@ -157,9 +157,9 @@ MonoBehaviour:
   debug2: 0
   debug3: 0
   debug4: 0
-  restrainMovement: 0
+  restrainMovement: 1
   speed: 3
-  smoothing: 0
+  smoothing: 0.331
   minAxisDistance: 0.1
   targetName: Target
   targetRef: {fileID: 1339858078}
@@ -232,7 +232,7 @@ Transform:
   m_GameObject: {fileID: 105155274}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.49, y: 3.39, z: 0}
+  m_LocalPosition: {x: -15.07, y: 0.37000012, z: 0}
   m_LocalScale: {x: 0.7962486, y: 0.7962486, z: 0.7962486}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -272,9 +272,9 @@ MonoBehaviour:
   debug2: 0
   debug3: 0
   debug4: 0
-  restrainMovement: 0
+  restrainMovement: 1
   speed: 3
-  smoothing: 0
+  smoothing: 0.331
   minAxisDistance: 0.1
   targetName: Target
   targetRef: {fileID: 1339858078}
@@ -347,7 +347,7 @@ Transform:
   m_GameObject: {fileID: 322359666}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.05, y: 1.63, z: 0}
+  m_LocalPosition: {x: -9.43, y: 3.52, z: 0}
   m_LocalScale: {x: 0.7962486, y: 0.7962486, z: 0.7962486}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -479,9 +479,9 @@ MonoBehaviour:
   debug2: 0
   debug3: 0
   debug4: 0
-  restrainMovement: 0
+  restrainMovement: 1
   speed: 3
-  smoothing: 0
+  smoothing: 0.331
   minAxisDistance: 0.1
   targetName: Target
   targetRef: {fileID: 1339858078}
@@ -554,7 +554,7 @@ Transform:
   m_GameObject: {fileID: 537010514}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.04, y: -2.08, z: 0}
+  m_LocalPosition: {x: -9.54, y: -5.1, z: 0}
   m_LocalScale: {x: 0.7962486, y: 0.7962486, z: 0.7962486}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -890,7 +890,7 @@ Transform:
   m_GameObject: {fileID: 1339858078}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.77, y: 3.57, z: 0}
+  m_LocalPosition: {x: -3.49, y: 2.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -930,9 +930,9 @@ MonoBehaviour:
   debug2: 0
   debug3: 0
   debug4: 0
-  restrainMovement: 0
+  restrainMovement: 1
   speed: 3
-  smoothing: 0
+  smoothing: 0.331
   minAxisDistance: 0.1
   targetName: Target
   targetRef: {fileID: 1339858078}
@@ -1005,7 +1005,7 @@ Transform:
   m_GameObject: {fileID: 1375010895}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.75, y: -3.83, z: 0}
+  m_LocalPosition: {x: -15.33, y: -6.85, z: 0}
   m_LocalScale: {x: 0.7962486, y: 0.7962486, z: 0.7962486}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1258,7 +1258,7 @@ Transform:
   m_GameObject: {fileID: 1545882188}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.25, y: 0.77, z: 0}
+  m_LocalPosition: {x: -16.83, y: -2.25, z: 0}
   m_LocalScale: {x: 0.7962486, y: 0.7962486, z: 0.7962486}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1280,9 +1280,9 @@ MonoBehaviour:
   debug2: 0
   debug3: 0
   debug4: 0
-  restrainMovement: 0
-  speed: 5
-  smoothing: 0
+  restrainMovement: 1
+  speed: 3
+  smoothing: 0.262
   minAxisDistance: 0.1
   targetName: Target
   targetRef: {fileID: 1339858078}

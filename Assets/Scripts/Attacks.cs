@@ -56,7 +56,7 @@ namespace Attacks
             GameObject projectile = GameObject.Instantiate(attacker.projectilePrefab, attacker.transform.position + offset, Quaternion.identity);
             projectile.GetComponent<Projectile>().speed = speed;
             projectile.GetComponent<Projectile>().onHit += OnHit;
-            projectile.GetComponent<Projectile>().direction = direction;
+            projectile.GetComponent<Projectile>().direction = direction.normalized;
             projectile.GetComponent<Projectile>().owner = attacker;
         }
 
