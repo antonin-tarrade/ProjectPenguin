@@ -23,7 +23,9 @@ using System.ComponentModel;
 //les evitements de la target elle meme
 //optimisation
 //fix les tremblements statiques (done)
-//système de priorité (contrainte pondérée) ou de distance critique (distance à partir de laquelle on ne cherche plus à s'approcher de la cible mais seulement à s'éloigner de l'objet
+//système de priorité (contrainte pondérée)
+//OU
+//de distance critique (distance à partir de laquelle on ne cherche plus à s'approcher de la cible mais seulement à s'éloigner de l'objet)
 public class Pathfinder : MonoBehaviour
 {
     // Class for editor purpose only (dictionnary not serializable)
