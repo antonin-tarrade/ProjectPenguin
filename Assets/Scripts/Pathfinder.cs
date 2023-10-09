@@ -23,7 +23,9 @@ using System.ComponentModel;
 //les evitements de la target elle meme
 //optimisation
 //fix les tremblements statiques (done)
-//système de priorité (contrainte pondérée) ou de distance critique (distance à partir de laquelle on ne cherche plus à s'approcher de la cible mais seulement à s'éloigner de l'objet
+//systï¿½me de prioritï¿½ (contrainte pondï¿½rï¿½e)
+//OU
+//de distance critique (distance ï¿½ partir de laquelle on ne cherche plus ï¿½ s'approcher de la cible mais seulement ï¿½ s'ï¿½loigner de l'objet)
 public class Pathfinder : MonoBehaviour
 {
     // Class for editor purpose only (dictionnary not serializable)
@@ -52,21 +54,22 @@ public class Pathfinder : MonoBehaviour
     bool prioritiseTarget;
 
     [Header("Movement")]
-
-    [SerializeField] float speed;
+    [SerializeField, Tooltip("The speed for which the movement is calculated(affects the pathfinding)")]
+    float speed;
     [Tooltip("How smooth the movement should be, low smoothing will be more accurate, high smoothing will be more fluid")]
     [SerializeField, Range(0f, 1f)]
     float smoothing;
     [Tooltip("The min distance for which it considers it is aligned on an axis with its target")]
-    [SerializeField] float minAxisDistance;
-    Vector3 currentDirection;
+    [SerializeField] public float minAxisDistance;
+    public Vector3 currentDirection { get; private set; }
     [Tooltip("Will look for object with targetName if targetRef is not set")]
     [SerializeField] string targetName;
     [SerializeField] GameObject targetRef;
     GameObject target;
 
     [Header("Calculations")]
-    [SerializeField, Tooltip("The frequency at which it calculates a new direction")] float updateFrequency;
+    [SerializeField, Tooltip("The frequency at which it calculates a new direction")] 
+    float updateFrequency;
     [Tooltip("The number of points to calculate for the circle of directions, a high resolution is not needed for good results and brings heavy calculations")]
     [SerializeField] int circlePointsResolution;
     [Tooltip("How much we want the movement to be precise and local")]
@@ -110,7 +113,7 @@ public class Pathfinder : MonoBehaviour
         {
             time -= Time.deltaTime;
         }
-        MoveTo(currentDirection);
+        //MoveTo(currentDirection);
     }
 
     // General method that computes all of the algorithm and stores the result in currentDirection
