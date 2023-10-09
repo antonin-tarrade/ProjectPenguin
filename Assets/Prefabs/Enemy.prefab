@@ -295,6 +295,7 @@ MonoBehaviour:
   debug3: 0
   debug4: 0
   restrainMovement: 1
+  prioritiseTarget: 0
   speed: 1
   smoothing: 0.169
   minAxisDistance: 1
@@ -305,7 +306,7 @@ MonoBehaviour:
   localisationFactor: 3
   tagsToAvoid:
   - tag: Ennemy
-    minDistance: 2
+    minDistance: 1
   - tag: Obstacle
     minDistance: 3
 --- !u!1 &7120548093083841651

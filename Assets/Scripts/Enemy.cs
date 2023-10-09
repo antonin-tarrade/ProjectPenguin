@@ -48,7 +48,7 @@ public class Enemy : Penguin
 		if (usePathfinder)
 		{
 			xAlignedToTarget = Mathf.Abs(distanceToTarget.x) < pathfinder.minAxisDistance;
-            xAlignedToTarget = Mathf.Abs(distanceToTarget.x) < pathfinder.minAxisDistance;
+            yAlignedToTarget = Mathf.Abs(distanceToTarget.y) < pathfinder.minAxisDistance;
         }
 		else
 		{
