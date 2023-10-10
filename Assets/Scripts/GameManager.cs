@@ -5,14 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-
     // Objet/Component
-    public GameObject player;
-    private Player playerSystem;
-
-    public GameObject UI;
-    private UIManager UIManager;
+    private Player player;
 
     // Objet contenant toutes les statistiques, peut �tre customis� � volont� pour changer la difficult�(voir dossier GameData)
     public BattleData battleData;
@@ -25,31 +19,28 @@ public class GameManager : MonoBehaviour
     public GameplayEvent playerRespawnEvent;
     public GameplayEvent pauseEvent;
     public GameplayEvent unpauseEvent;
+    private UIManager UI;
 
-
+    // Singleton
     public static GameManager instance;
 
-
-
     private void Awake() {
-        //Initialisation Component
-        playerSystem = player.GetComponent<Player>();
-        UIManager = UI.GetComponent<UIManager>();
 
+        //Initialisation Component
         instance = this;
     }
     
     void Start()
     {
-    	//Pause();
-        //Unpause();
+        UI = UIManager.instance;
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
     
     
     void Update()
     {
         // Game Over
-        //if (playerSystem.health<=0) {
+        //if (player.health<=0) {
         //    isOver = true;            
         //}
         //else{
@@ -59,34 +50,32 @@ public class GameManager : MonoBehaviour
 
     public void Play(){
         Time.timeScale = 1f;
+        player.SetStats(battleData.playerStats);
+        player.health = player.baseHealth;
+        player.iceShards = 0;
 
-        playerSystem.SetStats(battleData.playerStats);
-        playerSystem.health = playerSystem.baseHealth;
-        playerSystem.iceShards = 0;
-
-        UIManager.Switch(UIManager.gameMenu);
+        UI.Switch(UI.gameMenu);
     }
 
     public void Pause(){
         Time.timeScale = 0f;
-        UIManager.Switch(UIManager.pauseMenu);
-        UIManager.pauseDefaultButton.Select();
-        UIManager.isPaused = !(UIManager.isPaused);
+        UI.Switch(UI.pauseMenu);
+        UI.pauseDefaultButton.Select();
+        UI.isPaused = !(UI.isPaused);
         this.isPaused = true;
         pauseEvent?.Invoke();
     }
 
     public void ShopPause(){
         Time.timeScale = 0f;
-        UIManager.Switch(UIManager.shopMenu);
-        UIManager.isPaused = !(UIManager.isPaused);
+        UI.isPaused = !(UI.isPaused);
         this.isPaused = true;
     }
 
     public void Unpause(){
         Time.timeScale = 1f;
-        UIManager.Switch(UIManager.gameMenu);
-        UIManager.isPaused = !(UIManager.isPaused);
+        UI.Switch(UI.gameMenu);
+        UI.isPaused = !(UI.isPaused);
         this.isPaused = false;
         unpauseEvent?.Invoke();
     }
@@ -103,7 +92,5 @@ public class GameManager : MonoBehaviour
         playerRespawnEvent?.Invoke();
     }
     
-    
-
     
 }

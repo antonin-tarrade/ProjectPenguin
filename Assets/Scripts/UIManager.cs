@@ -9,29 +9,22 @@ using JetBrains.Annotations;
 
 public class UIManager : MonoBehaviour
 {
-    // Objet/Component
-    // GameManager
-    public GameObject GameManager;
-    private GameManager gameManager;
+
     // Player
-    public GameObject player;
-    public Player playerSystem;
-    public float playerHealth;
+    public Player player;
+
     // enemySpawner
-    public GameObject enemySpawner;
-    private EnemySpawner enemySpawnerSystem;
+    private EnemySpawner enemySpawner;
 
     // Menu
     public GameObject gameMenu;
     public GameObject pauseMenu;
     public GameObject overMenu;
-    public GameObject shopMenu;
+    [HideInInspector]
     public GameObject difficultyMenu;
 
-    
     // UIs
-    public GameObject UIHealth;
-    private Health UIHealthSystem;
+    public Health UIHealth;
     public TMP_Text UIShards;
     public TMP_Text UIWaveTxtWave;
     public TMP_Text UIWaveTXTEnemies;
@@ -48,16 +41,16 @@ public class UIManager : MonoBehaviour
     public GameObject menuActif;
     public bool isPaused = false;
 
+    // Singleton
+    public static UIManager instance;
+
 
     private void Awake() {
+
         Initialisation();
 
         //Initialisation Component
-        playerSystem = player.GetComponent<Player>();
-        gameManager = GameManager.GetComponent<GameManager>();
-        UIHealthSystem = UIHealth.GetComponent<Health>();
-        UIHealthSystem.InitHealthUI(playerSystem.baseHealth);
-        enemySpawnerSystem = enemySpawner.GetComponent<EnemySpawner>();
+        UIHealth.InitHealthUI(player.baseHealth);
 
     }
 
@@ -69,16 +62,17 @@ public class UIManager : MonoBehaviour
         gameMenu.SetActive(false);
         pauseMenu.SetActive(false);
         overMenu.SetActive(false);
-        shopMenu.SetActive(false);
         difficultyMenu.SetActive(true);
         difficultyDefaultButton.Select();
 
+        instance = this;
     }
 
     private void Start()
     {
-        gameManager.playerDeathEvent += onPlayerDeath;
-        gameManager.playerRespawnEvent += onPlayerRespawn;
+        enemySpawner = EnemySpawner.instance;
+        GameManager.instance.playerDeathEvent += onPlayerDeath;
+        GameManager.instance.playerRespawnEvent += onPlayerRespawn;
     }
 
     private void Update() {
@@ -86,17 +80,17 @@ public class UIManager : MonoBehaviour
         // Menu Over
         if (menuActif == overMenu)
         {
-            if (Input.GetKeyDown(KeyCode.R)) gameManager.PlayerRespawn();
+            if (Input.GetKeyDown(KeyCode.R)) GameManager.instance.PlayerRespawn();
 
         }
 
         // Menu Pause
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.B)){
             if(!isPaused){
-                gameManager.Pause();
+                GameManager.instance.Pause();
             }
             else {
-                gameManager.Unpause();
+                GameManager.instance.Unpause();
             }
         }
         if (isPaused) return;
@@ -105,24 +99,22 @@ public class UIManager : MonoBehaviour
 
 
         // Health (UI)
-        //DEBUG
-        playerHealth = playerSystem.health;
-        UIHealthSystem.UpdateHealthUI(playerSystem.baseHealth, playerSystem.health);
+        UIHealth.UpdateHealthUI(player.baseHealth, player.health);
         // Wave (UI)
-        UIWaveTxtWave.text = "Wave : " + (enemySpawnerSystem.waveNumber + 1);
+        UIWaveTxtWave.text = "Wave : " + (enemySpawner.waveNumber + 1);
 
         UIWaveTXTEnemies.text = "Enemies left : " + EnemySpawner.remainingEnemies;
         // Shards (UI)
-        UIShards.text = ": " + playerSystem.iceShards.ToString();
+        UIShards.text = ": " + player.iceShards.ToString();
         
         // Score (UI)
-        UIScore.text = "Score : " + playerSystem.score.ToString();
+        UIScore.text = "Score : " + player.score.ToString();
 
     }
 
     public void onPlayerDeath()
     {
-    	scoreMort.text = "Score : " + playerSystem.score.ToString();
+    	scoreMort.text = "Score : " + player.score.ToString();
         Switch(overMenu) ;
         overDefaultButton.Select();
     }
@@ -134,13 +126,12 @@ public class UIManager : MonoBehaviour
     }
     
 
-        
-
+    
     public void Switch(GameObject to) {
         menuActif.SetActive(false);
         //gameMenu.SetActive(true);
         to.SetActive(true);
-	Debug.Log("Switch : " + to.ToString() + " " + menuActif.ToString());
+	    Debug.Log("Switch : " + to.ToString() + " " + menuActif.ToString());
         menuActif = to;
     }
 

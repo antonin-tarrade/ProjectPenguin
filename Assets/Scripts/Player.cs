@@ -33,6 +33,8 @@ public class Player : Penguin
 	
 	public int score = 0;
 
+	public float fishingTime = 10f;
+
 	private void Start ()
 	{
 		InitPenguin ();

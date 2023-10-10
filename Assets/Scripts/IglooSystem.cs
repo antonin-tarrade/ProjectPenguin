@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IglooSystem : MonoBehaviour
 {
     [SerializeField]
     private Canvas shopButton;
+    private bool isShopOpen = false;
+
     private void Start() {
         shopButton.gameObject.SetActive(true);
         shopButton.enabled = false;
@@ -12,30 +15,26 @@ public class IglooSystem : MonoBehaviour
     // On rend le shop ouvrable quand le joueur est à proximité
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
-            shopButton.enabled = true;     
-            ShopManager.openable = true;       
+            shopButton.enabled = true;            
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
             shopButton.enabled = false;
-            ShopManager.openable = false;
         }
     }
-    // public GameObject player;
-    // private Player playerSystem;
 
-    // private void Awake() {
-    //     //Initialisation Component
-    //     playerSystem = player.GetComponent<Player>();
-    // }
-    // private void OnCollisionEnter2D(Collision2D collision)
-	// {
-	// 	if (collision.gameObject.CompareTag("Shards"))
-	// 	{
-	// 		Destroy(collision.gameObject);
-    //         playerSystem.iceShards+=1; // Incrementation du score
-	// 	}
-	// }
+
+    private void Update() {
+        if (!isShopOpen &&Input.GetKeyDown(KeyCode.E)) {
+            isShopOpen = true;
+            SceneManager.LoadScene("Shop", LoadSceneMode.Additive);
+            GameManager.instance.ShopPause();
+        } else if (isShopOpen && Input.GetKeyDown(KeyCode.E)) {
+            SceneManager.UnloadSceneAsync("Shop");
+            GameManager.instance.Unpause();
+            isShopOpen = false;
+        }
+    }
 }

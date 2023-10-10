@@ -5,7 +5,9 @@ using UnityEngine;
 public class IcefishingHole : MonoBehaviour
 {
     public GameObject fishPrefab;
-    public float fishingTime = 10f;
+    public GameObject playerObject;
+    public Player player;
+    private float fishingTime;
     private bool isFishing = false;
     private bool isPlayerInside = false;
     private float fishingStartTime = 0f;
@@ -19,8 +21,12 @@ public class IcefishingHole : MonoBehaviour
 
     private void Start()
     {
+
+        // Fishing hole
         fishingSoundSource = GetComponent<AudioSource>();
         fishingSoundSource.Stop();
+        fishingTime = player.fishingTime;
+
 
         GameManager.instance.pauseEvent += fishingSoundSource.Pause;
         GameManager.instance.unpauseEvent += fishingSoundSource.UnPause;
