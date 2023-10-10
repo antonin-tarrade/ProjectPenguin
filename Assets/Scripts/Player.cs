@@ -71,7 +71,7 @@ public class Player : Penguin
 			StartCoroutine (slide ());
 		}
 
-		if (!isSliding && (Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)|| Input.GetKeyDown(KeyCode.R)) && !GameManager.instance.isPaused) 
+		if (!isSliding && (Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)|| Input.GetKeyDown(KeyCode.R)) && !GameManager.instance.isPaused && GameManager.instance.isStarted && !GameManager.instance.isOver) 
 		{
 			Fire();
 		}

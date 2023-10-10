@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     // Variable
     public bool isOver;
     public bool isPaused;
+    public bool isStarted;
     public delegate void GameplayEvent();
     public GameplayEvent playerDeathEvent;
     public GameplayEvent playerRespawnEvent;
