@@ -38,7 +38,7 @@ namespace Attacks
 
     }
 
-   
+    
 
     public class BasicAttack : IAttack
     {
@@ -68,6 +68,7 @@ namespace Attacks
             }
             
             targetHit.Hit(dmg);
+
         }
     }
 

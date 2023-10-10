@@ -60,7 +60,7 @@ public class PolarBearDialogue : MonoBehaviour
        			{
        				ChangerTexte("Bravo tu as trouvé le bouclier ! tu peux l'activer en appuyant sur 'C', mais attention à ne pas trop l'utiliser...");
        			} else {
-       				ChangerTexte("Après avoir autant progresser en attaque, il est désormais tant d'apprendre à vous défendre aussi ! Aller donc au nord-est de cette ville, on dit qu'un navire de guerre s'y était échoué il y a fort fort longtemps, peut être y trouverez vous encore un bouclier...");
+       				ChangerTexte("Après avoir autant progressé en attaque, il est désormais tant d'apprendre à vous défendre aussi ! Aller donc au nord-est de cette ville, on dit qu'un navire de guerre s'y était échoué il y a fort fort longtemps, peut être y trouverez vous encore un bouclier...");
        			}
        		}
        		ShowPrompt();

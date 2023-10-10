@@ -8,8 +8,6 @@ public class ShopManager : MonoBehaviour
 {
     // Singleton
     public static ShopManager instance;
-
-
     private Player player;
     public static bool openable;
     private Upgrade[] upgrades;
@@ -181,8 +179,8 @@ public class FishingUpgrade : Upgrade {
 	    levelMax = 3;
     }
     public override void Buy() {
-            base.Buy();
-            player.fishingTime *= 0.7f;
+        base.Buy();
+        player.fishingTime *= 0.7f;
     
     }
 }
@@ -232,6 +230,8 @@ public class MultishotUpgrade : Upgrade {
 
             ChangeAttack();      
         }
+
+
     }
 
     public void ChangeAttack()
