@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class IcefishingHole : MonoBehaviour
 {
     public GameObject fishPrefab;
-    public float fishingTime = 10f;
+    public static float fishingTime = 10f;
     private bool isFishing = false;
     private bool isPlayerInside = false;
     private float fishingStartTime = 0f;

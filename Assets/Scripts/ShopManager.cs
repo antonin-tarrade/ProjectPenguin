@@ -215,13 +215,13 @@ public class FishingUpgrade : Upgrade {
         Price = 3;
         Image = "FishingRod";
         Level = LevelEnum.LEVEL0;
-	LevelMax = LevelEnum.LEVEL3;
+	    LevelMax = LevelEnum.LEVEL3;
         this.fishingHole = fishingHole;
     }
     public override void Buy() {
         if(Player.iceShards >= Price && Level != LevelMax) {
             base.Buy();
-            fishingHole.fishingTime *= 0.7f;
+            IcefishingHole.fishingTime *= 0.7f;
         }
     }
 }
