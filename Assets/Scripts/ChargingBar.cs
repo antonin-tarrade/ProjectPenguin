@@ -28,6 +28,7 @@ public class ChargingBar : MonoBehaviour
         if (isCharging)
         {
             progressImage.fillAmount = Mathf.Min(1f, number);
+            Debug.Log(progressImage.fillAmount);
         }
 
         if (number >= 1)
