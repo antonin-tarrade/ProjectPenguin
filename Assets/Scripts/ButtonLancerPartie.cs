@@ -16,5 +16,6 @@ public class ButtonLancerPartie : MonoBehaviour
     public void DemarrerPartie()
     {
     	GameManager.instance.Play();
+        GameManager.instance.isStarted = true;
     }
 }

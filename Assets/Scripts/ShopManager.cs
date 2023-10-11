@@ -15,7 +15,7 @@ public class ShopManager : MonoBehaviour
     public GameObject shopUI;
     public Transform shopContent;
     public GameObject itemPrefab;
-    public Health healthUI;
+    private Health healthUI;
     private UIManager uiManager;
     private GameManager gameManager;
 
@@ -27,6 +27,9 @@ public class ShopManager : MonoBehaviour
         else {
             Destroy(gameObject);
         }
+
+
+        healthUI = GameObject.Find("UIHealth").GetComponent<Health>();
 
         upgrades = new Upgrade[] {
             new HealthUpgrade(healthUI),
@@ -150,7 +153,7 @@ public class SpeedUpgrade : Upgrade {
     }
 }
 public class HealthUpgrade : Upgrade {
-    private Health healthUI;
+    private Health UI;
 
     public HealthUpgrade(Health healthUI) {
         name = "Health";
@@ -158,13 +161,14 @@ public class HealthUpgrade : Upgrade {
         image = "Heart";
         currentLevel = 0;
 	    levelMax = 3;
-        this.healthUI = healthUI;
+        this.UI = healthUI;
 
     }
     public override void Buy() {
         base.Buy();
         player.baseHealth += 1;
-        healthUI.InitHealthUI(player.baseHealth);
+        UI.InitHealthUI(player.baseHealth);
+        UI.UpdateHealthUI(player.baseHealth, player.health);
     }
 }
 
