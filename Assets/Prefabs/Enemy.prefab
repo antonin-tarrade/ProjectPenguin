@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 9140020812526462646}
   - component: {fileID: 1875279394382818684}
   - component: {fileID: -2015954402254113668}
+  - component: {fileID: 4607392872794718454}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Ennemy
@@ -53,6 +54,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHealth: 1
   health: 1
+  points: 0
+  def: 0
   speed: 3
   slideBoost: 0
   slideSlowDown: 0
@@ -60,6 +63,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 272138857047783761, guid: 2a2c1118dd3e64c44add8db72445c361, type: 3}
   isSliding: 0
   iceShard: {fileID: 3918862722806596231, guid: 830c59bbe9dbaed4d8f7fba26008a608, type: 3}
+  usePathfinder: 1
   movementTreshold: 2
   shootingDistance: 10
   spawner: {fileID: 0}
@@ -274,6 +278,37 @@ MonoBehaviour:
   transitionSpeed: 0.5
   maxIntensity: 0.5
   minIntensity: 0
+--- !u!114 &4607392872794718454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047452247930797885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a1d3afea4229da4193b6b76910dce8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug1: 1
+  debug2: 0
+  debug3: 0
+  debug4: 0
+  restrainMovement: 1
+  prioritiseTarget: 0
+  speed: 1
+  smoothing: 0.169
+  minAxisDistance: 1
+  targetName: Player
+  targetRef: {fileID: 0}
+  updateFrequency: 0.2
+  circlePointsResolution: 20
+  localisationFactor: 3
+  tagsToAvoid:
+  - tag: Ennemy
+    minDistance: 1
+  - tag: Obstacle
+    minDistance: 3
 --- !u!1 &7120548093083841651
 GameObject:
   m_ObjectHideFlags: 0

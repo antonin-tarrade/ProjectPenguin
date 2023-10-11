@@ -12,6 +12,8 @@ public class Enemy : Penguin
 	public GameObject iceShard; // Prefab Loot
 
 	// Variables pathfinding
+	public bool usePathfinder;
+	Pathfinder pathfinder;
 	protected Transform target;
 	protected Vector2 distanceToTarget;
 	protected bool isAvoiding=false;
@@ -25,6 +27,7 @@ public class Enemy : Penguin
 	private void Awake() {
 		//Initialisation Component
 		player = GameObject.FindObjectOfType<Player>();
+		pathfinder = GetComponent<Pathfinder>();
 		target = player.transform;
         InitPenguin();
         type = Type.Ennemy;
@@ -40,17 +43,29 @@ public class Enemy : Penguin
 		// Déplacement et tir
 		distanceToTarget.x = transform.position.x - target.position.x;
 		distanceToTarget.y = transform.position.y - target.position.y;
-		bool xAlignedToTarget = Mathf.Abs (distanceToTarget.x) < 0.35f;
-		bool yAlignedToTarget = Mathf.Abs (distanceToTarget.y) < 0.35f;
+		bool xAlignedToTarget = false;
+		bool yAlignedToTarget = false;
+		if (usePathfinder)
+		{
+			xAlignedToTarget = Mathf.Abs(distanceToTarget.x) < pathfinder.minAxisDistance;
+            yAlignedToTarget = Mathf.Abs(distanceToTarget.y) < pathfinder.minAxisDistance;
+        }
+		else
+		{
+            xAlignedToTarget = Mathf.Abs(distanceToTarget.x) < 0.35f;
+            yAlignedToTarget = Mathf.Abs(distanceToTarget.y) < 0.35f;
+        }
 		bool canShootX = Mathf.Abs (facingDirection.x) < 0.01f && xAlignedToTarget && Mathf.Abs (distanceToTarget.x) < shootingDistance;
 		bool canShootY = Mathf.Abs (facingDirection.y) < 0.01f && yAlignedToTarget && Mathf.Abs (distanceToTarget.y) < shootingDistance;
-		if (canShootX || canShootY){ 
+		if (canShootX || canShootY){
 			// Tir
-			Fire ();
+			if (!usePathfinder) Fire();
+			else Fire(target.transform.position);
 		}
-		else{ 
+		else{
 			// Calcul du déplacement du personnage (modifie movement)
-			CaclMovement(xAlignedToTarget, yAlignedToTarget);
+			if (!usePathfinder) CaclMovement(xAlignedToTarget, yAlignedToTarget);
+			else movement = (pathfinder.currentDirection.normalized) * speed;
 		}
 		
 		//// Mort 
