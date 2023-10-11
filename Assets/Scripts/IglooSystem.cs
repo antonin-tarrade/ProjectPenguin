@@ -6,6 +6,7 @@ public class IglooSystem : MonoBehaviour
     [SerializeField]
     private Canvas shopButton;
     private bool isShopOpen = false;
+    private bool canOpenShop = false;
 
     private void Start() {
         shopButton.gameObject.SetActive(true);
@@ -15,19 +16,21 @@ public class IglooSystem : MonoBehaviour
     // On rend le shop ouvrable quand le joueur est à proximité
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
-            shopButton.enabled = true;            
+            shopButton.enabled = true;
+            canOpenShop = true;            
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
             shopButton.enabled = false;
+            canOpenShop = false;
         }
     }
 
 
     private void Update() {
-        if (!isShopOpen &&Input.GetKeyDown(KeyCode.E)) {
+        if (!isShopOpen && canOpenShop && Input.GetKeyDown(KeyCode.E)) {
             isShopOpen = true;
             SceneManager.LoadScene("Shop", LoadSceneMode.Additive);
             GameManager.instance.ShopPause();

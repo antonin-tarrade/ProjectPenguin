@@ -50,7 +50,10 @@ public class Player : Penguin
     }
 
     private void Update ()
+
 	{
+
+
 		UpdateDepTime();
 		if (dureeBouclier <=0)
 		{
