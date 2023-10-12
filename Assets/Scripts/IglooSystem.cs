@@ -7,6 +7,7 @@ public class IglooSystem : MonoBehaviour
     private Canvas shopButton;
     private bool isShopOpen = false;
     private bool canOpenShop = false;
+    private bool canOpenShop = false;
 
     private void Start() {
         shopButton.gameObject.SetActive(true);

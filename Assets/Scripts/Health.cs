@@ -36,8 +36,6 @@ public class Health : MonoBehaviour
     // Update the healthbar UI
     public void UpdateHealthUI(int numOfHearts,float health)
     {
-  
-        //InitHealthUI(numOfHearts);
 	    float eps = 0.1f;
         for (int i=0; i<hearts.Length; i++){
             if (i + 0.5f + eps > health && i + 0.5f - eps < health) {
@@ -56,4 +54,6 @@ public class Health : MonoBehaviour
         }
         
     }
+
+    
 }

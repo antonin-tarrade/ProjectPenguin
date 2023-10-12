@@ -6,9 +6,7 @@ using UnityEngine;
 public class IcefishingHole : MonoBehaviour
 {
     public GameObject fishPrefab;
-    public GameObject playerObject;
     public Player player;
-    private float fishingTime;
     private bool isFishing = false;
     private bool isPlayerInside = false;
     private float fishingStartTime = 0f;
@@ -26,8 +24,6 @@ public class IcefishingHole : MonoBehaviour
         // Fishing hole
         fishingSoundSource = GetComponent<AudioSource>();
         fishingSoundSource.Stop();
-        fishingTime = player.fishingTime;
-
 
         GameManager.instance.pauseEvent += fishingSoundSource.Pause;
         GameManager.instance.unpauseEvent += fishingSoundSource.UnPause;
@@ -35,14 +31,15 @@ public class IcefishingHole : MonoBehaviour
 
     void Update()
     {
+
         if (isPlayerInside)
         {
             if (isFishing)
             {
-                chargingBar.UpdateBar((Time.time - fishingStartTime) / fishingTime);
+                chargingBar.UpdateBar((Time.time - fishingStartTime) / player.fishingTime);
 
                 // V�rifiez si le joueur a p�ch� pendant suffisamment de temps.
-                if (isFishing && Time.time - fishingStartTime >= fishingTime)
+                if (isFishing && Time.time - fishingStartTime >= player.fishingTime)
                 {
                     CaptureFish();
                 }

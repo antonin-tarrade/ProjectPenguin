@@ -20,7 +20,7 @@ public class ShopManager : MonoBehaviour
     public GameObject shopUI;
     public Transform shopContent;
     public GameObject itemPrefab;
-    public Health healthUI;
+    private Health healthUI;
     private UIManager uiManager;
     private GameManager gameManager;
 
@@ -282,7 +282,7 @@ public class SpeedUpgrade : Upgrade {
     }
 }
 public class HealthUpgrade : Upgrade {
-    private Health healthUI;
+    private Health UI;
 
     public HealthUpgrade(Health healthUI) {
         name = "Health";
@@ -296,7 +296,8 @@ public class HealthUpgrade : Upgrade {
     }
     public override void UpdatePlayer(){
         player.baseHealth += 1;
-        healthUI.InitHealthUI(player.baseHealth);
+        UI.InitHealthUI(player.baseHealth);
+        UI.UpdateHealthUI(player.baseHealth, player.health);
     }
 }
 
