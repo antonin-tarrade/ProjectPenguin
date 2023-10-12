@@ -1,0 +1,59 @@
+.ShopUpgrade {
+    flex-grow: 1;
+    flex-direction: row;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: none;
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-scale: 1px;
+    justify-content: center;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    visibility: visible;
+}
+
+.UpgradeContainer {
+    flex-grow: 1;
+    height: 80%;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    flex-basis: 0;
+}
+
+.Upgrade {
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    justify-content: space-between;
+    position: absolute;
+}
+
+.UpgradeButton {
+    width: 30%;
+}
+
+.Image {
+    width: 40%;
+    height: 30%;
+    background-image: none;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.CategoryButton {
+    width: auto;
+    align-self: center;
+    align-items: auto;
+}
+
+.ShopContainer {
+    background-image: url('project://database/Assets/Sprites/UI%20Adventure%20Pack/PNG/panel_blue.png?fileID=21300000&guid=f1628ca9bc5474488a59fdb0f728bf01&type=3#panel_blue');
+}
+
+.CategoryButtonsConatiner {
+}
