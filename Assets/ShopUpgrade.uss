@@ -57,3 +57,7 @@
 
 .CategoryButtonsConatiner {
 }
+
+.UpgradeText {
+    font-size: 20px;
+}

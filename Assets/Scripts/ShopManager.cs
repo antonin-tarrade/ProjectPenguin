@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using Unity.VisualScripting;
 
 public class ShopManager : MonoBehaviour
 {
@@ -24,6 +26,9 @@ public class ShopManager : MonoBehaviour
     private UIManager uiManager;
     private GameManager gameManager;
 
+    public ShopUI[] shops;
+    public Button[] categoryButtons;
+
     // getters/setters
     public Player getPlayer { get => player; set => player = value; }
 
@@ -37,26 +42,10 @@ public class ShopManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        attackUpgrades = new Upgrade[] {
-            new SpeedUpgrade(),
-            new StrengthUpgrade(),
-            new MultishotUpgrade(),
-        };
-
-        healthUpgrades = new Upgrade[] {
-            new HealthUpgrade(healthUI),
-            new SecondChanceUpgrade(),
-            new FishingUpgrade(),
-        };
-
-        passiveUpgrades = new Upgrade[] {
-            new SlidingUpgrade(),
-            new SlowShotUpgrade(),
-        };
-
         player = GameObject.Find("Player").GetComponent<Player>();
         uiManager = UIManager.instance;
         gameManager = GameManager.instance;
+        healthUI = GameObject.Find("UIHealth").GetComponent<Health>();
     }
 
     private void Start() {
@@ -92,17 +81,21 @@ public class ShopManager : MonoBehaviour
         //     button.onClick.AddListener(( ) => upgrade.Buy());
         // }
 
+        Upgrade[] allUpgrades = player.upgradesList;
 
+        attackUpgrades = allUpgrades.Where(upgrade => upgrade.type == Upgrade.UpgradeType.Attack).ToArray();
+        healthUpgrades = allUpgrades.Where(upgrade => upgrade.type == Upgrade.UpgradeType.Health).ToArray();
+        passiveUpgrades = allUpgrades.Where(upgrade => upgrade.type == Upgrade.UpgradeType.Passive).ToArray();
 
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
-        Button[] categoryButtons = new Button[] {
+        categoryButtons = new Button[] {
             root.Q<Button>("AttackButton"),
             root.Q<Button>("HealthButton"),
             root.Q<Button>("PassiveButton"),
         };
 
-        ShopUI[] shops = new ShopUI[] {
+        shops = new ShopUI[] {
             new ShopUI("AttackShop",Upgrade.UpgradeType.Attack,attackUpgrades,root,categoryButtons[0]),
             new ShopUI("HealthShop",Upgrade.UpgradeType.Health,healthUpgrades,root,categoryButtons[1]),
             new ShopUI("PassiveShop",Upgrade.UpgradeType.Passive,passiveUpgrades,root,categoryButtons[2]),
@@ -128,6 +121,7 @@ public class ShopManager : MonoBehaviour
         shops[0].shopUI.style.display = DisplayStyle.Flex;
 
     }
+    
 
     private void OnGUI() {
         shardText.text = "Shards : " + player.iceShards.ToString();
@@ -173,7 +167,7 @@ public class ShopUI {
 
                 upgrade.Value.Q<Label>("Name").text = upgrade.Key.name;
                 upgrade.Value.Q<Label>("Level").text = "Level " + upgrade.Key.currentLevel;
-                upgrade.Value.Q<Label>("Price").text = "Price : " + upgrade.Key.price;
+                upgrade.Value.Q<Label>("Price").text = "Price : " + upgrade.Key.prices[upgrade.Key.currentLevel];
 
                 upgrade.Value.Q<VisualElement>("Image").style.backgroundImage = Resources.Load<Texture2D>(upgrade.Key.image);
                 upgrade.Value.Q<Button>("BuyButton").clickable.clicked += () => upgrade.Key.Buy();
@@ -193,7 +187,6 @@ public class ShopUI {
             } else {
                 shopUpgradesUI[upgrade].Q<Label>("Level").text = "Level " + currentLevel;
                 shopUpgradesUI[upgrade].Q<Label>("Price").text = "Price : " + price;
-                shopUI.Q<Label>("Shards").text = "Shards : " + iceShards;
             }
         }
 
@@ -203,6 +196,7 @@ public class ShopUI {
 // Classe abstraite dont il faut ré-implémenter la fonction d'achat (voir exemples)
 public abstract class Upgrade {
 
+    // Enum
     public enum UpgradeType {
         Attack,
         Health,
@@ -210,57 +204,56 @@ public abstract class Upgrade {
         Debuff,
     }
 
+    // Fields
     public UpgradeType type { get; protected set;}
     public string name { get; protected set;}
-    public int price { get; protected set;}
-    public string imagePath { get; protected set;}
-    public int currentLevel { get; protected set;}
     public int levelMax { get; protected set;}
-    public Player player { get; set;}
-    public GameObject itemRef { get; set;}
-
-
-    public TextMeshProUGUI priceText { get; set;}
-    public TextMeshProUGUI currentLevelText { get; set;}
-    public String image { get; set;}
+    public int currentLevel;
+    public string image { get; set;}
     public bool canBuy = false;
 
+    // Stats
+    public int[] prices;
+
+    // References
+    public Player player { get; set;}
     public ShopUI shopUI;
 
-    
-    public virtual void Buy() {
-        //Debug 
-        Debug.Log("IceShards" + player.iceShards);
-        Debug.Log("price : " + price);
 
-        canBuy = player.iceShards >= price && currentLevel != levelMax ;
+    // Effects
+    public abstract void UpdatePlayer();
+
+    public virtual void Buy() {
+
+        int currentPrice = prices[currentLevel];
+        canBuy = player.iceShards >= currentPrice && currentLevel != levelMax ;
 
         if(canBuy) {
-            player.iceShards -= price;
-            currentLevel += 1;
+
+            player.iceShards -= currentPrice;
+            currentLevel ++;
+            currentPrice = prices[currentLevel];
+            UpdatePlayer();
+
             if (currentLevel != levelMax)
             {
-                price *= 2;
-                shopUI.UpdateShopUI(this,price,currentLevel,player.iceShards);
+                shopUI.UpdateShopUI(this,currentPrice,currentLevel,player.iceShards);
             } else {
-                shopUI.UpdateShopUI(this,price,currentLevel,player.iceShards,true);
+                shopUI.UpdateShopUI(this,currentPrice,currentLevel,player.iceShards,true);
             }
-
-            UpdatePlayer();
         }
     }
 
-    public abstract void UpdatePlayer();
 }
 
 public class SecondChanceUpgrade : Upgrade {
     public SecondChanceUpgrade(){
     	name = "Second Chance";
-        price = 500;
         image = "SecondChance";
         currentLevel = 0;
         levelMax = 1;
         type = UpgradeType.Health;
+        prices = new int[] { 500 };
     }
 	
     public override void UpdatePlayer() {
@@ -271,65 +264,66 @@ public class SecondChanceUpgrade : Upgrade {
 public class SpeedUpgrade : Upgrade {
     public SpeedUpgrade() {
         name = "Speed";
-        price = 1;
         image = "Speed";
+	    levelMax = 4;
         currentLevel = 0;
-	    levelMax = 3;
         type = UpgradeType.Attack;
+        prices = new int[] { 1, 2, 5, 10 };
     } 
-    public override void UpdatePlayer(){
-        player.speed *= 1.2f;
+
+    public override void UpdatePlayer() {
+        player.speed += 0.5f;
     }
+
 }
 public class HealthUpgrade : Upgrade {
     private Health UI;
 
     public HealthUpgrade(Health healthUI) {
         name = "Health";
-        price = 5;
         image = "Heart";
+	    levelMax = 4;
         currentLevel = 0;
-	    levelMax = 3;
-        this.healthUI = healthUI;
+        UI = healthUI;
         type = UpgradeType.Health;
-
+        prices = new int[] { 1, 2, 5, 10 };
     }
-    public override void UpdatePlayer(){
-        player.baseHealth += 1;
+
+    public override void UpdatePlayer() {
+        player.baseHealth ++;
         UI.InitHealthUI(player.baseHealth);
         UI.UpdateHealthUI(player.baseHealth, player.health);
     }
 }
 
 public class FishingUpgrade : Upgrade {
-    private IcefishingHole fishingHole;
 
     public FishingUpgrade() {
         name = "Fishing";
-        price = 3;
         image = "FishingRod";
+	    levelMax = 4;
         currentLevel = 0;
-	    levelMax = 3;
         type = UpgradeType.Health;
+        prices = new int[] { 1, 2, 5, 10 };
     }
+
     public override void UpdatePlayer() {
-        player.fishingTime *= 0.7f;
-    
+        player.fishingTime -= 0.5f;
     }
 }
 
 public class SlidingUpgrade : Upgrade {
     public SlidingUpgrade() {
         name = "Sliding Distance";
-        price = 1;
         image = "Feather";
-        currentLevel = 0;
 	    levelMax = 3;
+        currentLevel = 0;
         type = UpgradeType.Passive;
+        prices = new int[] { 1, 5, 10 };
     } 
+
     public override void UpdatePlayer() {
-        player.slideBoost *= 1.2f;
-        player.slideSlowDown *= 0.95f;
+        player.slideBoost += 0.5f;
     }
 }
 
@@ -337,28 +331,31 @@ public class SlidingUpgrade : Upgrade {
 public class StrengthUpgrade : Upgrade {
     public StrengthUpgrade() {
         name = "Strength";
-        price = 1;
         image = "Strength";
         currentLevel = 0;
-	    levelMax = 3;
+	    levelMax = 5;
         type = UpgradeType.Attack;
+        prices = new int[] { 1, 2, 5, 10, 20 };
     } 
+
     public override void UpdatePlayer() {
-        player.attack.dmg += 0.5f;
+        player.attack.dmg += 1;
     }
 }
 
 public class MultishotUpgrade : Upgrade {
     public MultishotUpgrade() {
         name = "Multishot";
-        price = 5;
         image = "Multishot";
         currentLevel = 0;
 	    levelMax = 3;
         type = UpgradeType.Attack;
-    } 
-    public override void UpdatePlayer() {
-        ChangeAttack();      
+        prices = new int[] { 5, 15, 30 };
+    }
+
+    public override void UpdatePlayer()
+    {
+        ChangeAttack();
     }
 
     public void ChangeAttack()
@@ -389,11 +386,11 @@ public class SlowShotUpgrade : Upgrade
     public SlowShotUpgrade()
     {
         name = "SlowShot";
-        price = 1;
         image = "Slowshot";
         currentLevel = 0;
 	    levelMax = 1;
         type = UpgradeType.Passive;
+        prices = new int[] { 5 };
     }
 
     public override void UpdatePlayer()

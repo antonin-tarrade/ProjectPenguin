@@ -4,70 +4,70 @@
         <ui:VisualElement name="Shops" class="ShopContainer" style="flex-grow: 1; position: absolute; width: 80%; height: 80%;">
             <ui:VisualElement name="AttackShop" class="ShopUpgrade">
                 <ui:VisualElement name="Upgrade0" class="UpgradeContainer" style="flex-grow: 1; height: 80%;">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0; background-image: none;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Upgrade1" class="UpgradeContainer">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Upgrade2" class="UpgradeContainer">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="PassiveShop" class="ShopUpgrade">
                 <ui:VisualElement name="Upgrade0" class="UpgradeContainer" style="flex-grow: 1; height: 80%;">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0; background-image: none;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Upgrade1" class="UpgradeContainer">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Upgrade2" class="UpgradeContainer">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="HealthShop" class="ShopUpgrade">
                 <ui:VisualElement name="Upgrade0" class="UpgradeContainer" style="flex-grow: 1; height: 80%;">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0; background-image: none;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Upgrade1" class="UpgradeContainer">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Upgrade2" class="UpgradeContainer">
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
                     <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" />
-                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
                     <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
                 </ui:VisualElement>
             </ui:VisualElement>
@@ -75,6 +75,9 @@
                 <ui:Button text="Attack" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AttackButton" class="CategoryButton" style="flex-direction: column; visibility: visible;" />
                 <ui:Button text="Health" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HealthButton" class="CategoryButton" />
                 <ui:Button text="Passive" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PassiveButton" class="CategoryButton" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ShardsContainer" style="flex-grow: 1; align-self: flex-end; margin-right: 5%; margin-top: 3%; font-size: 40px;">
+                <ui:Label tabindex="-1" text="TODO : ICESHARDS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shards" style="font-size: 25px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
