@@ -295,7 +295,7 @@ public class SpeedUpgrade : Upgrade {
 	    levelMax = 4;
         currentLevel = 0;
         type = UpgradeType.Passive;
-        prices = new int[] { 1, 2, 5, 10 };
+        prices = new int[] { 3, 5, 20, 30 };
     } 
 
     public override void UpdatePlayer() {
@@ -313,7 +313,7 @@ public class HealthUpgrade : Upgrade {
         currentLevel = 0;
         UI = healthUI;
         type = UpgradeType.Health;
-        prices = new int[] { 1, 2, 5, 10 };
+        prices = new int[] { 5, 10, 20, 30 };
     }
 
     public override void UpdatePlayer() {
@@ -346,7 +346,7 @@ public class SlidingUpgrade : Upgrade {
 	    levelMax = 3;
         currentLevel = 0;
         type = UpgradeType.Passive;
-        prices = new int[] { 1, 5, 10 };
+        prices = new int[] { 3, 5, 20 };
     } 
 
     public override void UpdatePlayer() {
@@ -360,9 +360,9 @@ public class StrengthUpgrade : Upgrade {
         name = "Strength";
         image = "Strength";
         currentLevel = 0;
-	    levelMax = 5;
+	    levelMax = 3;
         type = UpgradeType.Attack;
-        prices = new int[] { 1, 2, 5, 10, 20 };
+        prices = new int[] { 5, 10, 30};
     } 
 
     public override void UpdatePlayer() {
@@ -375,9 +375,9 @@ public class MultishotUpgrade : Upgrade {
         name = "Multishot";
         image = "Multishot";
         currentLevel = 0;
-	    levelMax = 3;
+	    levelMax = 2;
         type = UpgradeType.Attack;
-        prices = new int[] { 5, 15, 30 };
+        prices = new int[] { 10, 30};
     }
 
     public override void UpdatePlayer()
@@ -415,9 +415,9 @@ public class SlowShotUpgrade : Upgrade
         name = "SlowShot";
         image = "Slowshot";
         currentLevel = 0;
-	    levelMax = 1;
+	    levelMax = 3;
         type = UpgradeType.Passive;
-        prices = new int[] { 5 };
+        prices = new int[] { 10, 20, 30};
     }
 
     public override void UpdatePlayer()

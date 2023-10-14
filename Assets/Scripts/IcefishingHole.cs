@@ -23,6 +23,7 @@ public class IcefishingHole : MonoBehaviour
 
         // Fishing hole
         fishingSoundSource = GetComponent<AudioSource>();
+        fishingSoundSource.volume = 0.3f;
         fishingSoundSource.Stop();
 
         GameManager.instance.pauseEvent += fishingSoundSource.Pause;

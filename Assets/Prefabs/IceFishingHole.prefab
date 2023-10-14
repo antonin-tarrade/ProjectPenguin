@@ -455,10 +455,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 1576202394463381705, guid: 5a9734fe824e04278927a0ebbadc47f4, type: 3}
+  player: {fileID: 0}
   spawnOffset: {x: 0.5, y: -0.5, z: 0}
   fishingSoundClips:
   - {fileID: 8300000, guid: 95596168f584f524f8a01408fa035c43, type: 3}
-  - {fileID: 8300000, guid: 6a34311f60e78d24692824d49ff34277, type: 3}
+  - {fileID: 8300000, guid: 09a49bc389763784a95111ac77a44515, type: 3}
   chargingBar: {fileID: 2594982697874253847}
 --- !u!61 &4382445861117006667
 BoxCollider2D:

@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 066017920aae7ff4cb2e6b8e5515ec03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHealth: 5
-  health: 5
+  baseHealth: 10
+  health: 10
   points: 0
   def: 5
   speed: 1
@@ -62,6 +62,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 272138857047783761, guid: 2a2c1118dd3e64c44add8db72445c361, type: 3}
   isSliding: 0
   iceShard: {fileID: 3918862722806596231, guid: 830c59bbe9dbaed4d8f7fba26008a608, type: 3}
+  usePathfinder: 0
   movementTreshold: 2
   shootingDistance: 10
   spawner: {fileID: 0}

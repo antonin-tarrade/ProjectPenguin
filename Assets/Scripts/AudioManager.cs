@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
         backgroundMusicSource.clip = backgroundMusicClip;
         backgroundMusicSource.loop = true;
         backgroundMusicSource.playOnAwake = true;
-        backgroundMusicSource.volume = 0f;
+        backgroundMusicSource.volume = 0.5f;
 
         soundEffectSource = gameObject.AddComponent<AudioSource>();
         soundEffectSource.clip = null;
