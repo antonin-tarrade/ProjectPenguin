@@ -95,6 +95,23 @@
     margin-bottom: 0.5%;
 }
 
+.UpgradeButtonMax {
+    width: 30%;
+    background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[1]%20Normal.png?fileID=2800000&guid=df12a28aa5eae4341a29726f65e7820c&type=3#[1] Normal');
+    flex-shrink: 0;
+    height: 8%;
+    -unity-text-align: upper-center;
+    text-overflow: clip;
+    font-size: 20px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    -unity-background-scale-mode: stretch-to-fill;
+    background-color: rgba(56, 56, 56, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
 .UpgradeButton {
     width: 30%;
     background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[1]%20Normal.png?fileID=2800000&guid=df12a28aa5eae4341a29726f65e7820c&type=3#[1] Normal');
@@ -112,7 +129,7 @@
     border-bottom-color: rgba(0, 0, 0, 0);
 }
 
-.unity-button.UpgradeButton:hover {
+.UpgradeButton:hover {
     background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[3]%20Hover.png?fileID=2800000&guid=5c05c28c1d66348238cbb9d8dec0f016&type=3#[3] Hover');
 }
 

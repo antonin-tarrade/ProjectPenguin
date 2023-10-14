@@ -1100,7 +1100,6 @@ MonoBehaviour:
   shopUI: {fileID: 743548042}
   shopContent: {fileID: 179675185}
   itemPrefab: {fileID: 7928525415197070137, guid: 7340c87388cbb62488e6650d5a71b8a0, type: 3}
-  healthUI: {fileID: 0}
 --- !u!1 &1975025029
 GameObject:
   m_ObjectHideFlags: 0

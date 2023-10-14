@@ -177,6 +177,8 @@ public class ShopUI {
                     upgrade.Value.Q<Label>("Level").text = "Level max atteint";
                     upgrade.Value.Q<Button>("BuyButton").text = "Indisponible";
                     upgrade.Value.Q<Button>("BuyButton").SetEnabled(false);
+                    upgrade.Value.Q<Button>("BuyButton").AddToClassList("UpgradeButtonMax");
+                    upgrade.Value.Q<Button>("BuyButton").RemoveFromClassList("UpgradeButton");
 
                 } else {
 
@@ -203,6 +205,9 @@ public class ShopUI {
                 shopUpgradesUI[upgrade].Q<Label>("Level").text = "Level max atteint";
                 shopUpgradesUI[upgrade].Q<Button>("BuyButton").text = "Indisponible";
                 shopUpgradesUI[upgrade].Q<Button>("BuyButton").SetEnabled(false);
+                shopUpgradesUI[upgrade].Q<Button>("BuyButton").AddToClassList("UpgradeButtonMax");
+                shopUpgradesUI[upgrade].Q<Button>("BuyButton").RemoveFromClassList("UpgradeButton");
+                
                 
             } else {
                 shopUpgradesUI[upgrade].Q<Label>("Level").text = "Level " + currentLevel;
