@@ -15,9 +15,6 @@ public class TimelineController : MonoBehaviour
         playableDirector = GetComponent<PlayableDirector>();
     }
 
-
-
-
     public void Test(KeyCode key)
     {
 
@@ -25,8 +22,7 @@ public class TimelineController : MonoBehaviour
 
     public void WaitForInput(string key)
     {
-        Debug.Log("pause");
-        playableDirector.Pause();
+        playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(0);
         StartCoroutine(CWaitForInput(key));
     }
 
@@ -35,10 +31,9 @@ public class TimelineController : MonoBehaviour
         while (!Input.GetKeyDown(key))
         {
             yield return null;
-            Debug.Log("waiting for input " + key);
         }
-        Debug.Log("resume");
-        playableDirector.Resume();
+        playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
     }
+
 
 }

@@ -297,8 +297,8 @@ MonoBehaviour:
   restrainMovement: 1
   prioritiseTarget: 0
   speed: 1
-  smoothing: 0.169
-  minAxisDistance: 1
+  smoothing: 0
+  minAxisDistance: 0.5
   targetName: Player
   targetRef: {fileID: 0}
   updateFrequency: 0.2

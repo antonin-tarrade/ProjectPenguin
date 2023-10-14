@@ -219,4 +219,9 @@ public class Player : Penguin
 		}
 		
 	}
+
+    private void OnDisable()
+    {
+		body.velocity = Vector3.zero;
+    }
 }
