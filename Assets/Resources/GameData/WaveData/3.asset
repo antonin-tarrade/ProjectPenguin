@@ -24,15 +24,15 @@ MonoBehaviour:
     statModifierRef:
       modifyStats: 1
       modifyHealth: 1
-      healthModifier: 10
+      healthModifier: 20
       modifySpeed: 0
       speedModifier: 0
       modifyAttackSpeed: 1
-      attackSpeedModifier: 3
+      attackSpeedModifier: 20
       modifyDmg: 0
       dmgModifier: 0
     statModifierContainer: {fileID: 0}
-    delayBeforeNextWave: 5
+    delayBeforeNextWave: 1
     delayBetweenEachEnnemy: 0.1
   - ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
     numberOfEnnemies: 10

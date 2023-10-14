@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         player.SetStats(battleData.playerStats);
         player.health = player.baseHealth;
-        Player.iceShards = 500;
+        Player.iceShards = 0;
 
         UI.Switch(UI.gameMenu);
     }

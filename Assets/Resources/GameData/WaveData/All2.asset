@@ -15,10 +15,10 @@ MonoBehaviour:
   statModifier:
     modifyStats: 1
     modifyHealth: 1
-    healthModifier: 3
+    healthModifier: 5
     modifySpeed: 1
     speedModifier: 2
     modifyAttackSpeed: 1
     attackSpeedModifier: 1.5
     modifyDmg: 1
-    dmgModifier: 2
+    dmgModifier: 3

@@ -52,16 +52,16 @@ MonoBehaviour:
   - ennemyPrefab: {fileID: 6047452247930797885, guid: 35d52e1749c83c044b2607f6f6436d39, type: 3}
     numberOfEnnemies: 5
     statModifierRef:
-      modifyStats: 0
-      modifyHealth: 0
-      healthModifier: 0
-      modifySpeed: 0
-      speedModifier: 0
-      modifyAttackSpeed: 0
-      attackSpeedModifier: 0
-      modifyDmg: 0
-      dmgModifier: 0
-    statModifierContainer: {fileID: 11400000, guid: 5d094ca164319174bad4409c79a51e71, type: 2}
+      modifyStats: 1
+      modifyHealth: 1
+      healthModifier: 30
+      modifySpeed: 1
+      speedModifier: 3
+      modifyAttackSpeed: 1
+      attackSpeedModifier: 30
+      modifyDmg: 1
+      dmgModifier: 3
+    statModifierContainer: {fileID: 0}
     delayBeforeNextWave: 1
     delayBetweenEachEnnemy: 3
   - ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}

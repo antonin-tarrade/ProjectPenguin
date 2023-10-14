@@ -50,7 +50,7 @@ MonoBehaviour:
     delayBeforeNextWave: 0.1
     delayBetweenEachEnnemy: 0.1
   - ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
-    numberOfEnnemies: 5
+    numberOfEnnemies: 10
     statModifierRef:
       modifyStats: 0
       modifyHealth: 0
