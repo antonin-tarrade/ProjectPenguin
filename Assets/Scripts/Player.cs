@@ -30,7 +30,7 @@ public class Player : Penguin
 	private Vector2 old_input = Vector2.zero;
 
 	// Score (iceShards étant rentré dans l'igloo)
-	public int iceShards = 0;
+	public static int iceShards = 0;
 	
 	public int score = 0;
 

@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour
 
         UIWaveTXTEnemies.text = "Enemies left : " + EnemySpawner.remainingEnemies;
         // Shards (UI)
-        UIShards.text = ": " + player.iceShards.ToString();
+        UIShards.text = ": " + Player.iceShards.ToString();
         
         // Score (UI)
         UIScore.text = "Score : " + player.score.ToString();

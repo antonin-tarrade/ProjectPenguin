@@ -90,15 +90,15 @@ public class ShopManager : MonoBehaviour
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
         categoryButtons = new Button[] {
-            root.Q<Button>("AttackButton"),
-            root.Q<Button>("HealthButton"),
             root.Q<Button>("PassiveButton"),
+            root.Q<Button>("HealthButton"),
+            root.Q<Button>("AttackButton"),
         };
 
         shops = new ShopUI[] {
-            new ShopUI("AttackShop",Upgrade.UpgradeType.Attack,attackUpgrades,root,categoryButtons[0]),
+            new ShopUI("PassiveShop",Upgrade.UpgradeType.Passive,passiveUpgrades,root,categoryButtons[0]),
             new ShopUI("HealthShop",Upgrade.UpgradeType.Health,healthUpgrades,root,categoryButtons[1]),
-            new ShopUI("PassiveShop",Upgrade.UpgradeType.Passive,passiveUpgrades,root,categoryButtons[2]),
+            new ShopUI("AttackShop",Upgrade.UpgradeType.Attack,attackUpgrades,root,categoryButtons[2]),
         };
 
         for (int i = 0; i < categoryButtons.Length; i++)
@@ -108,7 +108,11 @@ public class ShopManager : MonoBehaviour
             shop.shopUI.style.display = DisplayStyle.None;
 
             button.clickable.clicked += () => {
-                Debug.Log("Click");
+                foreach (var button in categoryButtons)
+                {
+                    button.RemoveFromClassList("pushed");
+                }
+                button.AddToClassList("pushed");
 
                 foreach (var shopUI in shops)
                 {
@@ -118,14 +122,11 @@ public class ShopManager : MonoBehaviour
             };
         }
 
+        categoryButtons[0].AddToClassList("pushed");
         shops[0].shopUI.style.display = DisplayStyle.Flex;
 
     }
     
-
-    private void OnGUI() {
-        shardText.text = "Shards : " + player.iceShards.ToString();
-    }
 }
 
 // Class for the shop UI
@@ -135,6 +136,7 @@ public class ShopUI {
         public string shopName;
         public Upgrade[] shopUpgrades;
         public VisualElement shopUI;
+        public VisualElement parent;
         public Dictionary<Upgrade, VisualElement> shopUpgradesUI;
         public Button upgradeButton;
 
@@ -144,6 +146,7 @@ public class ShopUI {
             this.shopType = shopType;
             this.shopUpgrades = shopUpgrades;
             this.upgradeButton = upgradeButton;
+            this.parent = root.Q<VisualElement>("Shops");
 
             shopUI = root.Q<VisualElement>(shopName);
             shopUpgradesUI = new Dictionary<Upgrade, VisualElement>();
@@ -165,17 +168,34 @@ public class ShopUI {
                 upgrade.Key.player = ShopManager.instance.getPlayer;
                 upgrade.Key.shopUI = this;
 
-                upgrade.Value.Q<Label>("Name").text = upgrade.Key.name;
-                upgrade.Value.Q<Label>("Level").text = "Level " + upgrade.Key.currentLevel;
-                upgrade.Value.Q<Label>("Price").text = "Price : " + upgrade.Key.prices[upgrade.Key.currentLevel];
+                // Is the upgrade at Max level ?
+                bool isMaxLevel = upgrade.Key.currentLevel >= upgrade.Key.levelMax;
 
+                if (isMaxLevel) {
+
+                    upgrade.Value.Q<Label>("Price").text = "Indisponible";
+                    upgrade.Value.Q<Label>("Level").text = "Level max atteint";
+                    upgrade.Value.Q<Button>("BuyButton").text = "Indisponible";
+                    upgrade.Value.Q<Button>("BuyButton").SetEnabled(false);
+
+                } else {
+
+                    upgrade.Value.Q<Label>("Level").text = "Level " + upgrade.Key.currentLevel;
+                    upgrade.Value.Q<Label>("Price").text = "Price : " + upgrade.Key.prices[upgrade.Key.currentLevel];
+                    upgrade.Value.Q<Button>("BuyButton").text = "Buy";
+                    upgrade.Value.Q<Button>("BuyButton").clickable.clicked += () => upgrade.Key.Buy();
+
+                }
+
+                upgrade.Value.Q<Label>("Name").text = upgrade.Key.name;
                 upgrade.Value.Q<VisualElement>("Image").style.backgroundImage = Resources.Load<Texture2D>(upgrade.Key.image);
-                upgrade.Value.Q<Button>("BuyButton").clickable.clicked += () => upgrade.Key.Buy();
-                upgrade.Value.Q<Button>("BuyButton").text = "Buy";
             }
+
+            parent.Q<Label>("Shards").text = " : " + Player.iceShards;
+            parent.Q<VisualElement>("ShardsImage").style.backgroundImage = Resources.Load<Texture2D>("IceShard");
         }
 
-        public void UpdateShopUI(Upgrade upgrade, int price , int currentLevel, int iceShards, bool maxLevel = false){
+        public void UpdateShopUI(Upgrade upgrade, int price , int currentLevel, bool maxLevel = false){
 
             if (maxLevel)
             {
@@ -188,7 +208,9 @@ public class ShopUI {
                 shopUpgradesUI[upgrade].Q<Label>("Level").text = "Level " + currentLevel;
                 shopUpgradesUI[upgrade].Q<Label>("Price").text = "Price : " + price;
             }
-        }
+
+            parent.Q<Label>("Shards").text = " : " + Player.iceShards;
+        }   
 
     }
 
@@ -226,20 +248,20 @@ public abstract class Upgrade {
     public virtual void Buy() {
 
         int currentPrice = prices[currentLevel];
-        canBuy = player.iceShards >= currentPrice && currentLevel != levelMax ;
+        canBuy = Player.iceShards >= currentPrice && currentLevel != levelMax ;
 
         if(canBuy) {
 
-            player.iceShards -= currentPrice;
+            Player.iceShards -= currentPrice;
             currentLevel ++;
-            currentPrice = prices[currentLevel];
             UpdatePlayer();
 
             if (currentLevel != levelMax)
             {
-                shopUI.UpdateShopUI(this,currentPrice,currentLevel,player.iceShards);
+                currentPrice = prices[currentLevel];
+                shopUI.UpdateShopUI(this,currentPrice,currentLevel);
             } else {
-                shopUI.UpdateShopUI(this,currentPrice,currentLevel,player.iceShards,true);
+                shopUI.UpdateShopUI(this,currentPrice,currentLevel,true);
             }
         }
     }
@@ -267,7 +289,7 @@ public class SpeedUpgrade : Upgrade {
         image = "Speed";
 	    levelMax = 4;
         currentLevel = 0;
-        type = UpgradeType.Attack;
+        type = UpgradeType.Passive;
         prices = new int[] { 1, 2, 5, 10 };
     } 
 

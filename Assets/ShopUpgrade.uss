@@ -33,8 +33,46 @@
     position: absolute;
 }
 
-.UpgradeButton {
-    width: 30%;
+.CategoryButton {
+    width: 10%;
+    align-self: center;
+    align-items: auto;
+    background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[6]%20Silver/[1]%20Normal.png?fileID=2800000&guid=40d0fe24d51154689886798215b04206&type=3#[1] Normal');
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    -unity-text-align: upper-center;
+    height: 35%;
+}
+
+.unity-button.CategoryButton.pushed {
+    align-self: center;
+    align-items: auto;
+    background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[6]%20Silver/[2]%20Clicked.png?fileID=2800000&guid=553236d10873f4913bfe48fa6c3a84d9&type=3#[2] Clicked');
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    -unity-text-align: middle-center;
+}
+
+.ShopContainer {
+    background-image: url('project://database/Assets/Sprites/UI%20Adventure%20Pack/PNG/panel_blue.png?fileID=21300000&guid=f1628ca9bc5474488a59fdb0f728bf01&type=3#panel_blue');
+}
+
+.CategoryButtonsContainer {
+}
+
+.UpgradeText {
+    font-size: 35px;
+    -unity-font: url('project://database/Assets/Pixeloid_Font_0_5/TrueType%20(.ttf)/PixeloidMono.ttf?fileID=12800000&guid=e9d28755804b74ea6ab215346505993f&type=3#PixeloidMono');
 }
 
 .Image {
@@ -45,19 +83,65 @@
     flex-shrink: 0;
 }
 
-.CategoryButton {
-    width: auto;
-    align-self: center;
-    align-items: auto;
+.ShardsContainer {
+    width: 40%;
+    height: 15%;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
 }
 
-.ShopContainer {
-    background-image: url('project://database/Assets/Sprites/UI%20Adventure%20Pack/PNG/panel_blue.png?fileID=21300000&guid=f1628ca9bc5474488a59fdb0f728bf01&type=3#panel_blue');
-}
-
-.CategoryButtonsConatiner {
-}
-
-.UpgradeText {
+.UpgradeButton {
+    width: 30%;
+    background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[1]%20Normal.png?fileID=2800000&guid=df12a28aa5eae4341a29726f65e7820c&type=3#[1] Normal');
+    flex-shrink: 0;
+    height: 8%;
+    -unity-text-align: upper-center;
+    text-overflow: clip;
     font-size: 20px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    -unity-background-scale-mode: stretch-to-fill;
+    background-color: rgba(56, 56, 56, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.unity-button.UpgradeButton:hover {
+    background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[3]%20Hover.png?fileID=2800000&guid=5c05c28c1d66348238cbb9d8dec0f016&type=3#[3] Hover');
+}
+
+.unity-button.UpgradeButton:active {
+    background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[2]%20Clicked.png?fileID=2800000&guid=ad93272a6aedf4e35a753ae75c6d0ffe&type=3#[2] Clicked');
+    -unity-text-align: middle-center;
+}
+
+.ShardImage {
+    flex-grow: 0;
+    width: 15%;
+    height: 70%;
+    flex-shrink: 0;
+    align-self: auto;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 10%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.PriceContainer {
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
