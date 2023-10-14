@@ -5,6 +5,8 @@ using TMPro;
 
 public class PolarBearDialogue : MonoBehaviour
 {
+
+    public string test;
     [SerializeField]
     private GameObject ePrompt;
     [SerializeField]
