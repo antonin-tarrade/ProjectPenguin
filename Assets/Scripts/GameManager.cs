@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     // Variable
     public bool isOver;
     public bool isPaused;
+    public bool isShopOpen;
+
     public bool isStarted;
     public delegate void GameplayEvent();
     public GameplayEvent playerDeathEvent;
@@ -22,6 +24,9 @@ public class GameManager : MonoBehaviour
     public GameplayEvent unpauseEvent;
     private UIManager UI;
 
+    // ShopData
+    public bool isFirstShop;
+
     // Singleton
     public static GameManager instance;
 
@@ -29,6 +34,7 @@ public class GameManager : MonoBehaviour
 
         //Initialisation Component
         instance = this;
+        isFirstShop = true;
     }
     
     void Start()
@@ -53,7 +59,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         player.SetStats(battleData.playerStats);
         player.health = player.baseHealth;
-        player.iceShards = 0;
+        Player.iceShards = 500;
 
         UI.Switch(UI.gameMenu);
     }
@@ -62,23 +68,28 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         UI.Switch(UI.pauseMenu);
         UI.pauseDefaultButton.Select();
-        UI.isPaused = !(UI.isPaused);
-        this.isPaused = true;
+        isPaused = true;
         pauseEvent?.Invoke();
     }
 
     public void ShopPause(){
         Time.timeScale = 0f;
-        UI.isPaused = !(UI.isPaused);
-        this.isPaused = true;
+        isShopOpen = true;
+        isPaused = true;
     }
 
     public void Unpause(){
+        isFirstShop = false;
         Time.timeScale = 1f;
         UI.Switch(UI.gameMenu);
-        UI.isPaused = !(UI.isPaused);
-        this.isPaused = false;
+        isPaused = false;
         unpauseEvent?.Invoke();
+    }
+
+    public void ShopUnpause(){
+        Time.timeScale = 1f;
+        isShopOpen = false;
+        isPaused = false;
     }
 
     public void PlayerDeath()

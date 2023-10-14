@@ -5,20 +5,20 @@ public class IglooSystem : MonoBehaviour
 {
     [SerializeField]
     private Canvas shopButton;
-    private bool isShopOpen = false;
     private bool canOpenShop = false;
+    private GameManager gameManager;
 
     private void Start() {
         shopButton.gameObject.SetActive(true);
         shopButton.enabled = false;
+        gameManager = GameManager.instance;
     }
 
     // On rend le shop ouvrable quand le joueur est à proximité
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
             shopButton.enabled = true;
-            canOpenShop = true;   
-          
+            canOpenShop = true;            
         }
     }
 
@@ -31,14 +31,14 @@ public class IglooSystem : MonoBehaviour
 
 
     private void Update() {
-        if (!isShopOpen && canOpenShop && Input.GetKeyDown(KeyCode.E)) {
-            isShopOpen = true;
+        if (!gameManager.isShopOpen && canOpenShop && !gameManager.isPaused &&Input.GetKeyDown(KeyCode.E)) {
+            gameManager.isShopOpen = true;
             SceneManager.LoadScene("Shop", LoadSceneMode.Additive);
-            GameManager.instance.ShopPause();
-        } else if (isShopOpen && Input.GetKeyDown(KeyCode.E)) {
+            gameManager.ShopPause();
+        } else if (gameManager.isShopOpen && Input.GetKeyDown(KeyCode.E)) {
             SceneManager.UnloadSceneAsync("Shop");
-            GameManager.instance.Unpause();
-            isShopOpen = false;
+            gameManager.ShopUnpause();
+            gameManager.isShopOpen = false;
         }
     }
 }

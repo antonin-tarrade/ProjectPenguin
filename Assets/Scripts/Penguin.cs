@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Attacks;
 using System;
+using Unity.VisualScripting.Dependencies.NCalc;
 
 public class Penguin : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class Penguin : MonoBehaviour
 			this.points = points;
 		}
     }
+
 
 	public void SetStats( Stats stats )
 	{
@@ -67,7 +69,6 @@ public class Penguin : MonoBehaviour
 	protected Rigidbody2D body;
 
 	// Competences
-	public List<Upgrade> upgrades = new();
 	public IAttack attack;
 
 	// Pour ne pas que les ennemis se tuent entre eux

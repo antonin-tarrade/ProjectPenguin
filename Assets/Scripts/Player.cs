@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Attacks;
 using UnityEngine.SceneManagement;
+using UnityEditor.Rendering.Universal;
 
 public class Player : Penguin
 {
@@ -29,18 +30,39 @@ public class Player : Penguin
 	private Vector2 old_input = Vector2.zero;
 
 	// Score (iceShards étant rentré dans l'igloo)
-	public int iceShards = 0;
+	public static int iceShards = 0;
 	
 	public int score = 0;
 
 	public float fishingTime = 10f;
 
+
+	//Upgrades 
+	public Upgrade[] upgradesList;
+	public Health healthUI;
+
 	private void Start ()
 	{
 		InitPenguin ();
 		type = Type.Player;
-
 		GameManager.instance.playerRespawnEvent += Respawn;
+
+		upgradesList = new Upgrade[]{
+			new SpeedUpgrade(),
+			new StrengthUpgrade(),
+			new HealthUpgrade(healthUI),
+			new SlowShotUpgrade(),
+			new MultishotUpgrade(),
+			new SecondChanceUpgrade(),
+			new SlidingUpgrade(),
+			new FishingUpgrade(),
+		};
+
+		// upgradesLevel = new Dictionary<Upgrade, int>();
+		// foreach (Upgrade upgrade in upgradesList)
+		// {
+		// 	upgradesLevel.Add(upgrade, 0);
+		// }
 	}
 
 	public override void InitPenguin()
@@ -50,7 +72,10 @@ public class Player : Penguin
     }
 
     private void Update ()
+
 	{
+
+
 		UpdateDepTime();
 		if (dureeBouclier <=0)
 		{

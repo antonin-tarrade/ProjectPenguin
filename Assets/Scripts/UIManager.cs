@@ -39,7 +39,6 @@ public class UIManager : MonoBehaviour
 
     // Variables
     public GameObject menuActif;
-    public bool isPaused = false;
 
     // Singleton
     public static UIManager instance;
@@ -86,14 +85,14 @@ public class UIManager : MonoBehaviour
 
         // Menu Pause
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.B)){
-            if(!isPaused){
+            if(!GameManager.instance.isPaused && !GameManager.instance.isShopOpen){
                 GameManager.instance.Pause();
             }
-            else {
+            else if (GameManager.instance.isPaused && !GameManager.instance.isShopOpen){
                 GameManager.instance.Unpause();
             }
         }
-        if (isPaused) return;
+        if (GameManager.instance.isPaused) return;
 
         // Menu Game
 
@@ -105,7 +104,7 @@ public class UIManager : MonoBehaviour
 
         UIWaveTXTEnemies.text = "Enemies left : " + EnemySpawner.remainingEnemies;
         // Shards (UI)
-        UIShards.text = ": " + player.iceShards.ToString();
+        UIShards.text = ": " + Player.iceShards.ToString();
         
         // Score (UI)
         UIScore.text = "Score : " + player.score.ToString();

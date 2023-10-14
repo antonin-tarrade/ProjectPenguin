@@ -1,0 +1,112 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/ShopUpgrade.uss?fileID=7433441132597879392&amp;guid=50139e0fe1d6849ec8ff0301db7e8bb7&amp;type=3#ShopUpgrade" />
+    <ui:VisualElement name="Root" style="flex-grow: 1; justify-content: center; align-items: center; width: 100%; height: 100%; position: absolute; align-self: center; top: 0; left: 0;">
+        <ui:VisualElement name="Shops" class="ShopContainer" style="flex-grow: 1; position: absolute; width: 80%; height: 80%; flex-direction: row;">
+            <ui:VisualElement name="PassiveShop" class="ShopUpgrade" style="display: flex;">
+                <ui:VisualElement name="Upgrade0" class="UpgradeContainer" style="flex-grow: 1; height: 80%;">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0; background-image: none;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Upgrade1" class="UpgradeContainer">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Upgrade2" class="UpgradeContainer">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="HealthShop" class="ShopUpgrade" style="display: flex;">
+                <ui:VisualElement name="Upgrade0" class="UpgradeContainer" style="flex-grow: 1; height: 80%;">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0; background-image: none;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Upgrade1" class="UpgradeContainer">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Upgrade2" class="UpgradeContainer">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="AttackShop" class="ShopUpgrade" style="display: flex;">
+                <ui:VisualElement name="Upgrade0" class="UpgradeContainer" style="flex-grow: 1; height: 80%;">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0; background-image: none;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Upgrade1" class="UpgradeContainer">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Upgrade2" class="UpgradeContainer">
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Name" class="UpgradeText" />
+                    <ui:VisualElement name="Image" class="Image" style="flex-grow: 0;" />
+                    <ui:VisualElement name="PriceContainer" class="PriceContainer">
+                        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Price" class="UpgradeText" />
+                        <ui:VisualElement name="ShardsImage" style="flex-grow: 0; flex-shrink: 0; height: 40%; width: 20%; margin-left: 0; background-image: resource(&apos;IceShard&apos;); margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level" class="UpgradeText" />
+                    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuyButton" class="UpgradeButton" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="CategoryButtons" class="CategoryButtonsConatiner CategoryButtonsContainer" style="flex-grow: 1; align-self: flex-start; flex-direction: row; width: 30%; height: 15%; position: relative; top: auto; left: auto; padding-left: 5%; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; justify-content: flex-start; align-items: flex-start;">
+                <ui:Button text="Passive" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PassiveButton" class="CategoryButton" />
+                <ui:Button text="Health" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HealthButton" class="CategoryButton" />
+                <ui:Button text="Attack" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AttackButton" class="CategoryButton" style="flex-direction: column; visibility: visible;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ShardsContainer" class="ShardsContainer" style="justify-content: center;">
+                <ui:VisualElement name="ShardsImage" class="ShardImage" style="background-image: resource(&apos;IceShard&apos;); margin-right: 5%; margin-top: 0;" />
+                <ui:Label tabindex="-1" text="IceShards" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shards" style="font-size: 40px; align-self: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
