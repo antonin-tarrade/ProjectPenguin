@@ -95,7 +95,7 @@
     margin-bottom: 0.5%;
 }
 
-.UpgradeButtonMax {
+.UpgradeButton {
     width: 30%;
     background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[1]%20Normal.png?fileID=2800000&guid=df12a28aa5eae4341a29726f65e7820c&type=3#[1] Normal');
     flex-shrink: 0;
@@ -112,7 +112,7 @@
     border-bottom-color: rgba(0, 0, 0, 0);
 }
 
-.UpgradeButton {
+.UpgradeButtonMax {
     width: 30%;
     background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[1]%20Normal.png?fileID=2800000&guid=df12a28aa5eae4341a29726f65e7820c&type=3#[1] Normal');
     flex-shrink: 0;
@@ -135,7 +135,7 @@
 
 .unity-button.UpgradeButton:active {
     background-image: url('project://database/Assets/Sprites/Button%20Pack%20-%20ok_lavender/Individual%20Frames/[1]%20Light%20Blue/[2]%20Clicked.png?fileID=2800000&guid=ad93272a6aedf4e35a753ae75c6d0ffe&type=3#[2] Clicked');
-    -unity-text-align: middle-center;
+    -unity-text-align: upper-center;
 }
 
 .ShardImage {

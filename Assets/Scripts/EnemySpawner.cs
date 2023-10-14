@@ -81,6 +81,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemiesWithDelay()
     {
+        remainingEnemies = 0;
         enemyTrackers.Clear();
         waves[waveNumber].Load();
         foreach (SpawnData spawnData in waveToSpawn)
