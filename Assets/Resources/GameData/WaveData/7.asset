@@ -18,20 +18,37 @@ MonoBehaviour:
   onFinished:
     m_PersistentCalls:
       m_Calls: []
-  numberOfEnnemies: 10
-  numberOfBoss: 30
-  numberOfSlime: 30
-  ennemyPrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
-  modifyStats: 0
-  statModifier:
-    modifyHealth: 1
-    healthModifier: 10
-    modifySpeed: 0
-    speedModifier: 0
-    modifyAttackSpeed: 0
-    attackSpeedModifier: 0
-    modifyDmg: 1
-    dmgModifier: 2
+  spawnDatas:
+  - ennemyPrefab: {fileID: 6047452247930797885, guid: 35d52e1749c83c044b2607f6f6436d39, type: 3}
+    numberOfEnnemies: 5
+    statModifierRef:
+      modifyStats: 1
+      modifyHealth: 1
+      healthModifier: 10
+      modifySpeed: 1
+      speedModifier: 2
+      modifyAttackSpeed: 1
+      attackSpeedModifier: 3
+      modifyDmg: 1
+      dmgModifier: 3
+    statModifierContainer: {fileID: 0}
+    delayBeforeNextWave: 3
+    delayBetweenEachEnnemy: 3
+  - ennemyPrefab: {fileID: 6047452247930797885, guid: 283d65fccde17b14ba15d7fc853c8f0d, type: 3}
+    numberOfEnnemies: 10
+    statModifierRef:
+      modifyStats: 1
+      modifyHealth: 1
+      healthModifier: 10
+      modifySpeed: 1
+      speedModifier: 2
+      modifyAttackSpeed: 1
+      attackSpeedModifier: 3
+      modifyDmg: 1
+      dmgModifier: 3
+    statModifierContainer: {fileID: 11400000, guid: 5d094ca164319174bad4409c79a51e71, type: 2}
+    delayBeforeNextWave: 3
+    delayBetweenEachEnnemy: 0.5
   changeSpawnParameters: 0
   spawnRadius: 0
   spawnRandom: 0

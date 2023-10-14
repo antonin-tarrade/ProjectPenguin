@@ -46,7 +46,7 @@ MonoBehaviour:
       attackSpeedModifier: 0
       modifyDmg: 0
       dmgModifier: 0
-    statModifierContainer: {fileID: 0}
+    statModifierContainer: {fileID: 11400000, guid: 9282a26fa5ce62b41bb2aefdacbce639, type: 2}
     delayBeforeNextWave: 0.1
     delayBetweenEachEnnemy: 1
   changeSpawnParameters: 0
