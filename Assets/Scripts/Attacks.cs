@@ -52,7 +52,7 @@ namespace Attacks
 
         public virtual void Fire(Vector3 direction)
         {
-            Vector3 offset = direction;
+            Vector3 offset = direction.normalized;
             GameObject projectile = GameObject.Instantiate(attacker.projectilePrefab, attacker.transform.position + offset, Quaternion.identity);
             projectile.GetComponent<Projectile>().speed = speed;
             projectile.GetComponent<Projectile>().onHit += OnHit;

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9140020812526462646}
   - component: {fileID: 1875279394382818684}
   - component: {fileID: -2015954402254113668}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss
   m_TagString: Ennemy
   m_Icon: {fileID: 0}
@@ -67,6 +67,7 @@ MonoBehaviour:
   shootingDistance: 10
   spawner: {fileID: 0}
   avoidance: 3
+  maxShootAngle: 20
 --- !u!212 &2664316855483250904
 SpriteRenderer:
   m_ObjectHideFlags: 0
