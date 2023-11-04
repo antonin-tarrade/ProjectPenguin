@@ -31,11 +31,11 @@ public class IglooSystem : MonoBehaviour
 
 
     private void Update() {
-        if (!gameManager.isShopOpen && canOpenShop && !gameManager.isPaused &&Input.GetKeyDown(KeyCode.E)) {
+        if (!gameManager.isShopOpen && canOpenShop && !gameManager.isPaused && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.T))) {
             gameManager.isShopOpen = true;
             SceneManager.LoadScene("Shop", LoadSceneMode.Additive);
             gameManager.ShopPause();
-        } else if (gameManager.isShopOpen && Input.GetKeyDown(KeyCode.E)) {
+        } else if (gameManager.isShopOpen && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.T))) {
             SceneManager.UnloadSceneAsync("Shop");
             gameManager.ShopUnpause();
             gameManager.isShopOpen = false;

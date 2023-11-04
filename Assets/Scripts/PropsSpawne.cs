@@ -30,7 +30,9 @@ public class PropsSpawne : MonoBehaviour
             Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
 
             // Spawn
-            Instantiate(iceBlockPrefab, spawnPosition, Quaternion.identity);
+            GameObject instance = Instantiate(iceBlockPrefab, spawnPosition, Quaternion.identity);
+            instance.transform.parent = transform;
+
         }
     }
 }

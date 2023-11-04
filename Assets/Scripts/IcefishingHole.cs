@@ -47,7 +47,7 @@ public class IcefishingHole : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.G))
+                if (Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.T))
                 {
                     StartFishing();
                     chargingBar.SetChargeOn();

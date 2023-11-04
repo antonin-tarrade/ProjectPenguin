@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ButtonMenu : MonoBehaviour
 {
-    
-    [SerializeField] GameObject canvas;
-    
-    public void Activer()
+
+    void Start()
     {
-    	canvas.SetActive(true);
+        if (gameObject.name == "Return") gameObject.GetComponent<Button>().Select();
     }
     
-    public void Retour()
+    public void GoToRule()
     {
-    	canvas.SetActive(false);
+    	SceneManager.LoadScene("Rules");
+    }
+    
+    public void GoBackToMenu()
+    {
+    	SceneManager.LoadScene("Menu");
     }
 }
