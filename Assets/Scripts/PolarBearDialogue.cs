@@ -53,16 +53,16 @@ public class PolarBearDialogue : MonoBehaviour
     {
         if (collision.CompareTag("Player")) 
         {
-        	if (player.score > 25)
-       		//if (GameManager.instance.battleData.playerStats.Dmg > 3)
-       		{	
-       			if (player.GetHasBouclier())
-       			{
-       				ChangerTexte("Bravo tu as trouvé le bouclier ! tu peux l'activer en appuyant sur 'C', mais attention à ne pas trop l'utiliser...");
-       			} else {
-       				ChangerTexte("Après avoir autant progressé en attaque, il est désormais tant d'apprendre à vous défendre aussi ! Aller donc au nord-est de cette ville, on dit qu'un navire de guerre s'y était échoué il y a fort fort longtemps, peut être y trouverez vous encore un bouclier...");
-       			}
-       		}
+        	//if (player.score > 25)
+       		////if (GameManager.instance.battleData.playerStats.Dmg > 3)
+       		//{	
+       		//	if (player.GetHasBouclier())
+       		//	{
+       		//		ChangerTexte("Bravo tu as trouvé le bouclier ! tu peux l'activer en appuyant sur 'C', mais attention à ne pas trop l'utiliser...");
+       		//	} else {
+       		//		ChangerTexte("Après avoir autant progressé en attaque, il est désormais tant d'apprendre à vous défendre aussi ! Aller donc au nord-est de cette ville, on dit qu'un navire de guerre s'y était échoué il y a fort fort longtemps, peut être y trouverez vous encore un bouclier...");
+       		//	}
+       		//}
        		ShowPrompt();
         }
     }

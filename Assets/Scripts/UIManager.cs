@@ -130,7 +130,6 @@ public class UIManager : MonoBehaviour
         menuActif.SetActive(false);
         //gameMenu.SetActive(true);
         to.SetActive(true);
-	    Debug.Log("Switch : " + to.ToString() + " " + menuActif.ToString());
         menuActif = to;
     }
 

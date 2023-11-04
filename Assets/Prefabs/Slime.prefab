@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 9140020812526462646}
   - component: {fileID: 1875279394382818684}
   - component: {fileID: -2015954402254113668}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Slime
   m_TagString: Ennemy
   m_Icon: {fileID: 0}
@@ -54,6 +54,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHealth: 12
   health: 12
+  points: 0
+  def: 0
   speed: 1
   slideBoost: 1
   slideSlowDown: 1
@@ -61,10 +63,12 @@ MonoBehaviour:
   projectilePrefab: {fileID: 272138857047783761, guid: 2a2c1118dd3e64c44add8db72445c361, type: 3}
   isSliding: 0
   iceShard: {fileID: 3918862722806596231, guid: 830c59bbe9dbaed4d8f7fba26008a608, type: 3}
+  usePathfinder: 0
   movementTreshold: 2
   shootingDistance: 10
   spawner: {fileID: 0}
   avoidance: 2
+  maxShootAngle: 20
   childNumber: 2
   smallSlimePrefab: {fileID: 6047452247930797885, guid: 2ca35ec86c007b14f882cbb88b68817f, type: 3}
 --- !u!114 &509827770822819753
@@ -81,6 +85,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHealth: 1
   health: 1
+  points: 0
+  def: 0
   speed: 3
   slideBoost: 0
   slideSlowDown: 0
@@ -88,10 +94,12 @@ MonoBehaviour:
   projectilePrefab: {fileID: 272138857047783761, guid: 2a2c1118dd3e64c44add8db72445c361, type: 3}
   isSliding: 0
   iceShard: {fileID: 3918862722806596231, guid: 830c59bbe9dbaed4d8f7fba26008a608, type: 3}
+  usePathfinder: 0
   movementTreshold: 2
   shootingDistance: 10
   spawner: {fileID: 0}
   avoidance: 2
+  maxShootAngle: 20
 --- !u!212 &2664316855483250904
 SpriteRenderer:
   m_ObjectHideFlags: 0

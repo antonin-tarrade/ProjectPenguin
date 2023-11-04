@@ -1,247 +1,326 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Attacks;
 using UnityEngine.SceneManagement;
-using UnityEditor.Rendering.Universal;
+using UnityEngine.Tilemaps;
 
 public class Player : Penguin
 {
+    //Moche
+    private bool hasSecondChance = false;
 
-	private bool hasSecondChance = false;
+    //Doit pas etre la
+    public Vector3 spawnPoint;
 
-	// Bouclier
-	private bool hasBouclier = false;
-	private float dureeBouclierMax = 3;
-	private float dureeBouclier = 0;
-	private float tempsAvantProcActInit = 10;
-	private float tempsAvantProcAct = 0;
-	private ProtectionStatusEffect protec;
-	[SerializeField] GameObject bouclier;
-	[SerializeField] BoxCollider2D colliderPlayer;
+    [Header("FireParameters")]
+    [SerializeField] private float fireRange;
+    [SerializeField] private float maxShootAngle;
+    [SerializeField] private int enemyDetectionPrecision;
 
-	public Vector3 spawnPoint;
+    public static int iceShards;
+    public int score;
+    public float fishingTime = 10f;
 
-	// Booleens pour empecher les mouvements diagonaux
-	private bool movement_x_lock = false;
-	private bool movement_y_lock = false;
+    public Upgrade[] upgradesList;
+    public Health healthUI;
 
-	// Inputs directionnels enregistres a la derniere frame
-	private Vector2 old_input = Vector2.zero;
+    private PlayerController controller;
 
-	// Score (iceShards étant rentré dans l'igloo)
-	public static int iceShards = 0;
-	
-	public int score = 0;
-
-	public float fishingTime = 10f;
-
-
-	//Upgrades 
-	public Upgrade[] upgradesList;
-	public Health healthUI;
-
-	private void Start ()
-	{
-		InitPenguin ();
-		type = Type.Player;
-		GameManager.instance.playerRespawnEvent += Respawn;
-
-		upgradesList = new Upgrade[]{
-			new SpeedUpgrade(),
-			new StrengthUpgrade(),
-			new HealthUpgrade(healthUI),
-			new SlowShotUpgrade(),
-			new MultishotUpgrade(),
-			new SecondChanceUpgrade(),
-			new SlidingUpgrade(),
-			new FishingUpgrade(),
-		};
-
-		// upgradesLevel = new Dictionary<Upgrade, int>();
-		// foreach (Upgrade upgrade in upgradesList)
-		// {
-		// 	upgradesLevel.Add(upgrade, 0);
-		// }
-	}
-
-	public override void InitPenguin()
-	{
-		base.InitPenguin();
-        SetStats(GameManager.instance.battleData.playerStats);
+    // Start is called before the first frame update
+    void Start()
+    {
+        InitPlayer();
     }
 
-    private void Update ()
-
-	{
-
-
-		UpdateDepTime();
-		if (dureeBouclier <=0)
-		{
-			bouclier.SetActive(false);
-			colliderPlayer.enabled = true;
-		}
-		
-		if (isDead) return;
-		// Arret du slide
-		if (Input.GetKeyUp ("space") || Input.GetMouseButtonUp(1) || Input.anyKeyDown || movement.magnitude < 0.01)
-			isSliding = false;
-		// Debut du slide
-		if (Input.GetKeyDown ("space") || Input.GetMouseButtonDown(1)|| Input.GetKeyDown(KeyCode.F))
-		{
-			isSliding = true;
-			movement.x *= slideBoost;
-			movement.y *= slideBoost;
-			StartCoroutine (slide ());
-		}
-
-		if (!isSliding && (Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButtonDown(0)|| Input.GetKeyDown(KeyCode.R)) && !GameManager.instance.isPaused && GameManager.instance.isStarted && !GameManager.instance.isOver) 
-		{
-			Fire();
-		}
-		
-		// Mouvement
-		Vector2 movementDirection = getDirectionFromInput ();
-		if (movementDirection != Vector2.zero)
-			facingDirection = movementDirection;
-
-		if (!isSliding)
-		{
-			movement.x = speed * movementDirection.x;
-			movement.y = speed * movementDirection.y;
-		}
-
-		// Variables d'animation
-		if (movementDirection.y < 0) // Down
-			animator.SetInteger ("orientation", 0);
-		if (movementDirection.x < 0) // Left
-			animator.SetInteger ("orientation", 1);
-		if (movementDirection.y > 0) // Up
-			animator.SetInteger ("orientation", 2);
-		if (movementDirection.x > 0) // Right
-			animator.SetInteger ("orientation", 3);
-		animator.SetBool ("isSliding", isSliding);
-		animator.SetFloat ("speed", movement.magnitude);
-		
-		//Activation du bouclier
-		if (hasBouclier && (Input.GetKeyDown(KeyCode.C) || Input.GetMouseButtonDown(1)))
-		{
-			ActiverBouclier();
-		}
-	}
-
-	private void FixedUpdate ()
-	{
-		Move ();
-	}
-
-	// Obtient la direction dans laquelle se deplacer en fonction des inputs
-	private Vector2 getDirectionFromInput ()
+    // Update is called once per frame
+    void Update()
     {
-		float input_x = Input.GetAxisRaw ("Horizontal");
-        float input_y = Input.GetAxisRaw ("Vertical");
+        if (isDead) return;
 
-        if (!isSliding)
+        controller.HandleInput();
+        Animate();
+        Move();
+    }
+
+
+    public override void InitPenguin()
+    {
+        base.InitPenguin();
+        SetStats(GameManager.instance.battleData.playerStats);
+        health = baseHealth;
+    }
+
+    public void InitPlayer()
+    {
+        InitPenguin();
+        type = Type.Player;
+        GameManager.instance.playerRespawnEvent += Respawn;
+
+        upgradesList = new Upgrade[]{
+            new SpeedUpgrade(),
+            new StrengthUpgrade(),
+            new HealthUpgrade(healthUI),
+            new SlowShotUpgrade(),
+            new MultishotUpgrade(),
+            new SecondChanceUpgrade(),
+            new SlidingUpgrade(),
+            new FishingUpgrade(),
+        };
+
+        controller = new PlayerController(this);
+    }
+
+
+    public void Move(Vector2 direction)
+    {
+        movement = direction.normalized * speed;
+        if (direction.sqrMagnitude > 0) facingDirection = direction;
+    }
+
+    public void StartSlide()
+    {
+        isSliding = true;
+        StartCoroutine("Slide");
+    }
+
+    public void StopSlide()
+    {
+        isSliding = false;
+        StopCoroutine("Slide");
+    }
+
+    public new void Fire()
+    {
+        Enemy closestEnemy = FindClosestEnnemyInRange();
+        if (closestEnemy == null)
         {
-            if (Mathf.Abs (input_x) < 0.01 || old_input.y != input_y)
+            attack.Fire(facingDirection);
+        }
+        else
+        {
+            attack.Fire(closestEnemy.transform.position - transform.position);
+        }
+    }
+
+    private Enemy FindClosestEnnemyInRange()
+    {
+        RaycastHit2D[] raycasts = new RaycastHit2D[enemyDetectionPrecision];
+        float stepAngle = 2 * maxShootAngle / enemyDetectionPrecision;
+        Vector2 direction = Rotate(facingDirection.normalized, maxShootAngle * Mathf.Deg2Rad);
+
+        float smallestDistance = float.MaxValue;
+        Enemy closestEnemy = null;
+        Enemy enemy = null;
+
+        for (int i = 0; i < enemyDetectionPrecision; i++)
+        {
+            direction = Rotate(direction, -stepAngle * Mathf.Deg2Rad);
+
+            raycasts[i] = Physics2D.Raycast(transform.position, direction, fireRange, LayerMask.GetMask("Enemies", "Obstacles"));
+            Debug.DrawLine(transform.position, raycasts[i].point);
+            if (raycasts[i])
             {
-                movement_x_lock = true;
-                movement_y_lock = false;
+                if (raycasts[i].distance < smallestDistance)
+                {
+                    //Debug.Log("DISTANCE");
+                    if (raycasts[i].collider.gameObject.TryGetComponent<Enemy>(out enemy))
+                    {
+                        //Debug.Log("ENEMY");
+                        closestEnemy = enemy;
+                    }
+                }
             }
-            if (Mathf.Abs (input_y) < 0.01 || old_input.x != input_x)
-            {
-                movement_y_lock = true;
-                movement_x_lock = false;
-            }
-		}
+        }
+        return closestEnemy;
+    }
 
-		old_input.x = input_x;
-        old_input.y = input_y;
+    public Vector2 Rotate(Vector2 v, float delta)
+    {
+        return new Vector2(
+            v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
+            v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
+        );
+    }
 
-        float direction_x = movement_x_lock ? 0 : input_x;
-        float direction_y = movement_y_lock ? 0 : input_y;
+    public void AddShards(int value)
+    {
+        iceShards += value;
+        AddScore(value);
+    }
 
-        return new Vector2 (direction_x, direction_y);
-	}
+    public void AddScore(int value)
+    {
+        score += value;
+    }
 
-	public void AddShards(int value)
-	{
-		iceShards += value;
-		AddScore(value);
-	}
-	
-	public void AddScore(int value)
-	{
-		score += value;
-	}
+    public void Heal(int value)
+    {
+        health += value;
+        health = Mathf.Min(health, baseHealth);
+    }
 
-	public void Heal(int value)
-	{
-		health += value;
-		health = Mathf.Min(health, baseHealth);
-	}
-	
-	// Bouclier
-	public bool GetHasBouclier()
-	{
-		return hasBouclier;
-	}
-	public void ActiverDispoBouclier()
-	{
-		hasBouclier = true;
-		protec = new ProtectionStatusEffect() { duration = 5 };
-		//Player.attack.effects.Add(new ProtectionStatusEffect() { duration = 5 });
-	}
-	
-	private void ActiverBouclier()
-	{
-		
-		if (tempsAvantProcAct < 0) 
-		{
-			tempsAvantProcAct = tempsAvantProcActInit;
-			dureeBouclier = dureeBouclierMax;
-			bouclier.SetActive(true);
-			colliderPlayer.enabled = false;
-			protec.ApplyOn(this);
-			Debug.Log("Bouclier activé");
-		} else {
-			Debug.Log("Le bouclier n'a pas pu être activé");
-		}
-	}
-	
-	
-	// Fait l'update de toutes les variables dépendants du temps pour pouvoir faire avec Time.deltaTime
-	private void UpdateDepTime()
-	{
-		float delta = Time.deltaTime;
-		tempsAvantProcAct -= delta;
-		dureeBouclier -= delta;
-	}
-	
-	public void SetSecondChance()
-	{
-		hasSecondChance = true;
-	}
+    private void Animate()
+    {
+        if (movement.y < 0) // Down
+            animator.SetInteger("orientation", 0);
+        if (movement.x < 0) // Left
+            animator.SetInteger("orientation", 1);
+        if (movement.y > 0) // Up
+            animator.SetInteger("orientation", 2);
+        if (movement.x > 0) // Right
+            animator.SetInteger("orientation", 3);
+        animator.SetBool("isSliding", isSliding);
+        animator.SetFloat("speed", movement.magnitude);
+    }
+
+    public void SetSecondChance()
+    {
+        hasSecondChance = true;
+    }
 
     public override void Death()
     {
-		isDead = true;
-		movement = new Vector2(0, 0);
-		GameManager.instance.PlayerDeath();
+        isDead = true;
+        movement = new Vector2(0, 0);
+        GameManager.instance.PlayerDeath();
     }
 
-	private void Respawn()
-	{	
-		if (hasSecondChance)
-		{
-			hasSecondChance = false;
-			isDead = false;
-			health = baseHealth;
-			transform.position = spawnPoint;
-		} else {
-			SceneManager.LoadScene("SampleScene");
-		}
-		
-	}
+    public void Respawn()
+    {
+        if (hasSecondChance)
+        {
+            hasSecondChance = false;
+            isDead = false;
+            health = baseHealth;
+            transform.position = spawnPoint;
+        }
+        else
+        {
+            SceneManager.LoadScene("SampleScene");
+        }
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class PlayerController
+{
+    public bool enabled;
+
+    public IPlayerState state;
+    public PlayerController(Player player)
+    {
+        state = new PlayerMovingState(player);
+        enabled = true;
+    }
+    public void HandleInput()
+    {
+        if (!enabled) return;
+        state = state.HandleInput();
+    }
+
+    public void Enable() { enabled = true; }
+    public void Disable() { enabled = false; }
+
+
+}
+
+public interface IPlayerState
+{
+    public string GetName();
+    public IPlayerState HandleInput();
+}
+
+public abstract class PlayerState : IPlayerState
+{
+    public string name { get; protected set; }
+
+    protected Player player;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public abstract IPlayerState HandleInput();
+
+
+    public PlayerState(Player player)
+    {
+        this.player = player;
+    }
+}
+
+public class PlayerMovingState : PlayerState
+{
+    private Vector2 movement;
+
+    public PlayerMovingState(Player player) : base(player)
+    {
+        name = "Moving";
+        movement = new();
+    }
+
+    public override IPlayerState HandleInput()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            player.StartSlide();
+            return new PlayerSlidingState(player);
+        }
+        else
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+            player.Move(movement);
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.R))
+            {
+                player.Fire();
+            }
+            return this;
+        }
+    }
+}
+
+public class PlayerSlidingState : PlayerState
+{
+    public PlayerSlidingState(Player player) : base(player)
+    {
+        name = "Sliding";
+    }
+
+    public override IPlayerState HandleInput()
+    {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            player.StopSlide();
+            return new PlayerMovingState(player);
+        }
+        else return this;
+    }
+}
+
+
