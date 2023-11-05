@@ -26,7 +26,7 @@ namespace Assets.Purification
         }
 
         /// <summary>
-        /// Modify the speed to a certain value for a certain duration
+        /// Modifies the speed for a certain duration
         /// </summary>
         /// <param name="speed">The modifier to apply</param>
         /// <param name="time">The duration</param>

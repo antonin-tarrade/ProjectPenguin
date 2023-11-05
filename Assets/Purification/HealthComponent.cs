@@ -24,6 +24,7 @@ namespace Assets.Purification
 
         public void DoDmg(float dmg)
         {
+            OnHealthChange?.Invoke();
             health -= dmg / def;
             if (health < 0) Death();
         }
@@ -35,7 +36,7 @@ namespace Assets.Purification
         public void Heal(float value)
         {
             OnHealthChange?.Invoke();
-            health = Mathf.Max(health + value, maxHealth);
+            health = Mathf.Min(health + value, maxHealth);
         }
 
 

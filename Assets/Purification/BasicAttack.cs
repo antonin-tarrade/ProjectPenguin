@@ -11,12 +11,14 @@ namespace Assets.Purification
     /// </summary>
     public class BasicAttack : MonoBehaviour, IAttack
     {
-        [SerializeField] private float atk;
-        [SerializeField] protected float attackSpeed;
-        protected List<IEffect<Component>> effects;
+        [Header("Projectile parameters")]
         [Tooltip("The prefab of the projectile to use when attacking")]
         [SerializeField] private Projectile projectile;
+        [SerializeField] private float atk;
+        [SerializeField] protected float attackSpeed;
         [SerializeField] private float projectileLifeLength;
+
+        protected List<IEffect<Component>> effects;
 
         private IDamageable.Type type;
 
