@@ -13,5 +13,10 @@ namespace Assets.Purification
         /// </summary>
         /// <param name="direction">The direction in which to fire</param>
         void Fire(Vector3 direction);
+
+        /// <summary>
+        /// The damage that the attack will do
+        /// </summary>
+        float damage { get; set;}
     }
 }
