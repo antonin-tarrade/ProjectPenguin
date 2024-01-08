@@ -1,22 +1,12 @@
-# Pass The Game 2023
+# Project Penguin 🐧
 
-## C'est votre tour !
+## Context
+This game project originated from a *Game Jam* made with ENSEEIHT's game development club, 7Fault. 
+The particularity of this GameJam is that each individual would take turns developing the game, for 1-2 days before passing it on to the next one, **without communicating anything**.
+The resulting game was pretty fun and @remoraki and I decided to then continue to work on this game.  
 
-### Avant de commencer
+## Goal of the game
+The goal of the game is to survive each wave of enemies, by shooting snowballs at them. Killing an enemy will drop ice shards. You can then buy augments with a certain amount of ice shards and upgrade your character abilities or even unlock new powers.
 
-Ce projet utilise Unity 2022.3.6f1 (Evitez de changer)
 
-git clone git@git.inpt.fr:7fault/2022-2023/pass_the_game_2023.git  
-git config --local core.autocrlf false (a vérifier pour linux)  
-git checkout -b *votre_nom*  
-git push --set-upstream origin *votre_nom*
-
-### Une fois que vous avez fini
-
-git add .  
-git commit  
-git push
-
-Une fois que vous avez push votre branch sur gitlab, vous pouvez faire une merge request sur gitlab vers la branche main :  
-Assignee : vous  
-Reviewer : Gabriel Rochaix--Yamamoto
+## ⚠️ This game is still in Work In Progress, and not completely finished yet ⚠️
